@@ -112,10 +112,10 @@ namespace tienda
                         break;
                     case "Modificar":
                         btnRealisarInstruccion.Text = "Modificar";
-                        txtNE.Enabled = true;
-                        txtRU.Enabled = true;
-                        txtVT.Enabled = true;
-                        txtCD.Enabled = true;
+                        txtNE.Enabled = false;
+                        txtRU.Enabled = false;
+                        txtVT.Enabled = false;
+                        txtCD.Enabled = false;
                         btnRealisarInstruccion.FlatStyle = FlatStyle.Flat;
                         btnRealisarInstruccion.BackColor = Color.Yellow;
                         btnRealisarInstruccion.ForeColor = Color.Black;
@@ -136,6 +136,7 @@ namespace tienda
                         btnRealisarInstruccion.Click -= BtnBorrar_Click;
                         btnRealisarInstruccion.Click -= BtnModificar_Click;//borrar si se selecciono varias veses y evitar que salga varios errores
                         btnRealisarInstruccion.Click += BtnModificar_Click;//volverlo a agregar para que solo se aga una ves
+                        MessageBox.Show("En este apartado solo podra modificar la fecha ya que los demas valores vienen de un calculo","Advertencia",MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         break;
                     case "Borrar":
                         btnRealisarInstruccion.Text = "Borrar";
