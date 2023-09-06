@@ -116,6 +116,10 @@ namespace tienda
                         txtRU.Enabled = false;
                         txtVT.Enabled = false;
                         txtCD.Enabled = false;
+                        txtNE.BackColor = Color.LightGray;
+                        txtRU.BackColor = Color.LightGray;
+                        txtCD.BackColor = Color.LightGray;
+                        txtVT.BackColor = Color.LightGray;
                         btnRealisarInstruccion.FlatStyle = FlatStyle.Flat;
                         btnRealisarInstruccion.BackColor = Color.Yellow;
                         btnRealisarInstruccion.ForeColor = Color.Black;
