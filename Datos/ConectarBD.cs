@@ -443,6 +443,48 @@ namespace Datos
             //string mostrartabla = "SELECT P.NombreProveedor, DC.Compra FROM DiasCompra AS DC INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID WHERE DiaVisita = 'Lunes'"; 
             //return DataTable;
         }
+
+
+        public DataTable llenarProveedores(string diaActual)
+        {
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+
+                //Hacemos la consulta para ver el nombre y el dia de visita
+                string ConsultaProveedores = $"SELECT NombreProveedor, DiaVisita FROM Proveedores WHERE DiaVisita LIKE '%{diaActual}%'";
+                SqlCommand sqlCommand = new SqlCommand(ConsultaProveedores, conn);
+                //SqlDataAdapter dataAdapter = new SqlDataAdapter(ConsultaProveedores, conn);
+                using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+                {
+                    DataTable data = new DataTable();
+                    data.Load(dataReader);
+                    return data;
+                }
+                    
+
+                //llenamos el dataAdapter con data
+                //dataAdapter.Fill(data);
+
+                //luego obtenemos el dia actual
+                //string diaActual = DateTime.Now.ToString("dddd");
+                //DataView dataView = new DataView(data);
+                ////encontramos el dia en la columna DiaVisita
+                //dataView.RowFilter = $"DiaVisita LIKE '%{diaActual}%'";
+
+                //y lo retornamos
+                //return dataView;
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex}");
+                return null;
+            }
+        }
         
         public int AgregarProveedor(string Nombreproveedor, string Diavisita)
         {
