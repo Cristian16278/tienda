@@ -23,10 +23,13 @@ namespace tienda
         {
             string diaActual = DateTime.Now.ToString("dddd");
             dataGridView1.DataSource = conectar.llenarProveedores(diaActual);
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                row.Cells["Proveedor"].Value = row.Cells["NombreProveedor"].Value;
-            }
+            dataGridView1.Columns["Proveedor"].DataPropertyName = "NombreProveedor";
+            dataGridView1.Columns["NombreProveedor"].Visible = false;
+            //dataGridView1.Columns["Proveedor"].HeaderText = "Proveedor";
+            //foreach (DataGridViewRow row in dataGridView1.Rows)
+            //{
+            //    row.Cells["Proveedor"].Value = row.Cells["NombreProveedor"].Value;
+            //}
         }
 
         //para abrir el forms
@@ -57,7 +60,7 @@ namespace tienda
                 consultaDiasAnteriores.Activate();
             }
         }
-
+        
         //private void Provedores_FormClosed(object sender, FormClosedEventArgs e)
         //{
         //    agregarProveedores = null;

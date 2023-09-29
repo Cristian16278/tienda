@@ -455,16 +455,19 @@ namespace Datos
                 }
 
                 //Hacemos la consulta para ver el nombre y el dia de visita
-                string ConsultaProveedores = $"SELECT NombreProveedor, DiaVisita FROM Proveedores WHERE DiaVisita LIKE '%{diaActual}%'";
-                SqlCommand sqlCommand = new SqlCommand(ConsultaProveedores, conn);
-                //SqlDataAdapter dataAdapter = new SqlDataAdapter(ConsultaProveedores, conn);
-                using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
-                {
-                    DataTable data = new DataTable();
-                    data.Load(dataReader);
-                    return data;
-                }
-                    
+                string ConsultaProveedores = $"SELECT NombreProveedor FROM Proveedores WHERE DiaVisita LIKE '%{diaActual}%'";
+                //SqlCommand sqlCommand = new SqlCommand(ConsultaProveedores, conn);
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(ConsultaProveedores, conn);
+                DataTable data = new DataTable();
+                dataAdapter.Fill(data);
+                return data;
+                //using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+                //{
+                //    DataTable data = new DataTable();
+                //    data.Load(dataReader);
+                //    return data;
+                //}
+
 
                 //llenamos el dataAdapter con data
                 //dataAdapter.Fill(data);
@@ -477,7 +480,7 @@ namespace Datos
 
                 //y lo retornamos
                 //return dataView;
-                
+
             }
             catch (Exception ex)
             {
