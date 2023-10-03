@@ -11,7 +11,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Forms;
 using System.Security.Cryptography.X509Certificates;
 using System.Globalization;
-
+using System.Net.Http.Headers;
 
 namespace Datos
 {
@@ -445,7 +445,7 @@ namespace Datos
         }
 
 
-        public DataTable llenarProveedores(string diaActual)
+        public List<int> ObtenerIDproveedores(string diaActual)
         {
             try
             {
@@ -453,14 +453,33 @@ namespace Datos
                 {
                     conn.Open();
                 }
+                List<int> ProveedoresID = new List<int>();
+                string obtenerID = $"SELECT ProveedorID FROM Proveedores WHERE DiaVisita LIKE '%{diaActual}%'";
+                using (SqlCommand comando = new SqlCommand(obtenerID, conn))
+                {
+                    using (SqlDataReader datareader = comando.ExecuteReader())
+                    {
+                        while (datareader.Read())
+                        {
+                            int proveedorID = datareader.GetInt32(0);
+                            ProveedoresID.Add(proveedorID);
+                        }
+                        return ProveedoresID;
+                    }
+                }
+                    
 
                 //Hacemos la consulta para ver el nombre y el dia de visita
-                string ConsultaProveedores = $"SELECT NombreProveedor FROM Proveedores WHERE DiaVisita LIKE '%{diaActual}%'";
-                //SqlCommand sqlCommand = new SqlCommand(ConsultaProveedores, conn);
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(ConsultaProveedores, conn);
-                DataTable data = new DataTable();
-                dataAdapter.Fill(data);
-                return data;
+                //string ConsultaProveedores = $"SELECT NombreProveedor FROM Proveedores WHERE DiaVisita LIKE '%{diaActual}%'";
+                //string consulta = "SELECT P.ProveedorID, DC.Fecha, DC.Compra, DC.ImagenCompras" +
+                //                  "FROM Proveedores AS P" +
+                //                  "INNER JOIN DiasCompra AS DC ON P.ProveedorID = DC.ProveedorID" +
+                //                  $"WHERE P.DiaVisita LIKE '%{diaActual}%'";
+                ////SqlCommand sqlCommand = new SqlCommand(ConsultaProveedores, conn);
+                //SqlDataAdapter dataAdapter = new SqlDataAdapter(ConsultaProveedores, conn);
+                //DataTable data = new DataTable();
+                //dataAdapter.Fill(data);
+                //return data;
                 //using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
                 //{
                 //    DataTable data = new DataTable();
@@ -486,6 +505,66 @@ namespace Datos
             {
                 MessageBox.Show($"{ex}");
                 return null;
+            }
+        }
+
+        public DataTable CargarTablaDiasCompra(DateTime FechaActual)
+        {
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+
+
+                string consultar = "SELECT P.NombreProveedor, DC.Compra, DC.ImagenCompras " +
+                                   "FROM DiasCompra AS DC " +
+                                   "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
+                                   "WHERE DC.Fecha = @fecha";
+                using (SqlCommand comando = new SqlCommand(consultar, conn))
+                {
+                    comando.Parameters.AddWithValue("@fecha", FechaActual);
+                    using (SqlDataReader sqlDataReader = comando.ExecuteReader())
+                    {
+                        DataTable dt = new DataTable();
+                        dt.Load(sqlDataReader);
+                        return dt;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Hubo un erro {e}");
+                return null;
+            }
+        }
+
+        public int llenarTablaDiasCompra(List<int> proveedorID, DateTime fechaactual)
+        {
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+
+                foreach (int provedorID in proveedorID)
+                {
+                    string insertarProveedor = $"INSERT INTO DiasCompra(ProveedorID, Compra, Fecha, ImagenCompras) VALUES (@Proveedor, 0, @Fecha, null)";
+                    using (SqlCommand insertar = new SqlCommand(insertarProveedor, conn))
+                    {
+                        insertar.Parameters.AddWithValue("@Proveedor", provedorID);
+                        insertar.Parameters.AddWithValue("@Fecha", fechaactual);
+                        insertar.ExecuteNonQuery();
+                    }
+                }
+                return 0;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"hubo un error {e}");
+                return 0;
             }
         }
         

@@ -22,9 +22,29 @@ namespace tienda
         private void Provedores_Load(object sender, EventArgs e)
         {
             string diaActual = DateTime.Now.ToString("dddd");
-            dataGridView1.DataSource = conectar.llenarProveedores(diaActual);
-            dataGridView1.Columns["Proveedor"].DataPropertyName = "NombreProveedor";
-            dataGridView1.Columns["NombreProveedor"].Visible = false;
+            DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
+            //este puede que sea el definitivo
+            //luego se descomenta<--------------8------------------8---------------8-----------
+            List<int> ProveedoresID = conectar.ObtenerIDproveedores(diaActual);
+            if (conectar.llenarTablaDiasCompra(ProveedoresID, date) > 0)
+            {
+                MessageBox.Show("Se agrego correctamente la consulta");
+            }
+            else
+            {
+                MessageBox.Show("Hubo un problema");
+            }
+            dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
+            //luego se descomenta<---------------8---------------8-----------------8-----------
+
+
+            //dataGridView1.DataSource = conectar.llenarProveedores(diaActual);
+            //dataGridView1.Columns["Proveedor"].DataPropertyName = "NombreProveedor";
+            //dataGridView1.Columns["NombreProveedor"].Visible = false;
+
+
+
+            //MessageBox.Show($"El dia de hoy es {diaActual}");
             //dataGridView1.Columns["Proveedor"].HeaderText = "Proveedor";
             //foreach (DataGridViewRow row in dataGridView1.Rows)
             //{
@@ -60,7 +80,7 @@ namespace tienda
                 consultaDiasAnteriores.Activate();
             }
         }
-        
+
         //private void Provedores_FormClosed(object sender, FormClosedEventArgs e)
         //{
         //    agregarProveedores = null;
