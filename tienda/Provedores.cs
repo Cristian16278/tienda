@@ -25,16 +25,16 @@ namespace tienda
             DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
             //este puede que sea el definitivo
             //luego se descomenta<--------------8------------------8---------------8-----------
-            List<int> ProveedoresID = conectar.ObtenerIDproveedores(diaActual);
-            if (conectar.llenarTablaDiasCompra(ProveedoresID, date) > 0)
+            if(conectar.ConsultaProveedorExisteFechaHoy(date) >= 1)//si ya hay proveedores con la fecha del dia actual que solo me recarge el datagridview
             {
-                MessageBox.Show("Se agrego correctamente la consulta");
+                dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
             }
-            else
+            else//si no quiere decir que es un nuevo dia y lo creara
             {
-                MessageBox.Show("Hubo un problema");
+                List<int> ProveedoresID = conectar.ObtenerIDproveedores(diaActual);
+                conectar.llenarTablaDiasCompra(ProveedoresID, date);
+                dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
             }
-            dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
             //luego se descomenta<---------------8---------------8-----------------8-----------
 
 

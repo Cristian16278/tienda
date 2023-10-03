@@ -412,9 +412,9 @@ namespace Datos
                 conn.Close();
             }
         }
-        #region Para proveedores
+        #region Para los forms de diascompraproveedores, agregarProveedores y consultaProveedores
         //pendiente
-        public DataTable MostrarTablaProveedores()
+        public DataTable MostrarTablaProveedores()//este metodo no lo utilizo
         {
             try
             {
@@ -540,7 +540,37 @@ namespace Datos
             }
         }
 
-        public int llenarTablaDiasCompra(List<int> proveedorID, DateTime fechaactual)
+        public int ConsultaProveedorExisteFechaHoy(DateTime fechaActualVerificar)
+        {
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+
+                string verificarsiexiste = "SELECT COUNT(*) " +
+                                           "FROM DiasCompra " +
+                                           "WHERE Fecha = @fecha";
+                //string verificarsiexiste = "SELECT P.NombreProveedor " +
+                //                           "FROM DiasCompra AS DC " +
+                //                           "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
+                //                           "WHERE DC.Fecha = @fecha";
+                using (SqlCommand comando = new SqlCommand(verificarsiexiste, conn))
+                {
+                    comando.Parameters.AddWithValue("@fecha", fechaActualVerificar);
+                    int count = Convert.ToInt32(comando.ExecuteScalar());
+                    return count;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Hubo un error {ex}");
+                return 0;
+            }
+        }
+
+        public void llenarTablaDiasCompra(List<int> proveedorID, DateTime fechaactual)
         {
             try
             {
@@ -559,12 +589,10 @@ namespace Datos
                         insertar.ExecuteNonQuery();
                     }
                 }
-                return 0;
             }
             catch (Exception e)
             {
                 MessageBox.Show($"hubo un error {e}");
-                return 0;
             }
         }
         
