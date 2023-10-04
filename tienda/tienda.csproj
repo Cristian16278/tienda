@@ -124,6 +124,12 @@
     <Compile Include="loging.Designer.cs">
       <DependentUpon>loging.cs</DependentUpon>
     </Compile>
+    <Compile Include="Previsualisacion_imagen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Previsualisacion_imagen.Designer.cs">
+      <DependentUpon>Previsualisacion_imagen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provedores.cs">
@@ -149,6 +155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="loging.resx">
       <DependentUpon>loging.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Previsualisacion_imagen.resx">
+      <DependentUpon>Previsualisacion_imagen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

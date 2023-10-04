@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,17 +24,19 @@ namespace tienda
         {
             string diaActual = DateTime.Now.ToString("dddd");
             DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
-            //este puede que sea el definitivo
+            //Procedimiento definitivo
             //luego se descomenta<--------------8------------------8---------------8-----------
             if(conectar.ConsultaProveedorExisteFechaHoy(date) >= 1)//si ya hay proveedores con la fecha del dia actual que solo me recarge el datagridview
             {
                 dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
+                AgregarBotonAlaFila();
             }
             else//si no quiere decir que es un nuevo dia y lo creara
             {
                 List<int> ProveedoresID = conectar.ObtenerIDproveedores(diaActual);
                 conectar.llenarTablaDiasCompra(ProveedoresID, date);
                 dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
+                AgregarBotonAlaFila();
             }
             //luego se descomenta<---------------8---------------8-----------------8-----------
 
@@ -52,12 +55,23 @@ namespace tienda
             //}
         }
 
+        private void AgregarBotonAlaFila()
+        {
+            DataGridViewButtonColumn botonAgregarimagen = new DataGridViewButtonColumn();
+            botonAgregarimagen.Name = "Agregar Imagen";
+            botonAgregarimagen.Text = "Agregar imagen";
+            botonAgregarimagen.UseColumnTextForButtonValue = true;
+            dtgDiasCompra.Columns.Add(botonAgregarimagen);
+        }
+
         //para abrir el forms
         private AgregarProveedores agregarProveedores = null;
         private ConsultaDiasAnteriores consultaDiasAnteriores = null;
-        private void agregarProveedorToolStripMenuItem_Click(object sender, EventArgs e)
+
+
+        private void agregarProveedorToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            if(agregarProveedores == null || agregarProveedores.IsDisposed)
+            if (agregarProveedores == null || agregarProveedores.IsDisposed)
             {
                 agregarProveedores = new AgregarProveedores();
                 agregarProveedores.Show();
@@ -67,10 +81,10 @@ namespace tienda
                 agregarProveedores.Activate();
             }
         }
-        
-        private void consultarDiasAtrasToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void consultarDiasAtrasToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            if(consultaDiasAnteriores == null || consultaDiasAnteriores.IsDisposed)
+            if (consultaDiasAnteriores == null || consultaDiasAnteriores.IsDisposed)
             {
                 consultaDiasAnteriores = new ConsultaDiasAnteriores();
                 consultaDiasAnteriores.Show();
@@ -80,6 +94,32 @@ namespace tienda
                 consultaDiasAnteriores.Activate();
             }
         }
+
+        private void dtgDiasCompra_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.ColumnIndex == dtgDiasCompra.Columns["Agregar Imagen"].Index)
+            {
+                //OfdElegirImagen.Title = "Seleccione una imagen";
+                //OfdElegirImagen.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png|Todos los archivos|*.*";
+
+                if(OfdElegirImagen.ShowDialog() == DialogResult.OK)
+                {
+                    string imagen = OfdElegirImagen.FileName;
+                    Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(imagen);
+                    if(previsualisacion.ShowDialog() == DialogResult.OK)
+                    {
+                        MessageBox.Show("Se guardara en la base de datos");
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se guardar en la base de datos");
+                    }
+                    byte[] guardarimagen = File.ReadAllBytes(imagen);
+                }
+            }
+        }
+
+        
 
         //private void Provedores_FormClosed(object sender, FormClosedEventArgs e)
         //{
