@@ -43,6 +43,7 @@
             this.CheckboxSabado = new System.Windows.Forms.CheckBox();
             this.CheckboxJueves = new System.Windows.Forms.CheckBox();
             this.GropboxVariosDias = new System.Windows.Forms.GroupBox();
+            this.CheckBoxSinDiaFijo = new System.Windows.Forms.CheckBox();
             this.CheckboxNoPasa = new System.Windows.Forms.CheckBox();
             this.lblObtenerDias = new System.Windows.Forms.Label();
             this.lblDiaAcambiar = new System.Windows.Forms.Label();
@@ -70,7 +71,7 @@
             "Seleccione",
             "Agregar proveedor",
             "Modificar proveedor",
-            "Borrar proveedor"});
+            "Borrar Proveedor"});
             this.CboxElegirAccion.Location = new System.Drawing.Point(12, 45);
             this.CboxElegirAccion.Name = "CboxElegirAccion";
             this.CboxElegirAccion.Size = new System.Drawing.Size(362, 39);
@@ -155,14 +156,14 @@
             this.CheckboxMiercoles.Name = "CheckboxMiercoles";
             this.CheckboxMiercoles.Size = new System.Drawing.Size(141, 33);
             this.CheckboxMiercoles.TabIndex = 12;
-            this.CheckboxMiercoles.Text = "Miercoles";
+            this.CheckboxMiercoles.Text = "Miércoles";
             this.CheckboxMiercoles.UseVisualStyleBackColor = true;
             // 
             // CheckboxDomingo
             // 
             this.CheckboxDomingo.AutoSize = true;
             this.CheckboxDomingo.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CheckboxDomingo.Location = new System.Drawing.Point(177, 94);
+            this.CheckboxDomingo.Location = new System.Drawing.Point(177, 56);
             this.CheckboxDomingo.Name = "CheckboxDomingo";
             this.CheckboxDomingo.Size = new System.Drawing.Size(133, 33);
             this.CheckboxDomingo.TabIndex = 13;
@@ -188,7 +189,7 @@
             this.CheckboxSabado.Name = "CheckboxSabado";
             this.CheckboxSabado.Size = new System.Drawing.Size(119, 33);
             this.CheckboxSabado.TabIndex = 15;
-            this.CheckboxSabado.Text = "Sabado";
+            this.CheckboxSabado.Text = "Sábado";
             this.CheckboxSabado.UseVisualStyleBackColor = true;
             // 
             // CheckboxJueves
@@ -204,6 +205,7 @@
             // 
             // GropboxVariosDias
             // 
+            this.GropboxVariosDias.Controls.Add(this.CheckBoxSinDiaFijo);
             this.GropboxVariosDias.Controls.Add(this.CheckboxNoPasa);
             this.GropboxVariosDias.Controls.Add(this.CheckboxLunes);
             this.GropboxVariosDias.Controls.Add(this.CheckboxMartes);
@@ -221,11 +223,23 @@
             this.GropboxVariosDias.TabStop = false;
             this.GropboxVariosDias.Text = "Elegir dia:";
             // 
+            // CheckBoxSinDiaFijo
+            // 
+            this.CheckBoxSinDiaFijo.AutoSize = true;
+            this.CheckBoxSinDiaFijo.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CheckBoxSinDiaFijo.Location = new System.Drawing.Point(177, 205);
+            this.CheckBoxSinDiaFijo.Name = "CheckBoxSinDiaFijo";
+            this.CheckBoxSinDiaFijo.Size = new System.Drawing.Size(147, 33);
+            this.CheckBoxSinDiaFijo.TabIndex = 18;
+            this.CheckBoxSinDiaFijo.Text = "Sin dia fijo";
+            this.CheckBoxSinDiaFijo.UseVisualStyleBackColor = true;
+            this.CheckBoxSinDiaFijo.CheckedChanged += new System.EventHandler(this.CheckBoxSinDiaFijo_CheckedChanged);
+            // 
             // CheckboxNoPasa
             // 
             this.CheckboxNoPasa.AutoSize = true;
             this.CheckboxNoPasa.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CheckboxNoPasa.Location = new System.Drawing.Point(177, 148);
+            this.CheckboxNoPasa.Location = new System.Drawing.Point(177, 128);
             this.CheckboxNoPasa.Name = "CheckboxNoPasa";
             this.CheckboxNoPasa.Size = new System.Drawing.Size(155, 33);
             this.CheckboxNoPasa.TabIndex = 17;
@@ -238,7 +252,7 @@
             this.lblObtenerDias.AutoSize = true;
             this.lblObtenerDias.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblObtenerDias.ForeColor = System.Drawing.Color.LimeGreen;
-            this.lblObtenerDias.Location = new System.Drawing.Point(15, 635);
+            this.lblObtenerDias.Location = new System.Drawing.Point(13, 633);
             this.lblObtenerDias.Name = "lblObtenerDias";
             this.lblObtenerDias.Size = new System.Drawing.Size(19, 20);
             this.lblObtenerDias.TabIndex = 19;
@@ -249,7 +263,7 @@
             this.lblDiaAcambiar.AutoSize = true;
             this.lblDiaAcambiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDiaAcambiar.ForeColor = System.Drawing.Color.Red;
-            this.lblDiaAcambiar.Location = new System.Drawing.Point(15, 575);
+            this.lblDiaAcambiar.Location = new System.Drawing.Point(12, 571);
             this.lblDiaAcambiar.Name = "lblDiaAcambiar";
             this.lblDiaAcambiar.Size = new System.Drawing.Size(22, 20);
             this.lblDiaAcambiar.TabIndex = 20;
@@ -302,5 +316,6 @@
         private System.Windows.Forms.Label lblObtenerDias;
         private System.Windows.Forms.CheckBox CheckboxNoPasa;
         private System.Windows.Forms.Label lblDiaAcambiar;
+        private System.Windows.Forms.CheckBox CheckBoxSinDiaFijo;
     }
 }

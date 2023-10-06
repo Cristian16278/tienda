@@ -23,19 +23,24 @@ namespace tienda
         private void Provedores_Load(object sender, EventArgs e)
         {
             string diaActual = DateTime.Now.ToString("dddd");
+            lblFechaActual.Text = DateTime.Now.ToString("dddd, d MMMM 'de' yyyy");
             DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
+            string DiaActual = conectar.ObtenerDiaActual(diaActual);
             //Procedimiento definitivo
             //luego se descomenta<--------------8------------------8---------------8-----------
-            if(conectar.ConsultaProveedorExisteFechaHoy(date) >= 1)//si ya hay proveedores con la fecha del dia actual que solo me recarge el datagridview
+            if (conectar.ConsultaProveedorExisteFechaHoy(date) >= 1)//si ya hay proveedores con la fecha del dia actual que solo me recarge el datagridview
             {
                 dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
+                dtgDiasCompra.Columns["ProveedorID"].Visible = false;
                 AgregarBotonAlaFila();
             }
             else//si no quiere decir que es un nuevo dia y lo creara
             {
-                List<int> ProveedoresID = conectar.ObtenerIDproveedores(diaActual);
+                List<int> ProveedoresID = conectar.ObtenerIDproveedores(DiaActual);
                 conectar.llenarTablaDiasCompra(ProveedoresID, date);
                 dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
+                //dtgDiasCompra.Columns["ProveedorID"].DataPropertyName = "ID";
+                dtgDiasCompra.Columns["ProveedorID"].Visible = false;
                 AgregarBotonAlaFila();
             }
             //luego se descomenta<---------------8---------------8-----------------8-----------
@@ -64,7 +69,7 @@ namespace tienda
             dtgDiasCompra.Columns.Add(botonAgregarimagen);
         }
 
-        //para abrir el forms
+        //para abrir los forms
         private AgregarProveedores agregarProveedores = null;
         private ConsultaDiasAnteriores consultaDiasAnteriores = null;
 
@@ -97,29 +102,80 @@ namespace tienda
 
         private void dtgDiasCompra_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.ColumnIndex == dtgDiasCompra.Columns["Agregar Imagen"].Index)
+            //me falta mejorar la logica para modificar el boton al hacerle click
+            DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
+            if (e.ColumnIndex == dtgDiasCompra.Columns["Agregar Imagen"].Index)
             {
                 //OfdElegirImagen.Title = "Seleccione una imagen";
                 //OfdElegirImagen.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png|Todos los archivos|*.*";
 
-                if(OfdElegirImagen.ShowDialog() == DialogResult.OK)
+                if (OfdElegirImagen.ShowDialog() == DialogResult.OK)
                 {
                     string imagen = OfdElegirImagen.FileName;
                     Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(imagen);
-                    if(previsualisacion.ShowDialog() == DialogResult.OK)
+                    if (previsualisacion.ShowDialog() == DialogResult.OK)
                     {
                         MessageBox.Show("Se guardara en la base de datos");
+                        int indice = e.RowIndex;
+                        int proveedorID = (int)dtgDiasCompra.Rows[indice].Cells["ProveedorID"].Value;
+                        conectar.GuardarImagenProveedor(proveedorID, date, imagen);
+                        dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
+                        //dtgDiasCompra.Columns["ProveedorID"].Visible = false;
+
                     }
                     else
                     {
-                        MessageBox.Show("No se guardar en la base de datos");
+                        MessageBox.Show("No se guardara en la base de datos");
                     }
-                    byte[] guardarimagen = File.ReadAllBytes(imagen);
+
                 }
+                //List<int> ints = conectar.VerificarImagenEnProveedor(date);
+                //if (ints.Count > 0)
+                //{
+                //    foreach (int i in ints)
+                //    {
+                //        if(i == e.RowIndex)
+                //        {
+                //            dtgDiasCompra.Rows[e.RowIndex].Cells[3].Value = "Visualizar imagen";
+                //        }
+                //    }
+                //}
+                //else
+                //{
+
+                //    }
+                //}
             }
         }
 
-        
+        private void dtgDiasCompra_SelectionChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dtgDiasCompra.SelectedCells.Count > 0)
+                {
+                    int seleccionarcampo = dtgDiasCompra.SelectedCells[0].RowIndex;
+                    DataGridViewRow row = dtgDiasCompra.Rows[seleccionarcampo];
+
+                    txtCompra.Text = row.Cells[2].Value.ToString();
+                    txtProveedor.Text = row.Cells[1].Value.ToString();
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void txtPresupuesto_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                MessageBox.Show("Se preciono la tecla enter");
+            }
+        }
+
+
 
         //private void Provedores_FormClosed(object sender, FormClosedEventArgs e)
         //{

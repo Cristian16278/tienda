@@ -443,6 +443,42 @@ namespace Datos
             //string mostrartabla = "SELECT P.NombreProveedor, DC.Compra FROM DiasCompra AS DC INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID WHERE DiaVisita = 'Lunes'"; 
             //return DataTable;
         }
+        string diaactual;
+        public string ObtenerDiaActual(string dia)
+        {
+            try
+            {
+                switch (dia)
+                {
+                    case "lunes":
+                        diaactual = "Lunes";
+                        break;
+                    case "martes":
+                        diaactual = "Martes";
+                        break;
+                    case "miércoles":
+                        diaactual = "Miércoles";
+                        break;
+                    case "jueves":
+                        diaactual = "Jueves";
+                        break;
+                    case "viernes":
+                        diaactual = "Viernes";
+                        break;
+                    case "sábado":
+                        diaactual = "Sábado";
+                        break;
+                    case "domingo":
+                        diaactual = "Domingo";
+                        break;
+                }
+                return diaactual;
+            }
+            catch (Exception es)
+            {
+                return es.Message;
+            }
+        }
 
 
         public List<int> ObtenerIDproveedores(string diaActual)
@@ -454,9 +490,11 @@ namespace Datos
                     conn.Open();
                 }
                 List<int> ProveedoresID = new List<int>();
-                string obtenerID = $"SELECT ProveedorID FROM Proveedores WHERE DiaVisita LIKE '%{diaActual}%'";
+                string obtenerID = $"SELECT ProveedorID FROM Proveedores WHERE DiaVisita LIKE @diaactual";
+                //string obtenerID = "SELECT ProveedorID FROM Proveedores WHERE DiaVisita COLLATE Latin1_General_BIN LIKE @diaactual COLLATE Latin1_General_BIN";
                 using (SqlCommand comando = new SqlCommand(obtenerID, conn))
                 {
+                    comando.Parameters.AddWithValue("@diaactual","%" + diaActual + "%");
                     using (SqlDataReader datareader = comando.ExecuteReader())
                     {
                         while (datareader.Read())
@@ -518,7 +556,7 @@ namespace Datos
                 }
 
 
-                string consultar = "SELECT P.NombreProveedor, DC.Compra, DC.ImagenCompras " +
+                string consultar = "SELECT P.ProveedorID, P.NombreProveedor, DC.Compra, DC.ImagenCompras " +
                                    "FROM DiasCompra AS DC " +
                                    "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
                                    "WHERE DC.Fecha = @fecha";
@@ -594,8 +632,47 @@ namespace Datos
             {
                 MessageBox.Show($"hubo un error {e}");
             }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private bool VerificarSiExisteNombreProveedor(string nombreproveedor)
+        {
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+
+                string verificar = "SELECT COUNT(NombreProveedor) " +
+                                   "FROM Proveedores " +
+                                   "WHERE NombreProveedor = @VerificarProveedor";
+                using (SqlCommand insertar = new SqlCommand(verificar, conn))
+                {
+                    insertar.Parameters.AddWithValue("@VerificarProveedor", nombreproveedor);
+                    int proveedor = Convert.ToInt32(insertar.ExecuteScalar());
+                    if (proveedor > 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            //finally { conn.Close(); }
         }
         
+
+        //Metodo Agregar Proveedor
         public int AgregarProveedor(string Nombreproveedor, string Diavisita)
         {
             try
@@ -604,27 +681,40 @@ namespace Datos
                 {
                     conn.Open();
                 }
-                
-                string Agregarproveedor = $"INSERT INTO Proveedores(NombreProveedor, DiaVisita) VALUES('{Nombreproveedor}','{Diavisita}')";
-                SqlCommand agregar = new SqlCommand(Agregarproveedor, conn);
-                int resultado = agregar.ExecuteNonQuery();
-                if (resultado == 1)
+
+                if (VerificarSiExisteNombreProveedor(Nombreproveedor))
                 {
-                    return resultado;
+                    string Agregarproveedor = $"INSERT INTO Proveedores(NombreProveedor, DiaVisita) VALUES('{Nombreproveedor}','{Diavisita}')";
+                    SqlCommand agregar = new SqlCommand(Agregarproveedor, conn);
+                    int resultado = agregar.ExecuteNonQuery();
+                    if (resultado >= 1)
+                    {
+                        return resultado;
+                    }
+                    else
+                    {
+                        return resultado;
+                    }
                 }
                 else
                 {
-                    return resultado;
+                    return 0;
                 }
+                
             }
             catch (Exception es)
             {
-                MessageBox.Show("Ocurrio un error");
+                MessageBox.Show($"Ocurrio un error {es}","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
+            }
+            finally
+            {
+                conn.Close();
             }
         }
 
-        public int ModificarProveedor(string NuevoProveedor, string NuevoDia, string ProveedorAcambiar, string DiaVisitaAcambiar)
+        //metodo Modificar proveedor
+        public int ModificarProveedor(/*string NuevoProveedor, */string NuevoDia, string ProveedorAcambiar, string DiaVisitaAcambiar)
         {
             try
             {
@@ -632,8 +722,8 @@ namespace Datos
                 {
                     conn.Open();
                 }
-
-                string modificar = $"UPDATE Proveedores SET NombreProveedor = '{NuevoProveedor}', DiaVisita = '{NuevoDia}' WHERE NombreProveedor = '{ProveedorAcambiar}' AND DiaVisita = '{DiaVisitaAcambiar}'";
+                //string modificar = $"UPDATE Proveedores SET NombreProveedor = '{NuevoProveedor}', DiaVisita = '{NuevoDia}' WHERE NombreProveedor = '{ProveedorAcambiar}' AND DiaVisita = '{DiaVisitaAcambiar}'";
+                string modificar = $"UPDATE Proveedores SET DiaVisita = '{NuevoDia}' WHERE NombreProveedor = '{ProveedorAcambiar}' AND DiaVisita = '{DiaVisitaAcambiar}'";
                 SqlCommand comando = new SqlCommand(modificar, conn);
                 int resultado = Convert.ToInt32(comando.ExecuteScalar());
                 conn.Close();
@@ -641,12 +731,14 @@ namespace Datos
             }
             catch (Exception es)
             {
-                MessageBox.Show($"ocurrio un error{es}");
+                MessageBox.Show($"ocurrio un error{es}", "Mensaje del Programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
             finally { conn.Close(); }
         }
 
+
+        //este metodo aun nose si lo usare
         public int BorrarProveedor(string proveedor, string diavisita)
         {
             try
@@ -665,6 +757,47 @@ namespace Datos
             catch (Exception o)
             {
                 return 0;
+            }
+        }
+        //este metodo aun nose si lo usare
+
+
+
+        //aqui se ara el guardado de la imagen
+        public void GuardarImagenProveedor(int idproveedor, DateTime fechaactual, string imagenguardar)
+        {
+            string guardarimagen = "UPDATE DiasCompra " +
+                                   "SET ImagenCompras = @guardarImagen " +
+                                   "WHERE ProveedorID = @idproveedor AND Fecha = @FechaActual";
+            using (SqlCommand comando = new SqlCommand(guardarimagen, conn))
+            {
+                comando.Parameters.AddWithValue("@guardarImagen", imagenguardar);
+                comando.Parameters.AddWithValue("@idproveedor", idproveedor);
+                comando.Parameters.AddWithValue("@FechaActual", fechaactual);
+                comando.ExecuteNonQuery();
+            }
+
+        }
+
+        //esto puede que me sirva al cargar el form
+        public List<int> VerificarImagenEnProveedor(DateTime fecha)//este metodo aun nolo utilizo
+        {
+            List<int> ObtenerProveedoresImagen = new List<int>();
+            string verificarImagen = "SELECT ProveedorID " +
+                                     "FROM DiasCompra " +
+                                     "WHERE (ImagenCompras IS NULL OR ImagenCompras = '') AND Fecha = @fechaVerificar";
+            using (SqlCommand comando = new SqlCommand(verificarImagen, conn))
+            {
+                comando.Parameters.AddWithValue("@fechaVerificar", fecha);
+                using (SqlDataReader datareader = comando.ExecuteReader())
+                {
+                    while (datareader.Read())
+                    {
+                        int proveedorID = datareader.GetInt32(0);
+                        ObtenerProveedoresImagen.Add(proveedorID);
+                    }
+                    return ObtenerProveedoresImagen;
+                }
             }
         }
         #endregion

@@ -15,7 +15,15 @@ namespace tienda
         public Previsualisacion_imagen(string imagen)
         {
             InitializeComponent();
-            pictureBox1.Image = Image.FromFile(imagen);
+            try
+            {
+                pictureBox1.Image = Image.FromFile(imagen);
+            }
+            catch(OutOfMemoryException)
+            {
+                MessageBox.Show("Solo puede elegir archivos con la extencion:\n.jpg, .jpeg, .png", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                BtnGuardar.Enabled = false;
+            }
         }
 
         private void BtnGuardar_Click(object sender, EventArgs e)

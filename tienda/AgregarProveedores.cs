@@ -34,6 +34,7 @@ namespace tienda
             {
                 diasobtener.Add(dia);
                 CheckboxNoPasa.Checked = false;
+                CheckBoxSinDiaFijo.Checked = false;
             }
             else
             {
@@ -43,10 +44,7 @@ namespace tienda
             Mostrar();
         }
 
-        private void Mostrar()
-        {
-            lblObtenerDias.Text = string.Join(", ", diasobtener);
-        }
+        private void Mostrar() => lblObtenerDias.Text = string.Join(", ", diasobtener);
 
         private void CambiarEstadoDeEventoChecked(bool cambiarestado)
         {
@@ -87,7 +85,7 @@ namespace tienda
                 BtnRealizarAccion.Text = "Seleccione";
                 GropboxVariosDias.Visible = false;
                 //CboxElegirDia.Visible = false;
-                ActivarCheckboxes(false);
+                HacerVisibleCheckBoxs(false);
                 CambiarEstadoDeEventoChecked(false);
                 
             }
@@ -101,7 +99,7 @@ namespace tienda
                 //CboxElegirCantidadDias.Visible = true;
                 TxtProveedor.Visible = true;
                 GropboxVariosDias.Visible = true;
-                ActivarCheckboxes(true);
+                HacerVisibleCheckBoxs(true);
                 CambiarEstadoDeEventoChecked(false);
                 CambiarEstadoDeEventoChecked(true);
                 
@@ -116,13 +114,13 @@ namespace tienda
                 lblDiavisitaProveedor.Text = "Seleccione la cantidad de dias:";
                 //CboxElegirCantidadDias.Visible = true;
                 GropboxVariosDias.Visible = true;
-                ActivarCheckboxes(true);
+                HacerVisibleCheckBoxs(true);
                 TxtProveedor.Visible = true;
                 CambiarEstadoDeEventoChecked(false);
                 CambiarEstadoDeEventoChecked(true);
                 BtnRealizarAccion.Text = "Modificar proveedor";
             }
-            else if (accion == "Borrar")//       <----esto no lo pondremos
+            else if (accion == "Borrar")//       <----esto no estoy seguro si lo utilisare
             {
                 CambiarMetodoaBoton(accion);
                 lblProveedor.Text = "Nombre del Proveedor:";
@@ -133,7 +131,7 @@ namespace tienda
             }
         }
 
-        //metodo Borrar proveedor
+        //metodo Borrar proveedor (este metodo nose si lo utilizare)
         private void BtnBorrarProveedor_Click(object sender, EventArgs e)
         {
             string provedor = TxtProveedor.Text;
@@ -160,29 +158,51 @@ namespace tienda
             DialogResult respuesta = MessageBox.Show("Esta seguro que quiere modificar estos datos?","Advertencia!",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
             if(respuesta == DialogResult.Yes)
             {
-                //conectar.ModificarProveedor();      <---- aqui ira el metodo de modificar
+                conectar.ModificarProveedor(diavisita, provedor, Modificardiavisita);      //<---- aqui ira el metodo de modificar
+                DtgvProveedores.DataSource = conectar.MostrarTablaProveedores();
             }
+            else
+            {
+                MessageBox.Show("No se modifico nada");
+            }
+            TxtProveedor.Text = "";
+            QuitarOmarcarChecked(false);
         }
 
         //metodo Agregar proveedor
         private void BtnAgregarProveedor_Click(object sender, EventArgs e)
         {
             string provedor = TxtProveedor.Text;
-            string diavisita = lblObtenerDias.Text;
-            DialogResult respuesta = MessageBox.Show("Esta seguro que quiero guardar estos datos?","Advertencia!",MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (respuesta == DialogResult.Yes)
+            if (string.IsNullOrEmpty(provedor))
             {
-                conectar.AgregarProveedor(provedor, diavisita);
-                DtgvProveedores.DataSource = conectar.MostrarTablaProveedores();
+                MessageBox.Show("Debe al menos agregar un nombre", "Mensaje del programa", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {
-                MessageBox.Show("Se ha cancelado","Accion cancelada", MessageBoxButtons.OK,MessageBoxIcon.Information);
+                string diavisita = lblObtenerDias.Text;
+                DialogResult respuesta = MessageBox.Show("Esta seguro que quiero guardar estos datos?", "Advertencia!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (respuesta == DialogResult.Yes)
+                {
+                    if (conectar.AgregarProveedor(provedor, diavisita) == 0)
+                    {
+                        MessageBox.Show("Ya existe un proveedor con ese nombre", "!Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        DtgvProveedores.DataSource = conectar.MostrarTablaProveedores();
+                        MessageBox.Show("Se guardo en la base de datos correctamente", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Se ha cancelado", "Accion cancelada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                TxtProveedor.Text = "";
+                QuitarOmarcarChecked(false);
             }
-            TxtProveedor.Text = "";
-            QuitarOmarcarChecked(false);
         }
 
+        //este evento se activa al cargar el form
         private void AgregarProveedores_Load(object sender, EventArgs e)
         {
             DtgvProveedores.ClearSelection();
@@ -205,19 +225,21 @@ namespace tienda
             else if(cambiaraccion == "Agregar proveedor")
             {
                 DtgvProveedores.SelectionChanged -= DtgvProveedores_SelectionChanged;
-                BtnRealizarAccion.Click += BtnAgregarProveedor_Click;
+                BtnRealizarAccion.Click -= BtnAgregarProveedor_Click;//si ya esta activado el evento, lo quimos luego se volvera a agregar
+                BtnRealizarAccion.Click += BtnAgregarProveedor_Click;//para no tener conflico de agregacion de datos
                 BtnRealizarAccion.Click -= BtnModificarProveedor_Click;
                 BtnRealizarAccion.Click -= BtnBorrarProveedor_Click;
             }
             else if (cambiaraccion == "Modificar proveedor")
             {
                 BtnRealizarAccion.Click -= BtnAgregarProveedor_Click;
-                BtnRealizarAccion.Click += BtnModificarProveedor_Click;
+                BtnRealizarAccion.Click -= BtnModificarProveedor_Click;//si ya esta activado el evento, lo quitamos luego se volvera a agregar
+                BtnRealizarAccion.Click += BtnModificarProveedor_Click;//para no tener conflico de agregacion de datos
                 BtnRealizarAccion.Click -= BtnBorrarProveedor_Click;
                 DtgvProveedores.SelectionChanged -= DtgvProveedores_SelectionChanged;
                 DtgvProveedores.SelectionChanged += DtgvProveedores_SelectionChanged;
             }
-            else if (cambiaraccion == "Borrar proveedor")
+            else if (cambiaraccion == "Borrar")//esto no estoy seguro si lo utilizare
             {
                 BtnRealizarAccion.Click -= BtnAgregarProveedor_Click;
                 BtnRealizarAccion.Click -= BtnModificarProveedor_Click;
@@ -303,15 +325,27 @@ namespace tienda
             }
         }
 
-        private void ActivarCheckboxes(bool activaroDesactivar)
+        private void HacerVisibleCheckBoxs(bool VisibleOnoVisible)
         {
-            CheckboxLunes.Visible = activaroDesactivar;
-            CheckboxMartes.Visible = activaroDesactivar;
-            CheckboxMiercoles.Visible = activaroDesactivar;
-            CheckboxJueves.Visible = activaroDesactivar;
-            CheckboxViernes.Visible = activaroDesactivar;
-            CheckboxSabado.Visible = activaroDesactivar;
-            CheckboxDomingo.Visible = activaroDesactivar;
+            CheckboxLunes.Visible = VisibleOnoVisible;
+            CheckboxMartes.Visible = VisibleOnoVisible;
+            CheckboxMiercoles.Visible = VisibleOnoVisible;
+            CheckboxJueves.Visible = VisibleOnoVisible;
+            CheckboxViernes.Visible = VisibleOnoVisible;
+            CheckboxSabado.Visible = VisibleOnoVisible;
+            CheckboxDomingo.Visible = VisibleOnoVisible;
+        }
+
+        private void QuitarOmarcarChecked(bool ActivarOdesactivar)
+        {
+            CheckboxLunes.Checked = ActivarOdesactivar;
+            CheckboxMartes.Checked = ActivarOdesactivar;
+            CheckboxMiercoles.Checked = ActivarOdesactivar;
+            CheckboxJueves.Checked = ActivarOdesactivar;
+            CheckboxViernes.Checked = ActivarOdesactivar;
+            CheckboxSabado.Checked = ActivarOdesactivar;
+            CheckboxDomingo.Checked = ActivarOdesactivar;
+            CheckboxNoPasa.Checked = ActivarOdesactivar;
         }
 
         private void CheckboxNoPasa_CheckedChanged(object sender, EventArgs e)
@@ -325,6 +359,7 @@ namespace tienda
                 CheckboxViernes.Checked = false;
                 CheckboxSabado.Checked = false;
                 CheckboxDomingo.Checked = false;
+                CheckBoxSinDiaFijo.Checked = false;
                 lblObtenerDias.Text = CheckboxNoPasa.Text;
             }
             else
@@ -333,16 +368,26 @@ namespace tienda
             }
         }
 
-        private void QuitarOmarcarChecked(bool ActivarOdesactivar)
+        
+
+        private void CheckBoxSinDiaFijo_CheckedChanged(object sender, EventArgs e)
         {
-            CheckboxLunes.Checked = ActivarOdesactivar;
-            CheckboxMartes.Checked = ActivarOdesactivar;
-            CheckboxMiercoles.Checked = ActivarOdesactivar;
-            CheckboxJueves.Checked = ActivarOdesactivar;
-            CheckboxViernes.Checked = ActivarOdesactivar;
-            CheckboxSabado.Checked = ActivarOdesactivar;
-            CheckboxDomingo.Checked = ActivarOdesactivar;
-            CheckboxNoPasa.Checked = ActivarOdesactivar;
+            if (CheckBoxSinDiaFijo.Checked)
+            {
+                CheckboxLunes.Checked = false;
+                CheckboxMartes.Checked = false;
+                CheckboxMiercoles.Checked = false;
+                CheckboxJueves.Checked = false;
+                CheckboxViernes.Checked = false;
+                CheckboxSabado.Checked = false;
+                CheckboxDomingo.Checked = false;
+                CheckboxNoPasa.Checked = false;
+                lblObtenerDias.Text = CheckBoxSinDiaFijo.Text;
+            }
+            else
+            {
+                lblObtenerDias.Text = "";
+            }
         }
     }
 }
