@@ -779,25 +779,36 @@ namespace Datos
 
         }
 
-        //esto puede que me sirva al cargar el form
-        public List<int> VerificarImagenEnProveedor(DateTime fecha)//este metodo aun nolo utilizo
+        //
+        public (int,string) VerificarImagenEnProveedor(DateTime fecha, int proveedorID)//este metodo aun nolo utilizo
         {
-            List<int> ObtenerProveedoresImagen = new List<int>();
-            string verificarImagen = "SELECT ProveedorID " +
+            //List<int> ObtenerProveedoresImagen = new List<int>();
+            string verificarImagen = "SELECT ProveedorID AS Proveedor, ImagenCompras AS Imagen " +
                                      "FROM DiasCompra " +
-                                     "WHERE (ImagenCompras IS NULL OR ImagenCompras = '') AND Fecha = @fechaVerificar";
+                                     "WHERE (ImagenCompras IS NULL OR ImagenCompras <> '') AND Fecha = @fechaVerificar AND ProveedorID = @proveedor";
             using (SqlCommand comando = new SqlCommand(verificarImagen, conn))
             {
                 comando.Parameters.AddWithValue("@fechaVerificar", fecha);
-                using (SqlDataReader datareader = comando.ExecuteReader())
+                comando.Parameters.AddWithValue("@proveedor", proveedorID);
+                using (SqlDataReader leer = comando.ExecuteReader())
                 {
-                    while (datareader.Read())
+                    if (leer.Read())
                     {
-                        int proveedorID = datareader.GetInt32(0);
-                        ObtenerProveedoresImagen.Add(proveedorID);
+                        int proveedor = Convert.ToInt32(leer["Proveedor"]);
+                        string rutaimagen = leer["Imagen"].ToString();
+                        return (proveedor, rutaimagen);
                     }
-                    return ObtenerProveedoresImagen;
+                    return (0, null);
                 }
+                //using (SqlDataReader datareader = comando.ExecuteReader())
+                //{
+                //    while (datareader.Read())
+                //    {
+                //        int proveedorID = datareader.GetInt32(0);
+                //        ObtenerProveedoresImagen.Add(proveedorID);
+                //    }
+                //    return ObtenerProveedoresImagen;
+                //}
             }
         }
         #endregion

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Datos;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace tienda
 {
@@ -108,26 +109,43 @@ namespace tienda
             {
                 //OfdElegirImagen.Title = "Seleccione una imagen";
                 //OfdElegirImagen.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png|Todos los archivos|*.*";
-
-                if (OfdElegirImagen.ShowDialog() == DialogResult.OK)
+                int indice = e.RowIndex;
+                int proveedorID = (int)dtgDiasCompra.Rows[indice].Cells["ProveedorID"].Value;
+                var (Proveedorexiste, rutaimagen) = conectar.VerificarImagenEnProveedor(date, proveedorID);
+                if(Proveedorexiste == proveedorID)
                 {
-                    string imagen = OfdElegirImagen.FileName;
-                    Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(imagen);
-                    if (previsualisacion.ShowDialog() == DialogResult.OK)
+                    Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(rutaimagen);
+                    if(previsualisacion.ShowDialog() == DialogResult.OK)
                     {
-                        MessageBox.Show("Se guardara en la base de datos");
-                        int indice = e.RowIndex;
-                        int proveedorID = (int)dtgDiasCompra.Rows[indice].Cells["ProveedorID"].Value;
-                        conectar.GuardarImagenProveedor(proveedorID, date, imagen);
-                        dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
-                        //dtgDiasCompra.Columns["ProveedorID"].Visible = false;
 
                     }
                     else
                     {
-                        MessageBox.Show("No se guardara en la base de datos");
-                    }
 
+                    }
+                }
+                else
+                {
+                    if (OfdElegirImagen.ShowDialog() == DialogResult.OK)
+                    {
+                        string imagen = OfdElegirImagen.FileName;
+                        Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(imagen);
+                        if (previsualisacion.ShowDialog() == DialogResult.OK)
+                        {
+                            MessageBox.Show("Se guardara en la base de datos");
+                            int indice1 = e.RowIndex;
+                            int proveedorID1 = (int)dtgDiasCompra.Rows[indice1].Cells["ProveedorID"].Value;
+                            conectar.GuardarImagenProveedor(proveedorID1, date, imagen);
+                            dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
+                            //dtgDiasCompra.Columns["ProveedorID"].Visible = false;
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se guardara en la base de datos");
+                        }
+
+                    }
                 }
                 //List<int> ints = conectar.VerificarImagenEnProveedor(date);
                 //if (ints.Count > 0)
