@@ -40,12 +40,15 @@
             this.lblFechaActual = new System.Windows.Forms.Label();
             this.txtPresupuesto = new System.Windows.Forms.TextBox();
             this.BtnGuardar = new System.Windows.Forms.Button();
+            this.BtnRefrescarTabla = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtgDiasCompra)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dtgDiasCompra
             // 
+            this.dtgDiasCompra.AllowUserToAddRows = false;
+            this.dtgDiasCompra.AllowUserToDeleteRows = false;
             this.dtgDiasCompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgDiasCompra.Location = new System.Drawing.Point(67, 113);
             this.dtgDiasCompra.Name = "dtgDiasCompra";
@@ -151,11 +154,22 @@
             this.BtnGuardar.Text = "Guardar";
             this.BtnGuardar.UseVisualStyleBackColor = true;
             // 
+            // BtnRefrescarTabla
+            // 
+            this.BtnRefrescarTabla.Location = new System.Drawing.Point(905, 46);
+            this.BtnRefrescarTabla.Name = "BtnRefrescarTabla";
+            this.BtnRefrescarTabla.Size = new System.Drawing.Size(99, 55);
+            this.BtnRefrescarTabla.TabIndex = 11;
+            this.BtnRefrescarTabla.Text = "Refrescar tabla";
+            this.BtnRefrescarTabla.UseVisualStyleBackColor = true;
+            this.BtnRefrescarTabla.Click += new System.EventHandler(this.BtnRefrescarTabla_Click);
+            // 
             // Provedores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1016, 659);
+            this.Controls.Add(this.BtnRefrescarTabla);
             this.Controls.Add(this.BtnGuardar);
             this.Controls.Add(this.txtPresupuesto);
             this.Controls.Add(this.lblFechaActual);
@@ -189,5 +203,6 @@
         private System.Windows.Forms.Label lblFechaActual;
         private System.Windows.Forms.TextBox txtPresupuesto;
         private System.Windows.Forms.Button BtnGuardar;
+        private System.Windows.Forms.Button BtnRefrescarTabla;
     }
 }

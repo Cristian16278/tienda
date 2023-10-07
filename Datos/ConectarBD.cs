@@ -546,6 +546,39 @@ namespace Datos
             }
         }
 
+
+        public List<int> ObtenerProveedorIDDeDiasCompra(DateTime fechaActual)
+        {
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+                List<int>obtenerProveedorDeDiasCompra = new List<int>();
+                string verificar = "SELECT ProveedorID " +
+                                   "FROM DiasCompra " +
+                                   "WHERE Fecha = @Fecha";
+                using (SqlCommand comando = new SqlCommand(verificar, conn))
+                {
+                    comando.Parameters.AddWithValue("@Fecha", fechaActual);
+                    using (SqlDataReader datareader = comando.ExecuteReader())
+                    {
+                        while (datareader.Read())
+                        {
+                            int proveedorID = datareader.GetInt32(0);
+                            obtenerProveedorDeDiasCompra.Add(proveedorID);
+                        }
+                        return obtenerProveedorDeDiasCompra;
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public DataTable CargarTablaDiasCompra(DateTime FechaActual)
         {
             try
@@ -555,14 +588,14 @@ namespace Datos
                     conn.Open();
                 }
 
-                //string consultar = "SELECT P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra, DC.ImagenCompras " +
-                //                   "FROM DiasCompra AS DC " +
-                //                   "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
-                //                   "WHERE DC.Fecha = @fecha";
-                string consultar = "SELECT P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra " +
+                string consultar = "SELECT P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra, DC.ImagenCompras " +
                                    "FROM DiasCompra AS DC " +
                                    "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
                                    "WHERE DC.Fecha = @fecha";
+                //string consultar = "SELECT P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra " +
+                //                   "FROM DiasCompra AS DC " +
+                //                   "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
+                //                   "WHERE DC.Fecha = @fecha";
                 using (SqlCommand comando = new SqlCommand(consultar, conn))
                 {
                     comando.Parameters.AddWithValue("@fecha", FechaActual);
@@ -788,7 +821,10 @@ namespace Datos
             //List<int> ObtenerProveedoresImagen = new List<int>();
             string verificarImagen = "SELECT ProveedorID AS Proveedor, ImagenCompras AS Imagen " +
                                      "FROM DiasCompra " +
-                                     "WHERE (ImagenCompras IS NULL OR ImagenCompras <> '') AND Fecha = @fechaVerificar AND ProveedorID = @proveedor";
+                                     "WHERE ImagenCompras <> '' AND Fecha = @fechaVerificar AND ProveedorID = @proveedor";
+            //string verificarImagen = "SELECT ProveedorID AS Proveedor, ImagenCompras AS Imagen " +
+            //                         "FROM DiasCompra " +
+            //                         "WHERE (ImagenCompras IS NULL OR ImagenCompras <> '') AND Fecha = @fechaVerificar AND ProveedorID = @proveedor";
             using (SqlCommand comando = new SqlCommand(verificarImagen, conn))
             {
                 comando.Parameters.AddWithValue("@fechaVerificar", fecha);
