@@ -588,7 +588,7 @@ namespace Datos
                     conn.Open();
                 }
 
-                string consultar = "SELECT P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra, DC.ImagenCompras " +
+                string consultar = "SELECT P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra, DC.ImagenCompras AS Imagen " +
                                    "FROM DiasCompra AS DC " +
                                    "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
                                    "WHERE DC.Fecha = @fecha";
@@ -848,6 +848,20 @@ namespace Datos
                 //    }
                 //    return ObtenerProveedoresImagen;
                 //}
+            }
+        }
+
+        public void AgregarCompraTablaDiasCompra(int ProveedorID, DateTime fecha, double compra)
+        {
+            string agregarCompra = "UPDATE DiasCompra " +
+                                   "SET Compra = @compraProveedor " +
+                                   "WHERE ProveedorID = @Proveedor AND Fecha = @fecha";
+            using (SqlCommand ejecutar = new SqlCommand(agregarCompra, conn))
+            {
+                ejecutar.Parameters.AddWithValue("@compraProveedor", compra);
+                ejecutar.Parameters.AddWithValue("@Proveedor", ProveedorID);
+                ejecutar.Parameters.AddWithValue("@fecha", fecha);
+                ejecutar.ExecuteNonQuery();
             }
         }
         #endregion
