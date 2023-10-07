@@ -31,6 +31,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.BtnGuardar = new System.Windows.Forms.Button();
             this.BtnCancelar = new System.Windows.Forms.Button();
+            this.BtnCambiarImagen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,7 +47,7 @@
             // BtnGuardar
             // 
             this.BtnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnGuardar.Location = new System.Drawing.Point(161, 641);
+            this.BtnGuardar.Location = new System.Drawing.Point(92, 641);
             this.BtnGuardar.Name = "BtnGuardar";
             this.BtnGuardar.Size = new System.Drawing.Size(169, 42);
             this.BtnGuardar.TabIndex = 1;
@@ -57,7 +58,7 @@
             // BtnCancelar
             // 
             this.BtnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnCancelar.Location = new System.Drawing.Point(366, 641);
+            this.BtnCancelar.Location = new System.Drawing.Point(280, 641);
             this.BtnCancelar.Name = "BtnCancelar";
             this.BtnCancelar.Size = new System.Drawing.Size(169, 42);
             this.BtnCancelar.TabIndex = 2;
@@ -65,11 +66,23 @@
             this.BtnCancelar.UseVisualStyleBackColor = true;
             this.BtnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click);
             // 
+            // BtnCambiarImagen
+            // 
+            this.BtnCambiarImagen.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnCambiarImagen.Location = new System.Drawing.Point(476, 641);
+            this.BtnCambiarImagen.Name = "BtnCambiarImagen";
+            this.BtnCambiarImagen.Size = new System.Drawing.Size(169, 42);
+            this.BtnCambiarImagen.TabIndex = 3;
+            this.BtnCambiarImagen.Text = "Cambiar imagen";
+            this.BtnCambiarImagen.UseVisualStyleBackColor = true;
+            this.BtnCambiarImagen.Click += new System.EventHandler(this.BtnCambiarImagen_Click);
+            // 
             // Previsualisacion_imagen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 718);
+            this.Controls.Add(this.BtnCambiarImagen);
             this.Controls.Add(this.BtnCancelar);
             this.Controls.Add(this.BtnGuardar);
             this.Controls.Add(this.pictureBox1);
@@ -88,5 +101,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button BtnGuardar;
         private System.Windows.Forms.Button BtnCancelar;
+        private System.Windows.Forms.Button BtnCambiarImagen;
     }
 }

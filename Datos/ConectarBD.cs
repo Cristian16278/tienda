@@ -555,8 +555,11 @@ namespace Datos
                     conn.Open();
                 }
 
-
-                string consultar = "SELECT P.ProveedorID, P.NombreProveedor, DC.Compra, DC.ImagenCompras " +
+                //string consultar = "SELECT P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra, DC.ImagenCompras " +
+                //                   "FROM DiasCompra AS DC " +
+                //                   "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
+                //                   "WHERE DC.Fecha = @fecha";
+                string consultar = "SELECT P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra " +
                                    "FROM DiasCompra AS DC " +
                                    "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
                                    "WHERE DC.Fecha = @fecha";

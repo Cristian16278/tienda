@@ -105,7 +105,7 @@ namespace tienda
         {
             //me falta mejorar la logica para modificar el boton al hacerle click
             DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
-            if (e.ColumnIndex == dtgDiasCompra.Columns["Agregar Imagen"].Index)
+            if(e.ColumnIndex == dtgDiasCompra.Columns["Agregar Imagen"].Index)
             {
                 //OfdElegirImagen.Title = "Seleccione una imagen";
                 //OfdElegirImagen.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png|Todos los archivos|*.*";
@@ -114,14 +114,16 @@ namespace tienda
                 var (Proveedorexiste, rutaimagen) = conectar.VerificarImagenEnProveedor(date, proveedorID);
                 if(Proveedorexiste == proveedorID)
                 {
-                    Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(rutaimagen);
+                    Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(rutaimagen, "si");
                     if(previsualisacion.ShowDialog() == DialogResult.OK)
                     {
-
+                        string obtenernuevaruta = previsualisacion.ObtenerNuevaRuta();
+                        MessageBox.Show("Se guardara la nueva ruta");
+                        //conectar.GuardarImagenProveedor(proveedorID, date, obtenernuevaruta);
                     }
                     else
                     {
-
+                        MessageBox.Show("No se hiso ningun cambio");
                     }
                 }
                 else
@@ -129,7 +131,7 @@ namespace tienda
                     if (OfdElegirImagen.ShowDialog() == DialogResult.OK)
                     {
                         string imagen = OfdElegirImagen.FileName;
-                        Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(imagen);
+                        Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(imagen, "no");
                         if (previsualisacion.ShowDialog() == DialogResult.OK)
                         {
                             MessageBox.Show("Se guardara en la base de datos");
