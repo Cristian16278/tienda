@@ -147,6 +147,9 @@
     <EmbeddedResource Include="Billetes.resx">
       <DependentUpon>Billetes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ConsultaDiasAnteriores.resx">
+      <DependentUpon>ConsultaDiasAnteriores.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConsultaVT.resx">
       <DependentUpon>ConsultaVT.cs</DependentUpon>
     </EmbeddedResource>

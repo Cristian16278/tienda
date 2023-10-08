@@ -185,7 +185,7 @@ namespace tienda
             {
                 if(e.RowIndex >= 0 && e.ColumnIndex >= 0)//si se dio click en una celda valida(que no sean los encabezados)
                 {
-                    //me falta mejorar la logica para modificar el boton al hacerle click
+                    
                     DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
                     if (e.ColumnIndex == dtgDiasCompra.Columns["Agregar Imagen"].Index)
                     {

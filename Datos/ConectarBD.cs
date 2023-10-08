@@ -579,7 +579,7 @@ namespace Datos
             }
         }
 
-        public DataTable CargarTablaDiasCompra(DateTime FechaActual)
+        public DataTable CargarTablaDiasCompra(DateTime FechaActual)//este metodo lo utiliso para cargar los datos en el forms de proveedores y en el form ConsultaDiasAnteriores
         {
             try
             {
