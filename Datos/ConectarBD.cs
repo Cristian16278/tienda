@@ -802,6 +802,10 @@ namespace Datos
         //aqui se ara el guardado de la imagen
         public void GuardarImagenProveedor(int idproveedor, DateTime fechaactual, string imagenguardar)
         {
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
             string guardarimagen = "UPDATE DiasCompra " +
                                    "SET ImagenCompras = @guardarImagen " +
                                    "WHERE ProveedorID = @idproveedor AND Fecha = @FechaActual";
@@ -818,6 +822,10 @@ namespace Datos
         //
         public (int,string) VerificarImagenEnProveedor(DateTime fecha, int proveedorID)//este metodo aun nolo utilizo
         {
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
             //List<int> ObtenerProveedoresImagen = new List<int>();
             string verificarImagen = "SELECT ProveedorID AS Proveedor, ImagenCompras AS Imagen " +
                                      "FROM DiasCompra " +
@@ -853,6 +861,10 @@ namespace Datos
 
         public void AgregarCompraTablaDiasCompra(int ProveedorID, DateTime fecha, double compra)
         {
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
             string agregarCompra = "UPDATE DiasCompra " +
                                    "SET Compra = @compraProveedor " +
                                    "WHERE ProveedorID = @Proveedor AND Fecha = @fecha";
@@ -862,6 +874,66 @@ namespace Datos
                 ejecutar.Parameters.AddWithValue("@Proveedor", ProveedorID);
                 ejecutar.Parameters.AddWithValue("@fecha", fecha);
                 ejecutar.ExecuteNonQuery();
+            }
+        }
+
+        public DataTable CargarCbox()
+        {
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
+            SqlDataAdapter adapter = new SqlDataAdapter("SP_LLENARCOMBOBOX", conn);
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            return dt;
+        }
+
+        public int agregarProveedorTablaDiasCompra(int proveedorID, double compra, DateTime fecha)
+        {
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
+            string agregar = "INSERT INTO DiasCompra(ProveedorID, Compra, Fecha) " +
+                             "VALUES(@proveedor, @compra, @fecha)";
+            SqlCommand ejecutar = new SqlCommand(agregar, conn);
+            ejecutar.Parameters.AddWithValue("@proveedor", proveedorID);
+            ejecutar.Parameters.AddWithValue("@compra", compra);
+            ejecutar.Parameters.AddWithValue("@fecha", fecha);
+            int resultado = ejecutar.ExecuteNonQuery();
+            if (resultado >= 1)
+            {
+                return resultado;
+            }
+            else
+            {
+                return resultado;
+            }
+        }
+
+        public int borrarProveedorTablaDiasCompra(int proveedorID, DateTime fecha)
+        {
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
+            string borrar = "DELETE FROM DiasCompra " +
+                            "WHERE ProveedorID = @proveedorborrar AND Fecha = @fechaBorrar";
+            using (SqlCommand ejecutar = new SqlCommand(borrar, conn))
+            {
+                ejecutar.Parameters.AddWithValue("@proveedorborrar", proveedorID);
+                ejecutar.Parameters.AddWithValue("@fechaBorrar", fecha);
+                int filasafectadas = ejecutar.ExecuteNonQuery();
+                if (filasafectadas > 0)//se borro correctamente
+                {
+                    return filasafectadas;
+                }
+                else//no se eligio una celda o ocurrio un error
+                {
+                    return filasafectadas;
+                }
             }
         }
         #endregion

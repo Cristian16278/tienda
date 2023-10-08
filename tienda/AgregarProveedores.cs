@@ -292,7 +292,7 @@ namespace tienda
                     {
                         CheckboxMartes.Checked = true;
                     }
-                    else if (dias == "Miercoles")
+                    else if (dias == "Miércoles")
                     {
                         CheckboxMiercoles.Checked = true;
                     }
@@ -304,13 +304,17 @@ namespace tienda
                     {
                         CheckboxViernes.Checked = true;
                     }
-                    else if (dias == "Sabado")
+                    else if (dias == "Sábado")
                     {
                         CheckboxSabado.Checked = true;
                     }
                     else if (dias == "Domingo")
                     {
                         CheckboxDomingo.Checked = true;
+                    }
+                    else if(dias == "Sin dia fijo")
+                    {
+                        CheckBoxSinDiaFijo.Checked = true;
                     }
                     else
                     {
@@ -346,6 +350,7 @@ namespace tienda
             CheckboxSabado.Checked = ActivarOdesactivar;
             CheckboxDomingo.Checked = ActivarOdesactivar;
             CheckboxNoPasa.Checked = ActivarOdesactivar;
+            CheckBoxSinDiaFijo.Checked = ActivarOdesactivar;
         }
 
         private void CheckboxNoPasa_CheckedChanged(object sender, EventArgs e)

@@ -26,6 +26,7 @@ namespace tienda
         {
             try
             {
+
                 string diaActual = DateTime.Now.ToString("dddd");
                 lblFechaActual.Text = DateTime.Now.ToString("dddd, d 'de' MMMM 'de' yyyy");
                 DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
@@ -34,6 +35,7 @@ namespace tienda
                 dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
                 AgregarBotonAlaFila();
                 borrarContenidoTextbox();
+                CboxAccionRealizar.SelectedItem = "Modificar";
                 //Procedimiento definitivo
                 //luego se descomenta<--------------8------------------8---------------8-----------
                 //if (conectar.ConsultaProveedorExisteFechaHoy(date) >= 1)//si ya hay proveedores con la fecha del dia actual que solo me recarge el datagridview
@@ -181,59 +183,67 @@ namespace tienda
         {
             try
             {
-                //me falta mejorar la logica para modificar el boton al hacerle click
-                DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
-                if (e.ColumnIndex == dtgDiasCompra.Columns["Agregar Imagen"].Index)
+                if(e.RowIndex >= 0 && e.ColumnIndex >= 0)//si se dio click en una celda valida(que no sean los encabezados)
                 {
-                    //OfdElegirImagen.Title = "Seleccione una imagen";
-                    //OfdElegirImagen.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png|Todos los archivos|*.*";
-                    int indice = e.RowIndex;
-                    int proveedorID = (int)dtgDiasCompra.Rows[indice].Cells["ProveedorID"].Value;
-                    var (Proveedorexiste, rutaimagen) = conectar.VerificarImagenEnProveedor(date, proveedorID);
-                    if (Proveedorexiste == proveedorID)
+                    //me falta mejorar la logica para modificar el boton al hacerle click
+                    DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
+                    if (e.ColumnIndex == dtgDiasCompra.Columns["Agregar Imagen"].Index)
                     {
-                        Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(rutaimagen, "si");
-                        if (previsualisacion.ShowDialog() == DialogResult.OK)
+                        //OfdElegirImagen.Title = "Seleccione una imagen";
+                        //OfdElegirImagen.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png|Todos los archivos|*.*";
+                        int indice = e.RowIndex;
+                        int proveedorID = (int)dtgDiasCompra.Rows[indice].Cells["ProveedorID"].Value;
+                        var (Proveedorexiste, rutaimagen) = conectar.VerificarImagenEnProveedor(date, proveedorID);
+                        if (Proveedorexiste == proveedorID)
                         {
-                            string obtenernuevaruta = previsualisacion.ObtenerNuevaRuta();
-                            MessageBox.Show("Se guardara la nueva ruta");
-                            conectar.GuardarImagenProveedor(proveedorID, date, obtenernuevaruta);
-                            dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
-                        }
-                        else
-                        {
-                            MessageBox.Show("No se hiso ningun cambio");
-                        }
-                    }
-                    else
-                    {
-                        if (OfdElegirImagen.ShowDialog() == DialogResult.OK)
-                        {
-                            string imagen = OfdElegirImagen.FileName;
-                            Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(imagen, "no");
+                            Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(rutaimagen, "si");
                             if (previsualisacion.ShowDialog() == DialogResult.OK)
                             {
-                                MessageBox.Show("Se guardara en la base de datos");
-                                int indice1 = e.RowIndex;
-                                int proveedorID1 = (int)dtgDiasCompra.Rows[indice1].Cells["ProveedorID"].Value;
-                                conectar.GuardarImagenProveedor(proveedorID1, date, imagen);
+                                string obtenernuevaruta = previsualisacion.ObtenerNuevaRuta();
+                                MessageBox.Show("Se guardara la nueva ruta");
+                                conectar.GuardarImagenProveedor(proveedorID, date, obtenernuevaruta);
                                 dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
-                                //dtgDiasCompra.Columns["ProveedorID"].Visible = false;
-
                             }
                             else
                             {
-                                MessageBox.Show("No se guardara en la base de datos");
+                                MessageBox.Show("No se hiso ningun cambio");
                             }
+                        }
+                        else
+                        {
+                            if (OfdElegirImagen.ShowDialog() == DialogResult.OK)
+                            {
+                                string imagen = OfdElegirImagen.FileName;
+                                Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(imagen, "no");
+                                if (previsualisacion.ShowDialog() == DialogResult.OK)
+                                {
+                                    MessageBox.Show("Se guardara en la base de datos");
+                                    int indice1 = e.RowIndex;
+                                    int proveedorID1 = (int)dtgDiasCompra.Rows[indice1].Cells["ProveedorID"].Value;
+                                    conectar.GuardarImagenProveedor(proveedorID1, date, imagen);
+                                    dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
+                                    //dtgDiasCompra.Columns["ProveedorID"].Visible = false;
 
+                                }
+                                else
+                                {
+                                    MessageBox.Show("No se guardara en la base de datos");
+                                }
+
+                            }
                         }
                     }
+                    else if (e.ColumnIndex == dtgDiasCompra.Columns["Compra"].Index || e.ColumnIndex == dtgDiasCompra.Columns["Imagen"].Index || e.ColumnIndex == dtgDiasCompra.Columns["Proveedor"].Index)
+                    {
+                        int indice = e.RowIndex;
+                        proveedorID = (int)dtgDiasCompra.Rows[indice].Cells["ProveedorID"].Value;
+                    }
                 }
-                else if (e.ColumnIndex == dtgDiasCompra.Columns["Compra"].Index || e.ColumnIndex == dtgDiasCompra.Columns["Imagen"].Index || e.ColumnIndex == dtgDiasCompra.Columns["Proveedor"].Index)
+                else
                 {
-                    int indice = e.RowIndex;
-                    proveedorID = (int)dtgDiasCompra.Rows[indice].Cells["ProveedorID"].Value;
+
                 }
+                
             }
             catch (Exception f)
             {
@@ -332,14 +342,19 @@ namespace tienda
         {
             try
             {
-                DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
-                int obtenerindiceProveedorID = proveedorID;
-                double compra = double.Parse(txtCompra.Text);
-                conectar.AgregarCompraTablaDiasCompra(obtenerindiceProveedorID, date, compra);
-                dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
-                dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
-                dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
-                borrarContenidoTextbox();
+                txtProveedor.Text = "";
+                //se cambiaran los datos
+                MessageBox.Show("Se modificaran los datos");
+                //se descomentara despues<-----------------------------------------------------------------------------------
+                //DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
+                //int obtenerindiceProveedorID = proveedorID;
+                //double compra = double.Parse(txtCompra.Text);
+                //conectar.AgregarCompraTablaDiasCompra(obtenerindiceProveedorID, date, compra);
+                //dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                //dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
+                //dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
+                //borrarContenidoTextbox();
+                //se descomentara despues<-----------------------------------------------------------------------------------
             }
             catch (FormatException)
             {
@@ -349,6 +364,69 @@ namespace tienda
             {
                 MessageBox.Show($"Ocurrio un error\ntipo de error:\n{es}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void llenarCombobox()
+        {
+            CboxProveedoresSinFechaFijo.DataSource = conectar.CargarCbox();
+            CboxProveedoresSinFechaFijo.DisplayMember = "NombreProveedor";
+            CboxProveedoresSinFechaFijo.ValueMember = "ProveedorID";
+        }
+
+        private void CboxAccionRealizar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string elegiraccion = CboxAccionRealizar.SelectedItem.ToString();
+            if (elegiraccion == "Agregar")
+            {
+                BtnGuardar.Text = "Agregar";
+                BtnGuardar.Click -= BtnAgregar_Click;
+                BtnGuardar.Click += BtnAgregar_Click;
+                BtnGuardar.Click -= BtnBorrar_Click;
+                BtnGuardar.Click -= BtnGuardar_Click;
+                BtnGuardar.BackColor = Color.Green;
+                BtnGuardar.ForeColor = Color.White;
+                CboxProveedoresSinFechaFijo.Visible = true;
+                txtProveedor.Visible = false;
+                //nesesitaremos el ProveedorID donde DiaVisita sea igual a 'Sin dia fijo',
+                //la fecha y la compra sera opcional
+            }
+            else if(elegiraccion == "Borrar")
+            {
+                BtnGuardar.Text = "Borrar";
+                BtnGuardar.Click -= BtnBorrar_Click;
+                BtnGuardar.Click += BtnBorrar_Click;
+                BtnGuardar.Click -= BtnAgregar_Click;
+                BtnGuardar.Click -= BtnGuardar_Click;
+                BtnGuardar.BackColor = Color.Red;
+                BtnGuardar.ForeColor = Color.White;
+                CboxProveedoresSinFechaFijo.Visible = false;
+                txtProveedor.Enabled = false;
+                //nesesitaremos el ProveedorID y la fecha
+            }
+            else
+            {
+                BtnGuardar.Text = "Guardar cambios";
+                BtnGuardar.Click -= BtnAgregar_Click;
+                BtnGuardar.Click -= BtnBorrar_Click;
+                BtnGuardar.Click -= BtnGuardar_Click;
+                BtnGuardar.Click += BtnGuardar_Click;
+                BtnGuardar.BackColor = Color.Silver;
+                BtnGuardar.ForeColor = Color.Black;
+                CboxProveedoresSinFechaFijo.Visible = false;
+                txtProveedor.Visible = true;
+
+                //nesecitaremos el ProveedroID, la compra y la fecha
+            }
+        }
+
+        private void BtnBorrar_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("se borraran los datos");
+        }
+
+        private void BtnAgregar_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("se agregaran nuevos datos");
         }
 
 
