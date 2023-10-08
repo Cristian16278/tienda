@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dtgDiasCompra = new System.Windows.Forms.DataGridView();
             this.OfdElegirImagen = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -59,30 +59,30 @@
             this.dtgDiasCompra.AllowUserToAddRows = false;
             this.dtgDiasCompra.AllowUserToDeleteRows = false;
             this.dtgDiasCompra.AllowUserToResizeRows = false;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.DimGray;
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
-            this.dtgDiasCompra.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.DimGray;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            this.dtgDiasCompra.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dtgDiasCompra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dtgDiasCompra.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dtgDiasCompra.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgDiasCompra.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgDiasCompra.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dtgDiasCompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dtgDiasCompra.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dtgDiasCompra.DefaultCellStyle = dataGridViewCellStyle6;
             this.dtgDiasCompra.Location = new System.Drawing.Point(27, 110);
             this.dtgDiasCompra.MultiSelect = false;
             this.dtgDiasCompra.Name = "dtgDiasCompra";
@@ -91,7 +91,7 @@
             this.dtgDiasCompra.RowHeadersWidth = 51;
             this.dtgDiasCompra.RowTemplate.Height = 24;
             this.dtgDiasCompra.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dtgDiasCompra.Size = new System.Drawing.Size(1060, 400);
+            this.dtgDiasCompra.Size = new System.Drawing.Size(1080, 400);
             this.dtgDiasCompra.TabIndex = 2;
             this.dtgDiasCompra.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgDiasCompra_CellClick);
             this.dtgDiasCompra.SelectionChanged += new System.EventHandler(this.dtgDiasCompra_SelectionChanged);
@@ -109,7 +109,7 @@
             this.consultarDiasAtrasToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1108, 39);
+            this.menuStrip1.Size = new System.Drawing.Size(1119, 39);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -175,7 +175,7 @@
             // txtPresupuesto
             // 
             this.txtPresupuesto.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPresupuesto.Location = new System.Drawing.Point(914, 66);
+            this.txtPresupuesto.Location = new System.Drawing.Point(732, 66);
             this.txtPresupuesto.Name = "txtPresupuesto";
             this.txtPresupuesto.Size = new System.Drawing.Size(165, 38);
             this.txtPresupuesto.TabIndex = 9;
@@ -188,7 +188,7 @@
             this.BtnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnGuardar.Location = new System.Drawing.Point(6, 152);
             this.BtnGuardar.Name = "BtnGuardar";
-            this.BtnGuardar.Size = new System.Drawing.Size(293, 44);
+            this.BtnGuardar.Size = new System.Drawing.Size(313, 44);
             this.BtnGuardar.TabIndex = 10;
             this.BtnGuardar.Text = "Guardar cambios";
             this.BtnGuardar.UseVisualStyleBackColor = false;
@@ -196,7 +196,7 @@
             // 
             // BtnRefrescarTabla
             // 
-            this.BtnRefrescarTabla.Location = new System.Drawing.Point(1140, 49);
+            this.BtnRefrescarTabla.Location = new System.Drawing.Point(903, 52);
             this.BtnRefrescarTabla.Name = "BtnRefrescarTabla";
             this.BtnRefrescarTabla.Size = new System.Drawing.Size(99, 55);
             this.BtnRefrescarTabla.TabIndex = 11;
@@ -225,7 +225,7 @@
             "Borrar"});
             this.CboxAccionRealizar.Location = new System.Drawing.Point(6, 54);
             this.CboxAccionRealizar.Name = "CboxAccionRealizar";
-            this.CboxAccionRealizar.Size = new System.Drawing.Size(293, 37);
+            this.CboxAccionRealizar.Size = new System.Drawing.Size(313, 37);
             this.CboxAccionRealizar.TabIndex = 13;
             this.CboxAccionRealizar.SelectedIndexChanged += new System.EventHandler(this.CboxAccionRealizar_SelectedIndexChanged);
             // 
@@ -251,7 +251,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(782, 516);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(305, 221);
+            this.groupBox2.Size = new System.Drawing.Size(325, 221);
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Acciones";
@@ -260,7 +260,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1108, 749);
+            this.ClientSize = new System.Drawing.Size(1119, 749);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.BtnRefrescarTabla);
@@ -268,6 +268,8 @@
             this.Controls.Add(this.lblFechaActual);
             this.Controls.Add(this.dtgDiasCompra);
             this.Controls.Add(this.menuStrip1);
+            this.MaximumSize = new System.Drawing.Size(1137, 796);
+            this.MinimumSize = new System.Drawing.Size(1137, 796);
             this.Name = "Provedores";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Provedores";

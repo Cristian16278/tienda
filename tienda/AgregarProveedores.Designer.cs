@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.DtgvProveedores = new System.Windows.Forms.DataGridView();
             this.CboxElegirAccion = new System.Windows.Forms.ComboBox();
             this.lblRealizarAccion = new System.Windows.Forms.Label();
@@ -53,12 +56,43 @@
             // 
             // DtgvProveedores
             // 
+            this.DtgvProveedores.AllowUserToAddRows = false;
+            this.DtgvProveedores.AllowUserToResizeColumns = false;
+            this.DtgvProveedores.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DtgvProveedores.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.DtgvProveedores.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DtgvProveedores.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.DtgvProveedores.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DtgvProveedores.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DtgvProveedores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DtgvProveedores.DefaultCellStyle = dataGridViewCellStyle3;
             this.DtgvProveedores.Location = new System.Drawing.Point(395, 12);
+            this.DtgvProveedores.MultiSelect = false;
             this.DtgvProveedores.Name = "DtgvProveedores";
+            this.DtgvProveedores.ReadOnly = true;
+            this.DtgvProveedores.RowHeadersVisible = false;
             this.DtgvProveedores.RowHeadersWidth = 51;
             this.DtgvProveedores.RowTemplate.Height = 24;
-            this.DtgvProveedores.Size = new System.Drawing.Size(535, 740);
+            this.DtgvProveedores.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DtgvProveedores.Size = new System.Drawing.Size(497, 740);
             this.DtgvProveedores.TabIndex = 0;
             this.DtgvProveedores.SelectionChanged += new System.EventHandler(this.DtgvProveedores_SelectionChanged);
             // 
@@ -273,7 +307,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(942, 764);
+            this.ClientSize = new System.Drawing.Size(904, 764);
             this.Controls.Add(this.lblDiaAcambiar);
             this.Controls.Add(this.lblObtenerDias);
             this.Controls.Add(this.GropboxVariosDias);
@@ -285,6 +319,8 @@
             this.Controls.Add(this.CboxElegirAccion);
             this.Controls.Add(this.DtgvProveedores);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1173, 811);
+            this.MinimumSize = new System.Drawing.Size(922, 811);
             this.Name = "AgregarProveedores";
             this.Text = "AgregarProveedores";
             this.Load += new System.EventHandler(this.AgregarProveedores_Load);
