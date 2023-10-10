@@ -37,6 +37,10 @@ namespace tienda
             dataGridView2.Columns["ProveedorID"].Visible = false;
             dataGridView3.Columns["ProveedorID"].Visible = false;
             dataGridView4.Columns["ProveedorID"].Visible = false;
+            dataGridView1.Columns["ProveedorDiaID"].Visible = false;
+            dataGridView2.Columns["ProveedorDiaID"].Visible = false;
+            dataGridView3.Columns["ProveedorDiaID"].Visible = false;
+            dataGridView4.Columns["ProveedorDiaID"].Visible = false;
         }
 
         private void AgregarEventoCellClickAdataGridview(DataGridView data, bool quitarOagregarEvento)//con este se traba bastante
@@ -84,7 +88,8 @@ namespace tienda
                 {
                     int indice = e.RowIndex;
                     int proveedorID = (int)data.Rows[indice].Cells["ProveedorID"].Value;
-                    var (Proveedorexiste, rutaimagen) = ConectarBD.VerificarImagenEnProveedor(fechadtgEspecifico, proveedorID);//aqui falta poner la fecha dependiendo el dia que sea en el datagridview
+                    int registroDC = (int)data.Rows[indice].Cells["ProveedorDiaID"].Value;
+                    var (Proveedorexiste, rutaimagen) = ConectarBD.VerificarImagenEnProveedor(fechadtgEspecifico, proveedorID, registroDC);//aqui falta poner la fecha dependiendo el dia que sea en el datagridview
                     if(Proveedorexiste == proveedorID)
                     {
                         Previsualisacion_imagen imagen = new Previsualisacion_imagen(rutaimagen, "si");

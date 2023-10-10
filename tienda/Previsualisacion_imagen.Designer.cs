@@ -71,7 +71,7 @@
             this.BtnCambiarImagen.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnCambiarImagen.Location = new System.Drawing.Point(476, 641);
             this.BtnCambiarImagen.Name = "BtnCambiarImagen";
-            this.BtnCambiarImagen.Size = new System.Drawing.Size(169, 42);
+            this.BtnCambiarImagen.Size = new System.Drawing.Size(185, 42);
             this.BtnCambiarImagen.TabIndex = 3;
             this.BtnCambiarImagen.Text = "Cambiar imagen";
             this.BtnCambiarImagen.UseVisualStyleBackColor = true;

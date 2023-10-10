@@ -16,7 +16,7 @@ namespace tienda
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ConsultaDiasAnteriores());//<---para que funcione bien todo tengo que poner: CuentasDiarias()
+            Application.Run(new Provedores());//<---para que funcione bien todo tengo que poner: CuentasDiarias()
         }
     }
 }
