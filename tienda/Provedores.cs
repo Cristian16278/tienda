@@ -186,11 +186,11 @@ namespace tienda
                                 string obtenernuevaruta = previsualisacion.ObtenerNuevaRuta();
                                 conectar.GuardarImagenProveedor(proveedorID, date, obtenernuevaruta, registroDC);
                                 dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
-                                EnviarMensaje("Se Guardo la nueva imagen", false);
+                                EnviarMensaje("Se cambio la imagen correctamente.", false);
                             }
                             else
                             {
-                                MessageBox.Show("No se hiso ningun cambio");
+                                EnviarMensaje("No se cambio la imagen.", false);
                             }
                         }
                         else
@@ -210,7 +210,7 @@ namespace tienda
                                 }
                                 else
                                 {
-                                    MessageBox.Show("No se guardara en la base de datos");
+                                    EnviarMensaje("No se guardara la imagen.", false);
                                 }
                             }
                         }
@@ -465,11 +465,11 @@ namespace tienda
                     dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
                     dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
                     borrarContenidoTextbox();
-                    EnviarMensaje("Se guardaron los cambios", false);
+                    EnviarMensaje("Se guardaron los cambios.", false);
                 }
                 else
                 {
-                    EnviarMensaje("Ocurrio un error al intentar ingresar los datos", true);
+                    EnviarMensaje("Ocurrio un error al intentar ingresar los datos.", true);
                 }
                 
                 //se descomentara despues<-----------------------------------------------------------------------------------
@@ -538,11 +538,11 @@ namespace tienda
                         int resultado = conectar.AgregarNuevoProveedorEnTablaDiasCompra(proveedorSeleccionado, compra, FechaActual);
                         if(resultado > 0)
                         {
-                            EnviarMensaje("Se agrego correctamente los datos", false);
+                            EnviarMensaje("Se agrego correctamente los datos.", false);
                         }
                         else
                         {
-                            EnviarMensaje("Ocurrio un problema al intentar agregar los datos", true);
+                            EnviarMensaje("Ocurrio un problema al intentar agregar los datos.", true);
                         }
                     }
                     else if(RdbProveedorSFechaFijo.Checked)
@@ -551,11 +551,11 @@ namespace tienda
                         int resultado = conectar.AgregarNuevoProveedorEnTablaDiasCompra(proveedorSeleccionado, compra, FechaActual);
                         if (resultado > 0)
                         {
-                            EnviarMensaje("Se agrego correctamente los datos", false);
+                            EnviarMensaje("Se agrego correctamente los datos.", false);
                         }
                         else
                         {
-                            EnviarMensaje("Ocurrio un problema al intentar agregar los datos", true);
+                            EnviarMensaje("Ocurrio un problema al intentar agregar los datos.", true);
                         }
                     }
                     dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
