@@ -77,12 +77,15 @@ namespace tienda
             {
                 CambiarMetodoaBoton(accion);
                 TxtProveedor.Visible = false;
-                //CboxElegirCantidadDias.Visible = false;
+                diasobtener.Clear();
                 lblDiavisitaProveedor.Text = "";
                 lblProveedor.Text = "";
                 lblObtenerDias.Text = "";
                 lblDiaAcambiar.Text = "";
                 BtnRealizarAccion.Text = "Seleccione";
+                BtnRealizarAccion.FlatStyle = FlatStyle.Standard;
+                BtnRealizarAccion.BackColor = Color.White;
+                BtnRealizarAccion.ForeColor = Color.Black;
                 GropboxVariosDias.Visible = false;
                 //CboxElegirDia.Visible = false;
                 HacerVisibleCheckBoxs(false);
@@ -96,12 +99,18 @@ namespace tienda
                 lblProveedor.Text = "Nombre del Proveedor:";
                 lblDiavisitaProveedor.Text = "Seleccione los dias que pasara:";
                 lblDiaAcambiar.Text = "";
+                TxtProveedor.Text = "";
+                diasobtener.Clear();
                 //CboxElegirCantidadDias.Visible = true;
                 TxtProveedor.Visible = true;
                 GropboxVariosDias.Visible = true;
                 HacerVisibleCheckBoxs(true);
+                TxtProveedor.Enabled = true;
                 CambiarEstadoDeEventoChecked(false);
                 CambiarEstadoDeEventoChecked(true);
+                BtnRealizarAccion.BackColor = Color.Green;
+                BtnRealizarAccion.ForeColor = Color.White;
+                BtnRealizarAccion.FlatStyle = FlatStyle.Popup;
                 
                 //CboxElegirCantidadDias.SelectedItem = "Seleccione";
                 BtnRealizarAccion.Text = "Agregar proveedor";
@@ -110,15 +119,21 @@ namespace tienda
             {
                 CambiarMetodoaBoton(accion);
                 QuitarOmarcarChecked(false);
+                diasobtener.Clear();
                 lblProveedor.Text = "Nombre del Proveedor:";
                 lblDiavisitaProveedor.Text = "Seleccione la cantidad de dias:";
                 //CboxElegirCantidadDias.Visible = true;
                 GropboxVariosDias.Visible = true;
                 HacerVisibleCheckBoxs(true);
+                TxtProveedor.Text = "";
                 TxtProveedor.Visible = true;
+                TxtProveedor.Enabled = false;
                 CambiarEstadoDeEventoChecked(false);
                 CambiarEstadoDeEventoChecked(true);
                 BtnRealizarAccion.Text = "Modificar proveedor";
+                BtnRealizarAccion.BackColor = Color.Yellow;
+                BtnRealizarAccion.FlatStyle = FlatStyle.Popup;
+                BtnRealizarAccion.ForeColor = Color.Black;
             }
             else if (accion == "Borrar")//       <----esto no estoy seguro si lo utilisare
             {
@@ -155,18 +170,34 @@ namespace tienda
             string provedor = TxtProveedor.Text;
             string diavisita = lblObtenerDias.Text;
             string Modificardiavisita = lblDiaAcambiar.Text;
-            DialogResult respuesta = MessageBox.Show("Esta seguro que quiere modificar estos datos?","Advertencia!",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
-            if(respuesta == DialogResult.Yes)
+            if (string.IsNullOrEmpty(Modificardiavisita))
             {
-                conectar.ModificarProveedor(diavisita, provedor, Modificardiavisita);      //<---- aqui ira el metodo de modificar
-                DtgvProveedores.DataSource = conectar.MostrarTablaProveedores();
+                MessageBox.Show("Eliga al menos un dia.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
-                MessageBox.Show("No se modifico nada");
+                DialogResult respuesta = MessageBox.Show("Esta seguro que quiere modificar estos datos?", "Advertencia!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (respuesta == DialogResult.Yes)
+                {
+                    int resultado = conectar.ModificarProveedor(diavisita, provedor, Modificardiavisita);      //<---- aqui ira el metodo de modificar
+                    if(resultado > 0)
+                    {
+                        MessageBox.Show("Se modifico correctamente", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        DtgvProveedores.DataSource = conectar.MostrarTablaProveedores();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Parece que hubo un error o los datos son los mismos", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No se modifico nada");
+                }
+                TxtProveedor.Text = "";
+                lblDiaAcambiar.Text = "";
+                QuitarOmarcarChecked(false);
             }
-            TxtProveedor.Text = "";
-            QuitarOmarcarChecked(false);
         }
 
         //metodo Agregar proveedor

@@ -48,12 +48,13 @@
             this.CboxProveedoresSinFechaFijo = new System.Windows.Forms.ComboBox();
             this.CboxAccionRealizar = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblMensage = new System.Windows.Forms.Label();
             this.CboxProveedorAdelantado = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.RdbProveedorAdelanto = new System.Windows.Forms.RadioButton();
             this.RdbProveedorSFechaFijo = new System.Windows.Forms.RadioButton();
+            this.RdbProveedorAdelanto = new System.Windows.Forms.RadioButton();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.lblMensage = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dtgDiasCompra)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -181,7 +182,7 @@
             // txtPresupuesto
             // 
             this.txtPresupuesto.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPresupuesto.Location = new System.Drawing.Point(732, 66);
+            this.txtPresupuesto.Location = new System.Drawing.Point(773, 66);
             this.txtPresupuesto.Name = "txtPresupuesto";
             this.txtPresupuesto.Size = new System.Drawing.Size(165, 38);
             this.txtPresupuesto.TabIndex = 9;
@@ -229,7 +230,8 @@
             this.CboxAccionRealizar.Items.AddRange(new object[] {
             "Modificar",
             "Agregar proveedor",
-            "Borrar"});
+            "Borrar",
+            "Sumar todo"});
             this.CboxAccionRealizar.Location = new System.Drawing.Point(6, 47);
             this.CboxAccionRealizar.Name = "CboxAccionRealizar";
             this.CboxAccionRealizar.Size = new System.Drawing.Size(313, 44);
@@ -253,6 +255,14 @@
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ingresar valores";
+            // 
+            // lblMensage
+            // 
+            this.lblMensage.AutoSize = true;
+            this.lblMensage.Location = new System.Drawing.Point(29, 167);
+            this.lblMensage.Name = "lblMensage";
+            this.lblMensage.Size = new System.Drawing.Size(0, 29);
+            this.lblMensage.TabIndex = 14;
             // 
             // CboxProveedorAdelantado
             // 
@@ -279,19 +289,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Acciones";
             // 
-            // RdbProveedorAdelanto
-            // 
-            this.RdbProveedorAdelanto.AutoSize = true;
-            this.RdbProveedorAdelanto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RdbProveedorAdelanto.Location = new System.Drawing.Point(22, 109);
-            this.RdbProveedorAdelanto.Name = "RdbProveedorAdelanto";
-            this.RdbProveedorAdelanto.Size = new System.Drawing.Size(111, 29);
-            this.RdbProveedorAdelanto.TabIndex = 14;
-            this.RdbProveedorAdelanto.TabStop = true;
-            this.RdbProveedorAdelanto.Text = "Adelanto";
-            this.RdbProveedorAdelanto.UseVisualStyleBackColor = true;
-            this.RdbProveedorAdelanto.CheckedChanged += new System.EventHandler(this.RdbProveedorAdelanto_CheckedChanged);
-            // 
             // RdbProveedorSFechaFijo
             // 
             this.RdbProveedorSFechaFijo.AutoSize = true;
@@ -305,17 +302,32 @@
             this.RdbProveedorSFechaFijo.UseVisualStyleBackColor = true;
             this.RdbProveedorSFechaFijo.CheckedChanged += new System.EventHandler(this.RdbProveedorSFechaFijo_CheckedChanged);
             // 
+            // RdbProveedorAdelanto
+            // 
+            this.RdbProveedorAdelanto.AutoSize = true;
+            this.RdbProveedorAdelanto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RdbProveedorAdelanto.Location = new System.Drawing.Point(22, 109);
+            this.RdbProveedorAdelanto.Name = "RdbProveedorAdelanto";
+            this.RdbProveedorAdelanto.Size = new System.Drawing.Size(111, 29);
+            this.RdbProveedorAdelanto.TabIndex = 14;
+            this.RdbProveedorAdelanto.TabStop = true;
+            this.RdbProveedorAdelanto.Text = "Adelanto";
+            this.RdbProveedorAdelanto.UseVisualStyleBackColor = true;
+            this.RdbProveedorAdelanto.CheckedChanged += new System.EventHandler(this.RdbProveedorAdelanto_CheckedChanged);
+            // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // lblMensage
+            // label1
             // 
-            this.lblMensage.AutoSize = true;
-            this.lblMensage.Location = new System.Drawing.Point(29, 167);
-            this.lblMensage.Name = "lblMensage";
-            this.lblMensage.Size = new System.Drawing.Size(0, 29);
-            this.lblMensage.TabIndex = 14;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(701, 72);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(66, 32);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "T.E:";
             // 
             // Provedores
             // 
@@ -323,6 +335,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1119, 749);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.BtnRefrescarTabla);
@@ -334,7 +347,7 @@
             this.MinimumSize = new System.Drawing.Size(1137, 796);
             this.Name = "Provedores";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Provedores";
+            this.Text = "Control de proveedores";
             this.Load += new System.EventHandler(this.Provedores_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgDiasCompra)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -371,5 +384,6 @@
         private System.Windows.Forms.RadioButton RdbProveedorAdelanto;
         private System.Windows.Forms.Label lblMensage;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -111,6 +111,32 @@ namespace Datos
             }
         }
 
+
+        public int GuardarMostrarNEDiaSiguiente(DateTime fechaActual, int cantidadGuardar)
+        {
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                string guardar = "INSERT INTO AgarrarDinero(DineroAgarrado, Fecha) " +
+                                 "VALUES(@guardarAgarrar, @fecha)";
+                SqlCommand cmdGuardar = new SqlCommand(guardar, conn);
+                cmdGuardar.Parameters.AddWithValue("@guardarAgarrar", cantidadGuardar);
+                cmdGuardar.Parameters.AddWithValue("@fecha", fechaActual);
+                int resultado = cmdGuardar.ExecuteNonQuery();
+                return resultado;
+            }
+            catch (Exception a)
+            {
+                MessageBox.Show($"Hubo un problema \n \n tipo de error:\n{a}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+            
+        }
+
         //metodo para llenar un datagridview y ordenarlo de manera desendente por fecha_registro.
         public DataTable ConsultaBDtienda()
         {
@@ -829,8 +855,8 @@ namespace Datos
         }
 
 
-        //este metodo aun nose si lo usare
-        public int BorrarProveedor(string proveedor, string diavisita)
+        
+        public int BorrarProveedor(string proveedor, string diavisita)//este metodo no lo utilizare
         {
             try
             {
@@ -1043,22 +1069,69 @@ namespace Datos
             {
                 conn.Open();
             }
-            string borrar = "DELETE FROM DiasCompra " +
-                            "WHERE ProveedorID = @proveedorborrar AND Fecha = @fechaBorrar";
-            using (SqlCommand ejecutar = new SqlCommand(borrar, conn))
+            //string borrar = "DELETE FROM DiasCompra " +
+            //                "WHERE ProveedorID = @proveedorborrar AND Fecha = @fechaBorrar";
+            //using (SqlCommand ejecutar = new SqlCommand(borrar, conn))
+            //{
+            //    ejecutar.Parameters.AddWithValue("@proveedorborrar", proveedorID);
+            //    ejecutar.Parameters.AddWithValue("@fechaBorrar", fecha);
+            //    int filasafectadas = ejecutar.ExecuteNonQuery();
+            //    if (filasafectadas > 0)//se borro correctamente
+            //    {
+            //        return filasafectadas;
+            //    }
+            //    else//no se eligio una celda o ocurrio un error
+            //    {
+            //        return filasafectadas;
+            //    }
+            //}
+            return 0;
+        }
+
+        public int VerificarDineroAgarradoDiaAnterior(DateTime FechaAnterior)
+        {
+            if (conn.State != ConnectionState.Open)
             {
-                ejecutar.Parameters.AddWithValue("@proveedorborrar", proveedorID);
-                ejecutar.Parameters.AddWithValue("@fechaBorrar", fecha);
-                int filasafectadas = ejecutar.ExecuteNonQuery();
-                if (filasafectadas > 0)//se borro correctamente
-                {
-                    return filasafectadas;
-                }
-                else//no se eligio una celda o ocurrio un error
-                {
-                    return filasafectadas;
-                }
+                conn.Open();
             }
+
+            string verificar = "SELECT DineroAgarrado " +
+                               "FROM AgarrarDinero " +
+                               "WHERE Fecha = @fechaAnterior";
+            SqlCommand comando = new SqlCommand(verificar, conn);
+            comando.Parameters.AddWithValue("@fechaAnterior", FechaAnterior);
+            int obtenerDineroDiaanterior = Convert.ToInt32(comando.ExecuteScalar());
+            if(obtenerDineroDiaanterior == 0)
+            {
+                int NEdiaAnterior = TraerNetoExistenteDiaAnterior(FechaAnterior);
+                return NEdiaAnterior;
+            }
+            else
+            {
+                return obtenerDineroDiaanterior;
+            }
+        }
+
+        private int TraerNetoExistenteDiaAnterior(DateTime NEfechaAnterior)
+        {
+            string traer = "SELECT N_E " +
+                           "FROM cuentas_Diarias " +
+                           "WHERE fecha_registro = @fechaAnterior";
+            SqlCommand comando = new SqlCommand(traer, conn);
+            comando.Parameters.AddWithValue("@fechaAnterior", NEfechaAnterior);
+            int obtenerNE = Convert.ToInt32(comando.ExecuteScalar());
+            return obtenerNE;
+        }
+
+        public double SumarTodosLosProveedoresFechaActual(DateTime fechaActual)
+        {
+            string sumar = "SELECT SUM(Compra) " +
+                           "FROM DiasCompra " +
+                           "WHERE Fecha = @fecha";
+            SqlCommand comando = new SqlCommand(sumar, conn);
+            comando.Parameters.AddWithValue("@fecha", fechaActual);
+            double resultado = Convert.ToDouble(comando.ExecuteScalar());
+            return resultado;
         }
         #endregion
     }

@@ -17,6 +17,9 @@ namespace tienda
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Provedores());//<---para que funcione bien todo tengo que poner: CuentasDiarias()
+            //para que comiense bien en proveedores debo poner: Provedores()
+            //para que comiense bien en proveedores debo poner: Provedores()
+            //cuando den las 00:10 verifico si funciona el de: Provedores()
         }
     }
 }

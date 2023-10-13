@@ -45,6 +45,7 @@
             this.actualisarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblRegistrohoy = new System.Windows.Forms.Label();
             this.BtnBilletesCalcular = new System.Windows.Forms.Button();
+            this.BtnAgarrarDinero = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -157,10 +158,10 @@
             // 
             this.btnGuardar.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGuardar.Location = new System.Drawing.Point(709, 571);
+            this.btnGuardar.Location = new System.Drawing.Point(671, 571);
             this.btnGuardar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(173, 50);
+            this.btnGuardar.Size = new System.Drawing.Size(211, 50);
             this.btnGuardar.TabIndex = 4;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = true;
@@ -225,12 +226,28 @@
             this.BtnBilletesCalcular.UseVisualStyleBackColor = true;
             this.BtnBilletesCalcular.Click += new System.EventHandler(this.BtnBilletesCalcular_Click);
             // 
+            // BtnAgarrarDinero
+            // 
+            this.BtnAgarrarDinero.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BtnAgarrarDinero.Enabled = false;
+            this.BtnAgarrarDinero.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAgarrarDinero.Location = new System.Drawing.Point(433, 571);
+            this.BtnAgarrarDinero.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnAgarrarDinero.Name = "BtnAgarrarDinero";
+            this.BtnAgarrarDinero.Size = new System.Drawing.Size(232, 50);
+            this.BtnAgarrarDinero.TabIndex = 13;
+            this.BtnAgarrarDinero.Text = "Agarrar dinero";
+            this.BtnAgarrarDinero.UseVisualStyleBackColor = true;
+            this.BtnAgarrarDinero.Visible = false;
+            this.BtnAgarrarDinero.Click += new System.EventHandler(this.BtnAgarrarDinero_Click);
+            // 
             // CuentasDiarias
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(913, 647);
+            this.Controls.Add(this.BtnAgarrarDinero);
             this.Controls.Add(this.BtnBilletesCalcular);
             this.Controls.Add(this.lblRegistrohoy);
             this.Controls.Add(this.btnGuardar);
@@ -279,5 +296,6 @@
         private System.Windows.Forms.Label lblRegistrohoy;
         private System.Windows.Forms.ToolStripMenuItem actualisarToolStripMenuItem;
         private System.Windows.Forms.Button BtnBilletesCalcular;
+        private System.Windows.Forms.Button BtnAgarrarDinero;
     }
 }

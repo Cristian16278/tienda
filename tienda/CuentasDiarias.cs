@@ -32,6 +32,8 @@ namespace tienda
                     btnGuardar.Enabled = false;
                     btnGuardar.BackColor = Color.LightGray;
                     BtnBilletesCalcular.Enabled = false;
+                    BtnAgarrarDinero.Enabled = true;
+                    BtnAgarrarDinero.Visible = true;
                     BtnBilletesCalcular.BackColor = Color.LightGray;
                     lblRegistrohoy.Text = "Ya hay un registro para la fecha de hoy";
                     lblRegistrohoy.ForeColor = Color.Red;
@@ -56,10 +58,22 @@ namespace tienda
                 Application.Exit();
             }
         }
-
+        int ObtenerNE;
         private void btnCalcular_Click(object sender, EventArgs e)
         {
             calcularCuentas(txtBilletes.Text, txtMonedas.Text, txtDelacaja.Text, txtConsumoDiario.Text);
+        }
+
+        private void GuardarNEconfiguracionDefault(int NEguardarEnConfiguracion)
+        {
+            Properties.Settings.Default.AgarrarDinero = NEguardarEnConfiguracion;
+            Properties.Settings.Default.Save();
+        }
+
+        private int CargarValorNE()
+        {
+            int CargarNE = Properties.Settings.Default.AgarrarDinero;
+            return CargarNE;
         }
 
         private void calcularCuentas(string bill, string mone, string delaC, string consumoD)
@@ -116,6 +130,10 @@ namespace tienda
                         MessageBox.Show("Se guardo correctamente", "Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         btnGuardar.Enabled = false;
                         btnGuardar.BackColor = Color.LightGray;
+                        BtnAgarrarDinero.Enabled = true;
+                        BtnAgarrarDinero.Visible = true;
+                        ObtenerNE = n_exi;
+                        GuardarNEconfiguracionDefault(ObtenerNE);
                     }
                     else
                     {
@@ -347,6 +365,22 @@ namespace tienda
             {
                 int mostrarentextbox = obtener.ObtenerResultado();
                 txtBilletes.Text = mostrarentextbox.ToString();
+            }
+        }
+
+        private void BtnAgarrarDinero_Click(object sender, EventArgs e)
+        {
+            int cargarNE = CargarValorNE();
+            AgarrarDinero agarrar = new AgarrarDinero(cargarNE);
+            if (agarrar.ShowDialog() == DialogResult.OK)
+            {
+                BtnAgarrarDinero.Enabled = false;
+                MessageBox.Show("Se guardo exitosamente la cantidad para mostrar para el dia de mañana", "Mensage del program", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                BtnAgarrarDinero.Enabled = true;
+                MessageBox.Show("Alparecer hubo un problema al intentar guardar los datos.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

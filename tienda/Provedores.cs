@@ -35,6 +35,13 @@ namespace tienda
                 dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
                 AgregarBotonAlaFila();
                 borrarContenidoTextbox();
+
+                //verificar si se agarro dinero
+                DateTime fechaActual1 = DateTime.Now.Date;//esto lo utilizaremos cuando de la hora para el dia de manana
+                DateTime fechaAnterior = fechaActual1.AddDays(-1);
+                int MostrarEnTextbox = conectar.VerificarDineroAgarradoDiaAnterior(fechaAnterior);
+                txtPresupuesto.Text = MostrarEnTextbox.ToString();
+
                 CboxAccionRealizar.SelectedItem = "Modificar";
                 llenarComboboxSinFechaFijo();
                 LlenarComboboxProveedorAdelanto();
@@ -168,10 +175,10 @@ namespace tienda
             {
                 if(e.RowIndex >= 0 && e.ColumnIndex >= 0)//si se dio click en una celda valida(que no sean los encabezados)
                 {
-                    
                     DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
                     if (e.ColumnIndex == dtgDiasCompra.Columns["Agregar Imagen"].Index)
                     {
+                        //OfdElegirImagen.InitialDirectory = "";
                         //OfdElegirImagen.Title = "Seleccione una imagen";
                         //OfdElegirImagen.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png|Todos los archivos|*.*";
                         int indice = e.RowIndex;
@@ -378,6 +385,7 @@ namespace tienda
 
         private void CboxAccionRealizar_SelectedIndexChanged(object sender, EventArgs e)
         {
+            DateTime horaactual = DateTime.Now;
             string elegiraccion = CboxAccionRealizar.SelectedItem.ToString();
             if (elegiraccion == "Agregar proveedor")
             {
@@ -422,6 +430,21 @@ namespace tienda
                 QuitarCheckedRadiobutton(false, false);
                 //nesesitaremos el ProveedorID y la fecha
             }
+            else if (elegiraccion == "Sumar todo")
+            {
+                if (horaactual.Hour >= 21 && horaactual.Minute >= 0)
+                {
+                    MessageBox.Show("Se activaran los botones");
+                    BtnGuardar.Click -= BtnSumarTodo_Click;
+                    BtnGuardar.Click += BtnSumarTodo_Click;
+                }
+                else
+                {
+                    MessageBox.Show("Solo se podra sumar los proveedores alas 9:00 PM para no tener problemas de sumas.","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    CboxAccionRealizar.SelectedItem = "Modificar";
+                }
+                //aqui se activaran los componentes que bayan a servir para sumar los datos de cada proveedor
+            }
             else
             {
                 BtnGuardar.Text = "Guardar cambios";
@@ -445,6 +468,22 @@ namespace tienda
                 //nesecitaremos el ProveedroID, la compra y la fecha
             }
         }
+
+
+        private void BtnSumarTodo_Click(object sender, EventArgs e)
+        {
+            DialogResult respuesta = MessageBox.Show("No hace falta ningun proveedor?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (respuesta == DialogResult.Yes)
+            {
+                double resultato = conectar.SumarTodosLosProveedoresFechaActual(FechaActual);
+                //se mostrara ya sea en un label o en un textbox
+            }
+            else
+            {
+
+            }
+        }
+
         DateTime FechaActual = DateTime.Now.Date;
 
         private void BtnGuardar_Click(object sender, EventArgs e)

@@ -104,8 +104,7 @@
             this.CboxElegirAccion.Items.AddRange(new object[] {
             "Seleccione",
             "Agregar proveedor",
-            "Modificar proveedor",
-            "Borrar Proveedor"});
+            "Modificar proveedor"});
             this.CboxElegirAccion.Location = new System.Drawing.Point(12, 45);
             this.CboxElegirAccion.Name = "CboxElegirAccion";
             this.CboxElegirAccion.Size = new System.Drawing.Size(362, 39);
