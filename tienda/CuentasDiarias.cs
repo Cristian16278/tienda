@@ -18,13 +18,46 @@ namespace tienda
         ConectarBD cone = new ConectarBD();
         loging lo = new loging();
         
-        public CuentasDiarias()
+        public CuentasDiarias(double seAgarroDelacaja = 0)
         {
             InitializeComponent();
+            int DelaCaja = redondearSeagarrodelacaja(seAgarroDelacaja);
+            txtDelacaja.Text = DelaCaja.ToString();
+        }
+
+        private int redondearSeagarrodelacaja(double caja)
+        {
+            int redondear = (int)caja;
+
+            string Redondear = redondear.ToString();
+            //asi se convierte de string a una lista de string
+            var lista = from x in Redondear select x.ToString();
+            List<string> str = new List<string>(lista);
+
+            //se convierte a lista de enteros
+            List<int> ints = str.Select(int.Parse).ToList();
+            RedondearUn(ints);
+
+            List<string> strings = ints.ConvertAll(x => x.ToString());
+            string une = string.Join("", strings);//<-------si da error utilizar este ---->  string une = String.Join("", strings);
+
+            //asi se convierte un string a int
+            int delacaja = int.Parse(une);
+            return delacaja;
         }
 
         private void CuentasDiarias_Load(object sender, EventArgs e)
         {
+            DateTime fechaactual = DateTime.Today;
+            if (cone.ActivarBotonAgarrarDinero(fechaactual) >= 1)
+            {
+                BtnAgarrarDinero.Enabled = false;
+            }
+            else
+            {
+                BtnAgarrarDinero.Enabled = true;
+            }
+
             if(lo.ShowDialog() == DialogResult.OK)
             {
                 if(cone.desacbtnSHFechahoy() == DateTime.Today)
@@ -297,6 +330,16 @@ namespace tienda
         {
             try
             {
+                DateTime fechaactual = DateTime.Today;
+                if (cone.ActivarBotonAgarrarDinero(fechaactual) >= 1)
+                {
+                    BtnAgarrarDinero.Enabled = false;
+                }
+                else
+                {
+                    BtnAgarrarDinero.Enabled = true;
+                }
+
                 if (cone.desacbtnSHFechahoy() == DateTime.Today)
                 {
                     MessageBox.Show("ya hay una registro para la fecha de hoy","Advertencia!!",MessageBoxButtons.OK,MessageBoxIcon.Warning);

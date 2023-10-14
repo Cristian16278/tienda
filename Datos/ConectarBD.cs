@@ -842,7 +842,7 @@ namespace Datos
                 //string modificar = $"UPDATE Proveedores SET NombreProveedor = '{NuevoProveedor}', DiaVisita = '{NuevoDia}' WHERE NombreProveedor = '{ProveedorAcambiar}' AND DiaVisita = '{DiaVisitaAcambiar}'";
                 string modificar = $"UPDATE Proveedores SET DiaVisita = '{NuevoDia}' WHERE NombreProveedor = '{ProveedorAcambiar}' AND DiaVisita = '{DiaVisitaAcambiar}'";
                 SqlCommand comando = new SqlCommand(modificar, conn);
-                int resultado = Convert.ToInt32(comando.ExecuteScalar());
+                int resultado = Convert.ToInt32(comando.ExecuteNonQuery());
                 conn.Close();
                 return resultado;
             }
@@ -901,7 +901,6 @@ namespace Datos
 
         }
 
-        //
         public (int,string) VerificarImagenEnProveedor(DateTime fecha, int proveedorID, int ProveedorDC)
         {
             if (conn.State != ConnectionState.Open)
@@ -1063,29 +1062,29 @@ namespace Datos
             }
         }
 
-        public int borrarProveedorTablaDiasCompra(int proveedorID, DateTime fecha)
+        public int borrarProveedorTablaDiasCompra(int proveedorID, int proveedorRegistro, DateTime fecha)
         {
             if (conn.State != ConnectionState.Open)
             {
                 conn.Open();
             }
-            //string borrar = "DELETE FROM DiasCompra " +
-            //                "WHERE ProveedorID = @proveedorborrar AND Fecha = @fechaBorrar";
-            //using (SqlCommand ejecutar = new SqlCommand(borrar, conn))
-            //{
-            //    ejecutar.Parameters.AddWithValue("@proveedorborrar", proveedorID);
-            //    ejecutar.Parameters.AddWithValue("@fechaBorrar", fecha);
-            //    int filasafectadas = ejecutar.ExecuteNonQuery();
-            //    if (filasafectadas > 0)//se borro correctamente
-            //    {
-            //        return filasafectadas;
-            //    }
-            //    else//no se eligio una celda o ocurrio un error
-            //    {
-            //        return filasafectadas;
-            //    }
-            //}
-            return 0;
+            string borrar = "DELETE FROM DiasCompra " +
+                            "WHERE ProveedorID = @proveedorborrar AND Fecha = @fechaBorrar AND ProveedorDiaID = @proveedorRegistro";
+            using (SqlCommand ejecutar = new SqlCommand(borrar, conn))
+            {
+                ejecutar.Parameters.AddWithValue("@proveedorborrar", proveedorID);
+                ejecutar.Parameters.AddWithValue("@fechaBorrar", fecha);
+                ejecutar.Parameters.AddWithValue("@proveedorRegistro", proveedorRegistro);
+                int filasafectadas = ejecutar.ExecuteNonQuery();
+                if (filasafectadas > 0)//se borro correctamente
+                {
+                    return filasafectadas;
+                }
+                else//no se eligio una celda o ocurrio un error
+                {
+                    return filasafectadas;
+                }
+            }
         }
 
         public int VerificarDineroAgarradoDiaAnterior(DateTime FechaAnterior)
@@ -1110,6 +1109,22 @@ namespace Datos
             {
                 return obtenerDineroDiaanterior;
             }
+        }
+
+        public int ActivarBotonAgarrarDinero(DateTime fechaActual)
+        {
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
+
+            string verificar = "SELECT COUNT(DineroAgarrado) " +
+                               "FROM AgarrarDinero " +
+                               "WHERE Fecha = @fechaAnterior";
+            SqlCommand comando = new SqlCommand(verificar, conn);
+            comando.Parameters.AddWithValue("@fechaAnterior", fechaActual);
+            int SiexisteDineroAgarrado = Convert.ToInt32(comando.ExecuteScalar());
+            return SiexisteDineroAgarrado;
         }
 
         private int TraerNetoExistenteDiaAnterior(DateTime NEfechaAnterior)

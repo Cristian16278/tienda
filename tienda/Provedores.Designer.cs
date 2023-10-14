@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dtgDiasCompra = new System.Windows.Forms.DataGridView();
             this.OfdElegirImagen = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -55,6 +55,9 @@
             this.RdbProveedorAdelanto = new System.Windows.Forms.RadioButton();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
+            this.CboxElegirAhorroOcomplemento = new System.Windows.Forms.ComboBox();
+            this.txtAhorroCasaOcomplemento = new System.Windows.Forms.TextBox();
+            this.lblAhoroCasaOcomplemento = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dtgDiasCompra)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -66,30 +69,30 @@
             this.dtgDiasCompra.AllowUserToAddRows = false;
             this.dtgDiasCompra.AllowUserToDeleteRows = false;
             this.dtgDiasCompra.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.DimGray;
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-            this.dtgDiasCompra.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.DimGray;
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
+            this.dtgDiasCompra.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dtgDiasCompra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dtgDiasCompra.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dtgDiasCompra.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgDiasCompra.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgDiasCompra.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dtgDiasCompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dtgDiasCompra.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dtgDiasCompra.DefaultCellStyle = dataGridViewCellStyle9;
             this.dtgDiasCompra.Location = new System.Drawing.Point(27, 110);
             this.dtgDiasCompra.MultiSelect = false;
             this.dtgDiasCompra.Name = "dtgDiasCompra";
@@ -141,6 +144,7 @@
             this.txtCompra.Name = "txtCompra";
             this.txtCompra.Size = new System.Drawing.Size(236, 38);
             this.txtCompra.TabIndex = 4;
+            this.txtCompra.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCompra_KeyPress);
             // 
             // lblCompra
             // 
@@ -181,10 +185,11 @@
             // 
             // txtPresupuesto
             // 
+            this.txtPresupuesto.Enabled = false;
             this.txtPresupuesto.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPresupuesto.Location = new System.Drawing.Point(773, 66);
+            this.txtPresupuesto.Location = new System.Drawing.Point(602, 57);
             this.txtPresupuesto.Name = "txtPresupuesto";
-            this.txtPresupuesto.Size = new System.Drawing.Size(165, 38);
+            this.txtPresupuesto.Size = new System.Drawing.Size(102, 38);
             this.txtPresupuesto.TabIndex = 9;
             this.txtPresupuesto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPresupuesto_KeyDown);
             // 
@@ -204,7 +209,7 @@
             // 
             // BtnRefrescarTabla
             // 
-            this.BtnRefrescarTabla.Location = new System.Drawing.Point(1008, 52);
+            this.BtnRefrescarTabla.Location = new System.Drawing.Point(1008, 46);
             this.BtnRefrescarTabla.Name = "BtnRefrescarTabla";
             this.BtnRefrescarTabla.Size = new System.Drawing.Size(99, 55);
             this.BtnRefrescarTabla.TabIndex = 11;
@@ -323,11 +328,45 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(701, 72);
+            this.label1.Location = new System.Drawing.Point(530, 60);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 32);
             this.label1.TabIndex = 16;
             this.label1.Text = "T.E:";
+            // 
+            // CboxElegirAhorroOcomplemento
+            // 
+            this.CboxElegirAhorroOcomplemento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CboxElegirAhorroOcomplemento.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CboxElegirAhorroOcomplemento.FormattingEnabled = true;
+            this.CboxElegirAhorroOcomplemento.Items.AddRange(new object[] {
+            "Sel..",
+            "A.C",
+            "D.L"});
+            this.CboxElegirAhorroOcomplemento.Location = new System.Drawing.Point(710, 55);
+            this.CboxElegirAhorroOcomplemento.Name = "CboxElegirAhorroOcomplemento";
+            this.CboxElegirAhorroOcomplemento.Size = new System.Drawing.Size(86, 39);
+            this.CboxElegirAhorroOcomplemento.TabIndex = 17;
+            this.CboxElegirAhorroOcomplemento.SelectedIndexChanged += new System.EventHandler(this.CboxElegirAhorroOcomplemento_SelectedIndexChanged);
+            // 
+            // txtAhorroCasaOcomplemento
+            // 
+            this.txtAhorroCasaOcomplemento.Enabled = false;
+            this.txtAhorroCasaOcomplemento.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAhorroCasaOcomplemento.Location = new System.Drawing.Point(886, 56);
+            this.txtAhorroCasaOcomplemento.Name = "txtAhorroCasaOcomplemento";
+            this.txtAhorroCasaOcomplemento.Size = new System.Drawing.Size(104, 38);
+            this.txtAhorroCasaOcomplemento.TabIndex = 18;
+            this.txtAhorroCasaOcomplemento.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAhorroCasaOcomplemento_KeyPress);
+            // 
+            // lblAhoroCasaOcomplemento
+            // 
+            this.lblAhoroCasaOcomplemento.AutoSize = true;
+            this.lblAhoroCasaOcomplemento.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAhoroCasaOcomplemento.Location = new System.Drawing.Point(811, 59);
+            this.lblAhoroCasaOcomplemento.Name = "lblAhoroCasaOcomplemento";
+            this.lblAhoroCasaOcomplemento.Size = new System.Drawing.Size(0, 32);
+            this.lblAhoroCasaOcomplemento.TabIndex = 19;
             // 
             // Provedores
             // 
@@ -335,6 +374,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1119, 749);
+            this.Controls.Add(this.lblAhoroCasaOcomplemento);
+            this.Controls.Add(this.txtAhorroCasaOcomplemento);
+            this.Controls.Add(this.CboxElegirAhorroOcomplemento);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -343,7 +385,6 @@
             this.Controls.Add(this.lblFechaActual);
             this.Controls.Add(this.dtgDiasCompra);
             this.Controls.Add(this.menuStrip1);
-            this.MaximumSize = new System.Drawing.Size(1137, 796);
             this.MinimumSize = new System.Drawing.Size(1137, 796);
             this.Name = "Provedores";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -385,5 +426,8 @@
         private System.Windows.Forms.Label lblMensage;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox CboxElegirAhorroOcomplemento;
+        private System.Windows.Forms.TextBox txtAhorroCasaOcomplemento;
+        private System.Windows.Forms.Label lblAhoroCasaOcomplemento;
     }
 }

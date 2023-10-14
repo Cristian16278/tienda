@@ -197,7 +197,7 @@ namespace tienda
                             }
                             else
                             {
-                                EnviarMensaje("No se cambio la imagen.", false);
+                                EnviarMensaje("No se cambio la imagen.", true);
                             }
                         }
                         else
@@ -217,7 +217,7 @@ namespace tienda
                                 }
                                 else
                                 {
-                                    EnviarMensaje("No se guardara la imagen.", false);
+                                    EnviarMensaje("No se guardara la imagen.", true);
                                 }
                             }
                         }
@@ -390,6 +390,7 @@ namespace tienda
             if (elegiraccion == "Agregar proveedor")
             {
                 BtnGuardar.Text = "Agregar";
+                lblCompra.Text = "Compra:";
                 //lblProveedor.Text = "Proveedor e agregar:";
                 BtnGuardar.Click -= BtnAgregar_Click;
                 BtnGuardar.Click += BtnAgregar_Click;
@@ -412,6 +413,7 @@ namespace tienda
             {
                 BtnGuardar.Text = "Borrar";
                 lblProveedor.Text = "Proveedor a eliminar:";
+                lblCompra.Text = "Compra:";
                 BtnGuardar.Click -= BtnBorrar_Click;
                 BtnGuardar.Click += BtnBorrar_Click;
                 BtnGuardar.Click -= BtnAgregar_Click;
@@ -432,15 +434,29 @@ namespace tienda
             }
             else if (elegiraccion == "Sumar todo")
             {
-                if (horaactual.Hour >= 21 && horaactual.Minute >= 0)
+                if (horaactual.Hour >= 12 && horaactual.Minute >= 0)
                 {
-                    MessageBox.Show("Se activaran los botones");
+                    //MessageBox.Show("Se activaran los botones");
+                    lblProveedor.Visible = false;
+                    txtProveedor.Visible = false;
+                    CboxProveedoresSinFechaFijo.Visible = false;
+                    CboxProveedorAdelantado.Visible = false;
+                    RdbProveedorAdelanto.Visible = false;
+                    RdbProveedorSFechaFijo.Visible = false;
+                    lblCompra.Text = "Resultado:";
                     BtnGuardar.Click -= BtnSumarTodo_Click;
                     BtnGuardar.Click += BtnSumarTodo_Click;
+                    BtnGuardar.Click -= BtnAgregar_Click;
+                    BtnGuardar.Click -= BtnGuardar_Click;
+                    BtnGuardar.Click -= BtnBorrar_Click;
+                    dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                    BtnGuardar.Text = "Sumar";
+                    BtnGuardar.BackColor = Color.Yellow;
+                    BtnGuardar.ForeColor = Color.Black;
                 }
                 else
                 {
-                    MessageBox.Show("Solo se podra sumar los proveedores alas 9:00 PM para no tener problemas de sumas.","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Solo se podra sumar los proveedores alas 21:00 horas para no tener problemas de sumas.","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     CboxAccionRealizar.SelectedItem = "Modificar";
                 }
                 //aqui se activaran los componentes que bayan a servir para sumar los datos de cada proveedor
@@ -449,6 +465,7 @@ namespace tienda
             {
                 BtnGuardar.Text = "Guardar cambios";
                 lblProveedor.Text = "Proveedor a modificar:";
+                lblCompra.Text = "Compra:";
                 BtnGuardar.Click -= BtnAgregar_Click;
                 BtnGuardar.Click -= BtnBorrar_Click;
                 BtnGuardar.Click -= BtnGuardar_Click;
@@ -469,14 +486,47 @@ namespace tienda
             }
         }
 
-
         private void BtnSumarTodo_Click(object sender, EventArgs e)
         {
             DialogResult respuesta = MessageBox.Show("No hace falta ningun proveedor?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (respuesta == DialogResult.Yes)
+            if (respuesta == DialogResult.No)
             {
-                double resultato = conectar.SumarTodosLosProveedoresFechaActual(FechaActual);
-                //se mostrara ya sea en un label o en un textbox
+                double resultado = conectar.SumarTodosLosProveedoresFechaActual(FechaActual);
+                txtCompra.Text = resultado.ToString();
+                double ne = Convert.ToDouble(txtPresupuesto.Text);
+                double restar = ne - resultado;
+                MessageBox.Show($"el resultado de la resta de {ne} - {resultado} = {restar}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if(restar < 0)
+                {
+                    double numeronegativo = Math.Abs(restar);
+                    double numeroredondeado = Math.Round(numeronegativo);
+                    Properties.Settings.Default.Delacaja = numeroredondeado;
+                    CuentasDiarias cuentasDiarias = new CuentasDiarias(numeroredondeado);
+                    this.Hide();
+                    if(cuentasDiarias.ShowDialog() == DialogResult.Cancel)
+                    {
+                        Application.Exit();//hicieron todos los calculos y lo cerraron
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ocurrio algo desde el form cuentas diarias");
+                    }
+                }
+                else
+                {
+                    double redondear = Math.Round(restar);
+                    Properties.Settings.Default.Delacaja = redondear;
+                    CuentasDiarias cuentas = new CuentasDiarias();
+                    this.Hide();
+                    if(cuentas.ShowDialog() == DialogResult.Cancel)
+                    {
+                        Application.Exit();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ocurrio algo desde el form cuentas diarias");
+                    }
+                }
             }
             else
             {
@@ -496,7 +546,7 @@ namespace tienda
                 DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
                 int obtenerindiceProveedorID = proveedorID;
                 int obtenerRegistroDC = registroDC;
-                double compra = double.Parse(txtCompra.Text);
+                double compra = double.Parse(txtCompra.Text.Replace(".",","));
                 int resultado = conectar.AgregarCompraTablaDiasCompra(obtenerindiceProveedorID, date, compra, obtenerRegistroDC);
                 if(resultado > 0)
                 {
@@ -531,11 +581,19 @@ namespace tienda
                 if (respuesta == DialogResult.Yes)
                 {
                     int ObtenerProveedorID = proveedorID;
-                    conectar.borrarProveedorTablaDiasCompra(ObtenerProveedorID, FechaActual);
-                    dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
-                    dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
-                    dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
-                    MessageBox.Show("se borraran los datos");
+                    int obtenerregistro = registroDC;
+                    int resultado = conectar.borrarProveedorTablaDiasCompra(ObtenerProveedorID, obtenerregistro, FechaActual);
+                    if (resultado == 0)
+                    {
+                        EnviarMensaje("Hubo un error.", true);
+                    }
+                    else
+                    {
+                        dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                        dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
+                        dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
+                        EnviarMensaje("Se borro el dato.", false);
+                    }
                 }
                 else
                 {
@@ -568,7 +626,7 @@ namespace tienda
                     }
                     else
                     {
-                        compra = double.Parse(txtCompra.Text);
+                        compra = double.Parse(txtCompra.Text.Replace(".", ","));
                     }
                     //aqui pondre una condicion para saber si agregara un proveedor sin fecha fijo o es un nuevo proveedor o un proveedor adelanto.
                     if (RdbProveedorAdelanto.Checked)
@@ -651,7 +709,7 @@ namespace tienda
             {
                 timer1.Start();
                 lblMensage.Text = mensage;
-                lblMensage.ForeColor = Color.Red;
+                lblMensage.ForeColor = Color.FromArgb(250,186,12);
             }
             else
             {
@@ -662,8 +720,49 @@ namespace tienda
             
         }
 
+        private void txtCompra_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            {
+                e.Handled = true; // Bloquear la tecla
+            }
 
+            if (e.KeyChar == '.' && (sender as TextBox).Text.Contains("."))// Si ya hay un punto
+            {
+                e.Handled = true;// Bloquear la tecla
+            }
+        }
 
+        
+
+        private void CboxElegirAhorroOcomplemento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string agregar = CboxElegirAhorroOcomplemento.SelectedItem.ToString();
+            if (agregar == "A.C")
+            {
+                lblAhoroCasaOcomplemento.Text = "A.C:";
+                txtAhorroCasaOcomplemento.Enabled = true;
+            }
+            else if (agregar == "D.L")
+            {
+                lblAhoroCasaOcomplemento.Text = "D.L:";
+                txtAhorroCasaOcomplemento.Enabled = true;
+            }
+            else if(agregar == "Sel..")
+            {
+                lblAhoroCasaOcomplemento.Text = "";
+                txtAhorroCasaOcomplemento.Text = "";
+                txtAhorroCasaOcomplemento.Enabled = false;
+            }
+        }
+
+        private void txtAhorroCasaOcomplemento_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // Bloquear la tecla
+            }
+        }
         //private void Provedores_FormClosed(object sender, FormClosedEventArgs e)
         //{
         //    agregarProveedores = null;

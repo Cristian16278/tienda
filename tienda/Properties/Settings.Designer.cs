@@ -34,5 +34,17 @@ namespace tienda.Properties {
                 this["AgarrarDinero"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Delacaja {
+            get {
+                return ((double)(this["Delacaja"]));
+            }
+            set {
+                this["Delacaja"] = value;
+            }
+        }
     }
 }
