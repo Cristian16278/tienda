@@ -169,7 +169,7 @@ namespace tienda
         {
             string provedor = TxtProveedor.Text;
             string diavisita = lblObtenerDias.Text;
-            string Modificardiavisita = lblDiaAcambiar.Text;
+            string Modificardiavisita = lblObtenerDias.Text;
             if (string.IsNullOrEmpty(Modificardiavisita))
             {
                 MessageBox.Show("Eliga al menos un dia.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -207,6 +207,10 @@ namespace tienda
             if (string.IsNullOrEmpty(provedor))
             {
                 MessageBox.Show("Debe al menos agregar un nombre", "Mensaje del programa", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (string.IsNullOrEmpty(lblObtenerDias.Text))
+            {
+                MessageBox.Show("Debe al menos ingresar un dia que baya a pasar.", "Mensage del program", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {

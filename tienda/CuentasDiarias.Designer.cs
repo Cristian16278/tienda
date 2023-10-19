@@ -46,6 +46,7 @@
             this.lblRegistrohoy = new System.Windows.Forms.Label();
             this.BtnBilletesCalcular = new System.Windows.Forms.Button();
             this.BtnAgarrarDinero = new System.Windows.Forms.Button();
+            this.BtnAgregarSumarProveedor = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,6 +74,7 @@
             // 
             // txtDelacaja
             // 
+            this.txtDelacaja.Enabled = false;
             this.txtDelacaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDelacaja.ForeColor = System.Drawing.Color.Teal;
             this.txtDelacaja.Location = new System.Drawing.Point(55, 370);
@@ -210,7 +212,7 @@
             // 
             this.lblRegistrohoy.AutoSize = true;
             this.lblRegistrohoy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegistrohoy.Location = new System.Drawing.Point(529, 534);
+            this.lblRegistrohoy.Location = new System.Drawing.Point(447, 534);
             this.lblRegistrohoy.Name = "lblRegistrohoy";
             this.lblRegistrohoy.Size = new System.Drawing.Size(0, 22);
             this.lblRegistrohoy.TabIndex = 11;
@@ -241,12 +243,28 @@
             this.BtnAgarrarDinero.Visible = false;
             this.BtnAgarrarDinero.Click += new System.EventHandler(this.BtnAgarrarDinero_Click);
             // 
+            // BtnAgregarSumarProveedor
+            // 
+            this.BtnAgregarSumarProveedor.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BtnAgregarSumarProveedor.Enabled = false;
+            this.BtnAgregarSumarProveedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAgregarSumarProveedor.Location = new System.Drawing.Point(55, 586);
+            this.BtnAgregarSumarProveedor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnAgregarSumarProveedor.Name = "BtnAgregarSumarProveedor";
+            this.BtnAgregarSumarProveedor.Size = new System.Drawing.Size(232, 50);
+            this.BtnAgregarSumarProveedor.TabIndex = 14;
+            this.BtnAgregarSumarProveedor.Text = "Agregar Suma";
+            this.BtnAgregarSumarProveedor.UseVisualStyleBackColor = true;
+            this.BtnAgregarSumarProveedor.Visible = false;
+            this.BtnAgregarSumarProveedor.Click += new System.EventHandler(this.BtnAgregarSumarProveedor_Click);
+            // 
             // CuentasDiarias
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(913, 647);
+            this.Controls.Add(this.BtnAgregarSumarProveedor);
             this.Controls.Add(this.BtnAgarrarDinero);
             this.Controls.Add(this.BtnBilletesCalcular);
             this.Controls.Add(this.lblRegistrohoy);
@@ -297,5 +315,6 @@
         private System.Windows.Forms.ToolStripMenuItem actualisarToolStripMenuItem;
         private System.Windows.Forms.Button BtnBilletesCalcular;
         private System.Windows.Forms.Button BtnAgarrarDinero;
+        private System.Windows.Forms.Button BtnAgregarSumarProveedor;
     }
 }

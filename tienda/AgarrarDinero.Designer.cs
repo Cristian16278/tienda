@@ -33,6 +33,7 @@
             this.lblNE = new System.Windows.Forms.Label();
             this.lblResultadoDineroAgarrado = new System.Windows.Forms.Label();
             this.txtAgarrarDinero = new System.Windows.Forms.TextBox();
+            this.lblSobroOagarrar = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BtnRestarDineroAgarrar
@@ -63,9 +64,9 @@
             // 
             this.lblNE.AutoSize = true;
             this.lblNE.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNE.Location = new System.Drawing.Point(183, 26);
+            this.lblNE.Location = new System.Drawing.Point(183, 62);
             this.lblNE.Name = "lblNE";
-            this.lblNE.Size = new System.Drawing.Size(109, 39);
+            this.lblNE.Size = new System.Drawing.Size(103, 38);
             this.lblNE.TabIndex = 2;
             this.lblNE.Text = "label1";
             // 
@@ -75,7 +76,7 @@
             this.lblResultadoDineroAgarrado.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblResultadoDineroAgarrado.Location = new System.Drawing.Point(183, 243);
             this.lblResultadoDineroAgarrado.Name = "lblResultadoDineroAgarrado";
-            this.lblResultadoDineroAgarrado.Size = new System.Drawing.Size(109, 39);
+            this.lblResultadoDineroAgarrado.Size = new System.Drawing.Size(103, 38);
             this.lblResultadoDineroAgarrado.TabIndex = 3;
             this.lblResultadoDineroAgarrado.Text = "label2";
             // 
@@ -88,11 +89,22 @@
             this.txtAgarrarDinero.TabIndex = 4;
             this.txtAgarrarDinero.TextChanged += new System.EventHandler(this.txtAgarrarDinero_TextChanged);
             // 
+            // lblSobroOagarrar
+            // 
+            this.lblSobroOagarrar.AutoSize = true;
+            this.lblSobroOagarrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSobroOagarrar.Location = new System.Drawing.Point(185, 24);
+            this.lblSobroOagarrar.Name = "lblSobroOagarrar";
+            this.lblSobroOagarrar.Size = new System.Drawing.Size(79, 29);
+            this.lblSobroOagarrar.TabIndex = 5;
+            this.lblSobroOagarrar.Text = "label1";
+            // 
             // AgarrarDinero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(487, 381);
+            this.Controls.Add(this.lblSobroOagarrar);
             this.Controls.Add(this.txtAgarrarDinero);
             this.Controls.Add(this.lblResultadoDineroAgarrado);
             this.Controls.Add(this.lblNE);
@@ -116,5 +128,6 @@
         private System.Windows.Forms.Label lblNE;
         private System.Windows.Forms.Label lblResultadoDineroAgarrado;
         private System.Windows.Forms.TextBox txtAgarrarDinero;
+        private System.Windows.Forms.Label lblSobroOagarrar;
     }
 }

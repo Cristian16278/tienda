@@ -257,7 +257,7 @@ namespace tienda
                     int seleccionarcampo = dtgDiasCompra.SelectedCells[0].RowIndex;
                     DataGridViewRow row = dtgDiasCompra.Rows[seleccionarcampo];
 
-                    txtCompra.Text = row.Cells["Compra"].Value.ToString();
+                    txtCompra.Text = row.Cells["Compra"].Value.ToString().Replace(",",".");
                     txtProveedor.Text = row.Cells["Proveedor"].Value.ToString();
                 }
             }
@@ -386,6 +386,8 @@ namespace tienda
         private void CboxAccionRealizar_SelectedIndexChanged(object sender, EventArgs e)
         {
             DateTime horaactual = DateTime.Now;
+            DayOfWeek dia = DateTime.Now.DayOfWeek;
+            //MessageBox.Show($"Test{dia}");
             string elegiraccion = CboxAccionRealizar.SelectedItem.ToString();
             if (elegiraccion == "Agregar proveedor")
             {
@@ -434,31 +436,62 @@ namespace tienda
             }
             else if (elegiraccion == "Sumar todo")
             {
-                if (horaactual.Hour >= 12 && horaactual.Minute >= 0)
+                if(dia == DayOfWeek.Sunday)
                 {
-                    //MessageBox.Show("Se activaran los botones");
-                    lblProveedor.Visible = false;
-                    txtProveedor.Visible = false;
-                    CboxProveedoresSinFechaFijo.Visible = false;
-                    CboxProveedorAdelantado.Visible = false;
-                    RdbProveedorAdelanto.Visible = false;
-                    RdbProveedorSFechaFijo.Visible = false;
-                    lblCompra.Text = "Resultado:";
-                    BtnGuardar.Click -= BtnSumarTodo_Click;
-                    BtnGuardar.Click += BtnSumarTodo_Click;
-                    BtnGuardar.Click -= BtnAgregar_Click;
-                    BtnGuardar.Click -= BtnGuardar_Click;
-                    BtnGuardar.Click -= BtnBorrar_Click;
-                    dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
-                    BtnGuardar.Text = "Sumar";
-                    BtnGuardar.BackColor = Color.Yellow;
-                    BtnGuardar.ForeColor = Color.Black;
+                    if (horaactual.Hour >= 17 && horaactual.Minute >= 0)
+                    {
+                        lblProveedor.Visible = false;
+                        txtProveedor.Visible = false;
+                        CboxProveedoresSinFechaFijo.Visible = false;
+                        CboxProveedorAdelantado.Visible = false;
+                        RdbProveedorAdelanto.Visible = false;
+                        RdbProveedorSFechaFijo.Visible = false;
+                        lblCompra.Text = "Resultado:";
+                        BtnGuardar.Click -= BtnSumarTodo_Click;
+                        BtnGuardar.Click += BtnSumarTodo_Click;
+                        BtnGuardar.Click -= BtnAgregar_Click;
+                        BtnGuardar.Click -= BtnGuardar_Click;
+                        BtnGuardar.Click -= BtnBorrar_Click;
+                        dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                        BtnGuardar.Text = "Sumar";
+                        BtnGuardar.BackColor = Color.Yellow;
+                        BtnGuardar.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Solo se podra sumar los proveedores alas \n17:00 horas(5:00 PM).", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CboxAccionRealizar.SelectedItem = "Modificar";
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Solo se podra sumar los proveedores alas 21:00 horas para no tener problemas de sumas.","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    CboxAccionRealizar.SelectedItem = "Modificar";
+                    if (horaactual.Hour >= 5 && horaactual.Minute >= 0)
+                    {
+                        //MessageBox.Show("Se activaran los botones");
+                        lblProveedor.Visible = false;
+                        txtProveedor.Visible = false;
+                        CboxProveedoresSinFechaFijo.Visible = false;
+                        CboxProveedorAdelantado.Visible = false;
+                        RdbProveedorAdelanto.Visible = false;
+                        RdbProveedorSFechaFijo.Visible = false;
+                        lblCompra.Text = "Resultado:";
+                        BtnGuardar.Click -= BtnSumarTodo_Click;
+                        BtnGuardar.Click += BtnSumarTodo_Click;
+                        BtnGuardar.Click -= BtnAgregar_Click;
+                        BtnGuardar.Click -= BtnGuardar_Click;
+                        BtnGuardar.Click -= BtnBorrar_Click;
+                        dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                        BtnGuardar.Text = "Sumar";
+                        BtnGuardar.BackColor = Color.Yellow;
+                        BtnGuardar.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Solo se podra sumar los proveedores alas \n22:00 horas(10:00 PM).", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CboxAccionRealizar.SelectedItem = "Modificar";
+                    }
                 }
+                
                 //aqui se activaran los componentes que bayan a servir para sumar los datos de cada proveedor
             }
             else
@@ -496,11 +529,12 @@ namespace tienda
                 double ne = Convert.ToDouble(txtPresupuesto.Text);
                 double restar = ne - resultado;
                 MessageBox.Show($"el resultado de la resta de {ne} - {resultado} = {restar}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if(restar < 0)
+                if(restar < 0)//si el resultado de la resta de tara existente y la suma de los proveedores da un numero negativo -1
                 {
                     double numeronegativo = Math.Abs(restar);
                     double numeroredondeado = Math.Round(numeronegativo);
                     Properties.Settings.Default.Delacaja = numeroredondeado;
+                    Properties.Settings.Default.Save();
                     CuentasDiarias cuentasDiarias = new CuentasDiarias(numeroredondeado);
                     this.Hide();
                     if(cuentasDiarias.ShowDialog() == DialogResult.Cancel)
@@ -512,10 +546,11 @@ namespace tienda
                         MessageBox.Show("Ocurrio algo desde el form cuentas diarias");
                     }
                 }
-                else
+                else//en caso contrario se almacenara para preguntar despues di desean agregarlo o no
                 {
                     double redondear = Math.Round(restar);
                     Properties.Settings.Default.Delacaja = redondear;
+                    Properties.Settings.Default.Save();
                     CuentasDiarias cuentas = new CuentasDiarias();
                     this.Hide();
                     if(cuentas.ShowDialog() == DialogResult.Cancel)

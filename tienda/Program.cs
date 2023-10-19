@@ -17,16 +17,17 @@ namespace tienda
             DateTime horaActual = DateTime.Now;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if(horaActual.Hour >= 21 && horaActual.Minute >= 0)
-            {
-                Application.Run(new CuentasDiarias());//<---para que funcione bien todo tengo que poner: CuentasDiarias()
-                //para que comiense bien en proveedores debo poner: Provedores()
-            }
-            else
-            {
-                Application.Run(new Provedores());//<---para que funcione bien todo tengo que poner: Proveedores()
-                //para que comiense bien en proveedores debo poner: Provedores()
-            }
+            Application.Run(new Provedores());
+            //if(horaActual.Hour >= 21 && horaActual.Minute >= 0)
+            //{
+            //    Application.Run(new CuentasDiarias());//<---para que funcione bien todo tengo que poner: CuentasDiarias()
+            //    //para que comiense bien en proveedores debo poner: Provedores()
+            //}
+            //else
+            //{
+            //    Application.Run(new Provedores());//<---para que funcione bien todo tengo que poner: Proveedores()
+            //    //para que comiense bien en proveedores debo poner: Provedores()
+            //}
 
         }
     }

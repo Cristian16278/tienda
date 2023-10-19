@@ -1120,9 +1120,9 @@ namespace Datos
 
             string verificar = "SELECT COUNT(DineroAgarrado) " +
                                "FROM AgarrarDinero " +
-                               "WHERE Fecha = @fechaAnterior";
+                               "WHERE Fecha = @fechaActual";
             SqlCommand comando = new SqlCommand(verificar, conn);
-            comando.Parameters.AddWithValue("@fechaAnterior", fechaActual);
+            comando.Parameters.AddWithValue("@fechaActual", fechaActual);
             int SiexisteDineroAgarrado = Convert.ToInt32(comando.ExecuteScalar());
             return SiexisteDineroAgarrado;
         }

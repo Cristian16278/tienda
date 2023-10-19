@@ -48,15 +48,17 @@ namespace tienda
 
         private void CuentasDiarias_Load(object sender, EventArgs e)
         {
-            DateTime fechaactual = DateTime.Today;
-            if (cone.ActivarBotonAgarrarDinero(fechaactual) >= 1)
-            {
-                BtnAgarrarDinero.Enabled = false;
-            }
-            else
-            {
-                BtnAgarrarDinero.Enabled = true;
-            }
+            //DateTime fechaactual = DateTime.Today;
+            //if (cone.ActivarBotonAgarrarDinero(fechaactual) >= 1)
+            //{
+            //    BtnAgarrarDinero.Enabled = false;
+            //    BtnAgarrarDinero.Visible = false;
+            //}
+            //else
+            //{
+            //    BtnAgarrarDinero.Enabled = true;
+            //    BtnAgarrarDinero.Visible = true;
+            //}
 
             if(lo.ShowDialog() == DialogResult.OK)
             {
@@ -65,8 +67,8 @@ namespace tienda
                     btnGuardar.Enabled = false;
                     btnGuardar.BackColor = Color.LightGray;
                     BtnBilletesCalcular.Enabled = false;
-                    BtnAgarrarDinero.Enabled = true;
-                    BtnAgarrarDinero.Visible = true;
+                    //BtnAgarrarDinero.Enabled = true;
+                    //BtnAgarrarDinero.Visible = true;
                     BtnBilletesCalcular.BackColor = Color.LightGray;
                     lblRegistrohoy.Text = "Ya hay un registro para la fecha de hoy";
                     lblRegistrohoy.ForeColor = Color.Red;
@@ -94,7 +96,107 @@ namespace tienda
         int ObtenerNE;
         private void btnCalcular_Click(object sender, EventArgs e)
         {
-            calcularCuentas(txtBilletes.Text, txtMonedas.Text, txtDelacaja.Text, txtConsumoDiario.Text);
+            int respuesta = calcularCuentas(txtBilletes.Text, txtMonedas.Text, txtDelacaja.Text, txtConsumoDiario.Text);//se guardara luego preguntara
+            if (respuesta == 1)//si todo salio bien me hara toda la logica
+            {
+                MandarMensagesParaSumarProveedoresConNE();
+            }
+            else//sino no se hara nada
+            {
+
+            }
+        }
+
+        private void MandarMensagesParaSumarProveedoresConNE()
+        {
+            DateTime fechaActual = DateTime.Now.Date;
+            double agarardinero = Properties.Settings.Default.Delacaja;//puede que aga una condicion para que solo si es mayor a 200 se pueda agregar al neto existente.
+            if (agarardinero >= 20)//solamente se redondeara si es mayor o igual a $20.
+            {
+                int agarar = redondearSeagarrodelacaja(agarardinero);
+                if (agarar >= 20)
+                {
+                    DialogResult resupuesta = MessageBox.Show($"Sobro ${agarar} de la suma de los proveedores, desea agregarlo?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (resupuesta == DialogResult.Yes)
+                    {
+                        DialogResult respues = MessageBox.Show("Desea agregarlo todo o solo una parte?\nEliga 'Si' si quiere agregarlo todo.\nEliga 'No' si desea agregar solo una parte.", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (respues == DialogResult.Yes)
+                        {
+                            int NEhoy = Properties.Settings.Default.AgarrarDinero;//AgarrarDinero se almacena Neto existente del calculo que se muestrar en el listbox
+                            int sumar = NEhoy + agarar;
+                            int resultado = cone.GuardarMostrarNEDiaSiguiente(fechaActual, sumar);
+                            if (resultado > 0)
+                            {
+                                MessageBox.Show($"Se guardo correctamente el resultado ${sumar} de la suma de ${NEhoy} y ${agarar}.");
+                                lblRegistrohoy.Text = $"Se mostrara ${sumar} para el dia siguiente";
+                                BtnAgarrarDinero.Enabled = false;
+                                BtnAgarrarDinero.Visible = false;
+                                BtnAgregarSumarProveedor.Enabled = false;
+                                BtnAgregarSumarProveedor.Visible = false;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Alparecer hubo un problema al guardar el resultado.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
+                        else
+                        {
+                            //Se mostrara un nuevo form para elegir la cantidad especifica de dinero e agarrar.
+                            AgarrarDinero Partedinero = new AgarrarDinero(agarar, "Sobro:");
+                            if (Partedinero.ShowDialog() == DialogResult.OK)
+                            {
+                                int resultado = Partedinero.ObtenerNEoProveedor();
+                                int NEsumarConLaparte = Properties.Settings.Default.AgarrarDinero;
+                                int sumarresultado = NEsumarConLaparte + resultado;
+                                int resul = cone.GuardarMostrarNEDiaSiguiente(fechaActual, sumarresultado);
+                                if (resul > 0)
+                                {
+                                    MessageBox.Show($"Se guardo correctamente la cantidad ${sumarresultado} para mostrar\ncomo tara existente del siguiente dia.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    BtnAgarrarDinero.Enabled = false;
+                                    BtnAgarrarDinero.Visible = false;
+                                    BtnAgregarSumarProveedor.Enabled = false;
+                                    BtnAgregarSumarProveedor.Visible = false;
+                                    lblRegistrohoy.Text = $"Se mostrara ${sumarresultado} para el dia siguiente";
+                                }
+                                else
+                                {
+                                    MessageBox.Show($"Hubo un problema al intentar ingresar la cantidad ${sumarresultado}.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Se cancelo la accion.", "Mensage del program", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                BtnAgregarSumarProveedor.Visible = true;
+                                BtnAgregarSumarProveedor.Enabled = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"No se sumara la cantidad ${agarar} con el neto existente", "Mensage del program", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        BtnAgarrarDinero.Enabled = true;
+                        BtnAgarrarDinero.Visible = true;
+                        BtnAgregarSumarProveedor.Enabled = true;
+                        BtnAgregarSumarProveedor.Visible = true;
+                    }
+                }
+                else
+                {
+                    //MessageBox.Show("Alparecer no sobro o la cantidad no cumple con el requisito dado.","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    BtnAgarrarDinero.Enabled = true;
+                    BtnAgarrarDinero.Visible = true;
+                    BtnAgregarSumarProveedor.Enabled = true;
+                    BtnAgregarSumarProveedor.Visible = true;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Alparecer no sobro o la cantidad no cumple con el requisito dado.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                BtnAgarrarDinero.Enabled = true;
+                BtnAgarrarDinero.Visible = true;
+                BtnAgregarSumarProveedor.Enabled = true;
+                BtnAgregarSumarProveedor.Visible = true;
+            }
         }
 
         private void GuardarNEconfiguracionDefault(int NEguardarEnConfiguracion)
@@ -109,7 +211,7 @@ namespace tienda
             return CargarNE;
         }
 
-        private void calcularCuentas(string bill, string mone, string delaC, string consumoD)
+        private int calcularCuentas(string bill, string mone, string delaC, string consumoD)
         {
             try
             {
@@ -163,28 +265,32 @@ namespace tienda
                         MessageBox.Show("Se guardo correctamente", "Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         btnGuardar.Enabled = false;
                         btnGuardar.BackColor = Color.LightGray;
-                        BtnAgarrarDinero.Enabled = true;
-                        BtnAgarrarDinero.Visible = true;
+                        
                         ObtenerNE = n_exi;
                         GuardarNEconfiguracionDefault(ObtenerNE);
+                        return 1;
                     }
                     else
                     {
                         MessageBox.Show("la fecha que desea guardar ya existe", "Advertencia!!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return 0;
                     }
                 }
                 else
                 {
                     MessageBox.Show("No se guardo nada", "Guardado cancelado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return 0;
                 }
             }
             catch (FormatException)
             {
                 MessageBox.Show($"Debe ingresar valores","Advertencia!!",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return 0;
             }
             catch (Exception g)
             {
                 MessageBox.Show($"Hubo un error\n\nTipo de error:\n{g}","Error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return 0;
             }
             
         }
@@ -330,15 +436,17 @@ namespace tienda
         {
             try
             {
-                DateTime fechaactual = DateTime.Today;
-                if (cone.ActivarBotonAgarrarDinero(fechaactual) >= 1)
-                {
-                    BtnAgarrarDinero.Enabled = false;
-                }
-                else
-                {
-                    BtnAgarrarDinero.Enabled = true;
-                }
+                //DateTime fechaactual = DateTime.Today;
+                //if (cone.ActivarBotonAgarrarDinero(fechaactual) >= 1)
+                //{
+                //    BtnAgarrarDinero.Enabled = false;
+                //    BtnAgarrarDinero.Visible = false;
+                //}
+                //else
+                //{
+                //    BtnAgarrarDinero.Enabled = true;
+                //    BtnAgarrarDinero.Visible = true;
+                //}
 
                 if (cone.desacbtnSHFechahoy() == DateTime.Today)
                 {
@@ -351,7 +459,7 @@ namespace tienda
                     lblRegistrohoy.ForeColor = Color.Red;
                     txtBilletes.Enabled = false;
                     txtMonedas.Enabled = false;
-                    txtDelacaja.Enabled = false;
+                    //txtDelacaja.Enabled = false;
                     txtConsumoDiario.Enabled = false;
                     txtBilletes.BackColor = Color.LightGray;
                     txtMonedas.BackColor = Color.LightGray;
@@ -368,18 +476,17 @@ namespace tienda
                     lblRegistrohoy.ForeColor = Color.Black;
                     txtBilletes.Enabled = true;
                     txtMonedas.Enabled = true;
-                    txtDelacaja.Enabled = true;
+                    //txtDelacaja.Enabled = true;
                     txtConsumoDiario.Enabled = true;
                     txtBilletes.BackColor = Color.White;
                     txtMonedas.BackColor = Color.White;
-                    txtDelacaja.BackColor = Color.White;
+                    //txtDelacaja.BackColor = Color.White;
                     txtConsumoDiario.BackColor = Color.White;
                     txtBilletes.Text = "";
                     txtMonedas.Text = "";
                     txtDelacaja.Text = "0";
                     txtConsumoDiario.Text = "";
                     listMostrar.Items.Clear();
-                    
                 }
             }
             catch (Exception c)
@@ -413,18 +520,36 @@ namespace tienda
 
         private void BtnAgarrarDinero_Click(object sender, EventArgs e)
         {
+            DateTime fechaActual = DateTime.Today;
             int cargarNE = CargarValorNE();
-            AgarrarDinero agarrar = new AgarrarDinero(cargarNE);
+            AgarrarDinero agarrar = new AgarrarDinero(cargarNE, "N.E:");
             if (agarrar.ShowDialog() == DialogResult.OK)
             {
-                BtnAgarrarDinero.Enabled = false;
-                MessageBox.Show("Se guardo exitosamente la cantidad para mostrar para el dia de mañana", "Mensage del program", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                int guardar = agarrar.ObtenerNEoProveedor();
+                int resultado = cone.GuardarMostrarNEDiaSiguiente(fechaActual, guardar);
+                if (resultado > 0)
+                {
+                    BtnAgarrarDinero.Enabled = false;
+                    MessageBox.Show($"Se guardo exitosamente la cantidad ${guardar} para mostrar para el dia de mañana.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    BtnAgregarSumarProveedor.Enabled = false;
+                    BtnAgregarSumarProveedor.Visible = false;
+                }
+                else
+                {
+                    MessageBox.Show("Alparecer hubo un problema");
+                }
+                
             }
             else
             {
                 BtnAgarrarDinero.Enabled = true;
                 MessageBox.Show("Alparecer hubo un problema al intentar guardar los datos.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void BtnAgregarSumarProveedor_Click(object sender, EventArgs e)
+        {
+            MandarMensagesParaSumarProveedoresConNE();
         }
     }
 }
