@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AgregarProveedores));
             this.DtgvProveedores = new System.Windows.Forms.DataGridView();
             this.CboxElegirAccion = new System.Windows.Forms.ComboBox();
             this.lblRealizarAccion = new System.Windows.Forms.Label();
@@ -317,11 +318,12 @@
             this.Controls.Add(this.lblRealizarAccion);
             this.Controls.Add(this.CboxElegirAccion);
             this.Controls.Add(this.DtgvProveedores);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1173, 811);
             this.MinimumSize = new System.Drawing.Size(922, 811);
             this.Name = "AgregarProveedores";
-            this.Text = "AgregarProveedores";
+            this.Text = "Agregar proveedor";
             this.Load += new System.EventHandler(this.AgregarProveedores_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DtgvProveedores)).EndInit();
             this.GropboxVariosDias.ResumeLayout(false);

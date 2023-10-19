@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Provedores));
             this.dtgDiasCompra = new System.Windows.Forms.DataGridView();
             this.OfdElegirImagen = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -48,6 +49,7 @@
             this.CboxProveedoresSinFechaFijo = new System.Windows.Forms.ComboBox();
             this.CboxAccionRealizar = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtAgregarComentario = new System.Windows.Forms.TextBox();
             this.lblMensage = new System.Windows.Forms.Label();
             this.CboxProveedorAdelantado = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -58,7 +60,6 @@
             this.CboxElegirAhorroOcomplemento = new System.Windows.Forms.ComboBox();
             this.txtAhorroCasaOcomplemento = new System.Windows.Forms.TextBox();
             this.lblAhoroCasaOcomplemento = new System.Windows.Forms.Label();
-            this.txtAgregarComentario = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dtgDiasCompra)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -70,30 +71,30 @@
             this.dtgDiasCompra.AllowUserToAddRows = false;
             this.dtgDiasCompra.AllowUserToDeleteRows = false;
             this.dtgDiasCompra.AllowUserToResizeRows = false;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.DimGray;
-            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.White;
-            this.dtgDiasCompra.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.DimGray;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            this.dtgDiasCompra.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dtgDiasCompra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dtgDiasCompra.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dtgDiasCompra.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgDiasCompra.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgDiasCompra.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dtgDiasCompra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dtgDiasCompra.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dtgDiasCompra.DefaultCellStyle = dataGridViewCellStyle3;
             this.dtgDiasCompra.Location = new System.Drawing.Point(27, 110);
             this.dtgDiasCompra.MultiSelect = false;
             this.dtgDiasCompra.Name = "dtgDiasCompra";
@@ -263,6 +264,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ingresar valores";
             // 
+            // txtAgregarComentario
+            // 
+            this.txtAgregarComentario.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAgregarComentario.Location = new System.Drawing.Point(23, 126);
+            this.txtAgregarComentario.Name = "txtAgregarComentario";
+            this.txtAgregarComentario.Size = new System.Drawing.Size(677, 38);
+            this.txtAgregarComentario.TabIndex = 20;
+            this.txtAgregarComentario.Enter += new System.EventHandler(this.txtAgregarComentario_Enter);
+            this.txtAgregarComentario.Leave += new System.EventHandler(this.txtAgregarComentario_Leave);
+            // 
             // lblMensage
             // 
             this.lblMensage.AutoSize = true;
@@ -370,16 +381,6 @@
             this.lblAhoroCasaOcomplemento.Size = new System.Drawing.Size(0, 32);
             this.lblAhoroCasaOcomplemento.TabIndex = 19;
             // 
-            // txtAgregarComentario
-            // 
-            this.txtAgregarComentario.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAgregarComentario.Location = new System.Drawing.Point(23, 126);
-            this.txtAgregarComentario.Name = "txtAgregarComentario";
-            this.txtAgregarComentario.Size = new System.Drawing.Size(677, 38);
-            this.txtAgregarComentario.TabIndex = 20;
-            this.txtAgregarComentario.Enter += new System.EventHandler(this.txtAgregarComentario_Enter);
-            this.txtAgregarComentario.Leave += new System.EventHandler(this.txtAgregarComentario_Leave);
-            // 
             // Provedores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -397,6 +398,7 @@
             this.Controls.Add(this.lblFechaActual);
             this.Controls.Add(this.dtgDiasCompra);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1137, 796);
             this.MinimumSize = new System.Drawing.Size(1137, 796);

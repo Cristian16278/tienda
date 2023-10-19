@@ -182,8 +182,8 @@ namespace tienda
                     if (e.ColumnIndex == dtgDiasCompra.Columns["Agregar Imagen"].Index)
                     {
                         //OfdElegirImagen.InitialDirectory = "";
-                        //OfdElegirImagen.Title = "Seleccione una imagen";
-                        //OfdElegirImagen.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png|Todos los archivos|*.*";
+                        OfdElegirImagen.Title = "Seleccione una imagen";
+                        OfdElegirImagen.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png";
                         int indice = e.RowIndex;
                         int proveedorID = (int)dtgDiasCompra.Rows[indice].Cells["ProveedorID"].Value;
                         int registroDC = (int)dtgDiasCompra.Rows[indice].Cells["ProveedorDiaID"].Value;
@@ -352,33 +352,6 @@ namespace tienda
                     dtgDiasCompra.Columns["ProveedorDiaID"].Visible = false;
                     //AgregarBotonAlaFila();
                 }
-                //List<int> proveedoresDiascompra = conectar.ObtenerProveedorIDDeDiasCompra(FechaActual);//para comparar las listas
-                //List<int> ProveedoresID = conectar.ObtenerIDproveedoresEnTablaProveedores(DiaActual);
-                //var (nuevoproveedores, verificar) = VerificarProveedorEspecifico(ProveedoresID,proveedoresDiascompra, FechaActual);
-                //if (CompararListas(ProveedoresID, proveedoresDiascompra))
-                //{
-                //    //si son los mismos valores que solo me recarge la tabla
-                //    dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
-                //    dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
-                //    dtgDiasCompra.Columns["ProveedorID"].Visible = false; //luego lo descomentamos < -------------------------------
-                //}
-                //else if (verificar)
-                //{
-                //    //si le hace falta ala tabla diascompra, que me agrege lo que falta y me lo recarge
-                //    conectar.llenarTablaDiasCompra(nuevoproveedores, FechaActual);
-                //    dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
-                //    dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
-                //    dtgDiasCompra.Columns["ProveedorID"].Visible = false; //luego lo descomentamos < -------------------------------
-                //}
-                //else if (conectar.ConsultaProveedorExisteFechaHoy(FechaActual) >= 1)
-                //{
-                //    //si es un nuevo dia que me agrege todos lo proveedores que pasan en el dia actual
-                //    conectar.llenarTablaDiasCompra(ProveedoresID, FechaActual);
-                //    dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
-                //    dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
-                //    dtgDiasCompra.Columns["ProveedorID"].Visible = false; //luego lo descomentamos < -------------------------------
-                //    //AgregarBotonAlaFila();
-                //}
 
             }
             catch (Exception ex)
@@ -460,9 +433,9 @@ namespace tienda
             }
             else if (elegiraccion == "Sumar todo")
             {
-                if(dia == DayOfWeek.Sunday)
+                if(dia == DayOfWeek.Sunday)//para domingo
                 {
-                    if (horaactual.Hour >= 17 && horaactual.Minute >= 0)
+                    if (horaactual.Hour >= 17 && horaactual.Minute >= 0)// solo se podra hacer la suma asta las 5:00pm
                     {
                         lblProveedor.Visible = false;
                         txtProveedor.Visible = false;
@@ -488,9 +461,9 @@ namespace tienda
                         CboxAccionRealizar.SelectedItem = "Modificar";
                     }
                 }
-                else
+                else//para los demas dias
                 {
-                    if (horaactual.Hour >= 5 && horaactual.Minute >= 0)
+                    if (horaactual.Hour >= 22 && horaactual.Minute >= 0)//solo se podra hacer la suma asta las 10:00 pm
                     {
                         //MessageBox.Show("Se activaran los botones");
                         lblProveedor.Visible = false;

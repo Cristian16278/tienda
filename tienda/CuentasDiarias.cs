@@ -151,7 +151,7 @@ namespace tienda
                                 int resul = cone.GuardarMostrarNEDiaSiguiente(fechaActual, sumarresultado);
                                 if (resul > 0)
                                 {
-                                    MessageBox.Show($"Se guardo correctamente la cantidad ${sumarresultado} para mostrar\ncomo tara existente del siguiente dia.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    MessageBox.Show($"Se guardo correctamente el resultado ${sumarresultado} de la suma de {NEsumarConLaparte} y {resultado} para mostrar\ncomo tara existente del siguiente dia.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     BtnAgarrarDinero.Enabled = false;
                                     BtnAgarrarDinero.Visible = false;
                                     BtnAgregarSumarProveedor.Enabled = false;
