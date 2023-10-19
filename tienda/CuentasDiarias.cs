@@ -99,12 +99,27 @@ namespace tienda
             int respuesta = calcularCuentas(txtBilletes.Text, txtMonedas.Text, txtDelacaja.Text, txtConsumoDiario.Text);//se guardara luego preguntara
             if (respuesta == 1)//si todo salio bien me hara toda la logica
             {
-                MandarMensagesParaSumarProveedoresConNE();
+                double numeroNegativo = NumeroNegativoOno();
+                if (numeroNegativo < 0)//si es un numero negativo es que se agarro de la caja
+                {
+                    BtnAgarrarDinero.Visible = true;
+                    BtnAgarrarDinero.Enabled = true;
+                }
+                else//sino es que sobro
+                {
+                    MandarMensagesParaSumarProveedoresConNE();
+                }
             }
             else//sino no se hara nada
             {
 
             }
+        }
+
+        private double NumeroNegativoOno()
+        {
+            double verificar = Properties.Settings.Default.NumeroNegativoOno;
+            return verificar;
         }
 
         private void MandarMensagesParaSumarProveedoresConNE()
@@ -450,7 +465,7 @@ namespace tienda
 
                 if (cone.desacbtnSHFechahoy() == DateTime.Today)
                 {
-                    MessageBox.Show("ya hay una registro para la fecha de hoy","Advertencia!!",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                    MessageBox.Show("Ya hay una registro para la fecha de hoy","Advertencia!!",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                     btnGuardar.Enabled = false;
                     btnGuardar.BackColor = Color.LightGray;
                     BtnBilletesCalcular.Enabled = false;

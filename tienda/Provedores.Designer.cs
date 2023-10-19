@@ -370,6 +370,7 @@
             this.txtAhorroCasaOcomplemento.Name = "txtAhorroCasaOcomplemento";
             this.txtAhorroCasaOcomplemento.Size = new System.Drawing.Size(104, 38);
             this.txtAhorroCasaOcomplemento.TabIndex = 18;
+            this.txtAhorroCasaOcomplemento.Text = "0";
             this.txtAhorroCasaOcomplemento.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAhorroCasaOcomplemento_KeyPress);
             // 
             // lblAhoroCasaOcomplemento

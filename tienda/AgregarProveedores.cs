@@ -146,8 +146,8 @@ namespace tienda
             }
         }
 
-        //metodo Borrar proveedor (este metodo nose si lo utilizare)
-        private void BtnBorrarProveedor_Click(object sender, EventArgs e)
+        
+        private void BtnBorrarProveedor_Click(object sender, EventArgs e)//este metodo no lo utilizo
         {
             string provedor = TxtProveedor.Text;
             //string diavisita = CboxElegirCantidadDias.SelectedItem.ToString();
@@ -240,12 +240,12 @@ namespace tienda
         //este evento se activa al cargar el form
         private void AgregarProveedores_Load(object sender, EventArgs e)
         {
-            DtgvProveedores.ClearSelection();
             TxtProveedor.Visible = false;
             lblDiavisitaProveedor.Text = "";
             lblProveedor.Text = "";
             CboxElegirAccion.SelectedItem = "Seleccione";
             DtgvProveedores.DataSource = conectar.MostrarTablaProveedores();
+            DtgvProveedores.ClearSelection();
         }
 
         private void CambiarMetodoaBoton(string cambiaraccion)

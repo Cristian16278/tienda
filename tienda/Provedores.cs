@@ -28,31 +28,62 @@ namespace tienda
         {
             try
             {
-                dtgDiasCompra.ClearSelection();
-                string diaActual = DateTime.Now.ToString("dddd");
-                lblFechaActual.Text = DateTime.Now.ToString("dddd, d 'de' MMMM 'de' yyyy");
-                DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
-                string DiaActual = conectar.ObtenerDiaActual(diaActual);
-                RefrescarFormululario(DiaActual, date);
-                dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
-                dtgDiasCompra.ClearSelection();
-                AgregarBotonAlaFila();
-                borrarContenidoTextbox();
-                //verificar si se agarro dinero
-                DateTime fechaActual1 = DateTime.Now.Date;//esto lo utilizaremos cuando de la hora para el dia de manana
-                DateTime fechaAnterior = fechaActual1.AddDays(-1);
-                int MostrarEnTextbox = conectar.VerificarDineroAgarradoDiaAnterior(fechaAnterior);
-                txtPresupuesto.Text = MostrarEnTextbox.ToString();
-
-                CboxAccionRealizar.SelectedItem = "Modificar";
-                llenarComboboxSinFechaFijo();
-                LlenarComboboxProveedorAdelanto();
-                dtgDiasCompra.ClearSelection();
+                DayOfWeek dia = DateTime.Now.DayOfWeek;
+                DateTime horaactual = DateTime.Now;
+                if (dia == DayOfWeek.Sunday)//si hoy es domingo
+                {
+                    if (horaactual.Hour >= 17 && horaactual.Minute >= 0)//y la hora es mas de las 17:00 horas(5:00 PM)
+                    {
+                        CboxAccionRealizar.SelectedItem = "Sumar todo";//Seleccioname el 'Sumar todo' del combobox
+                        MetodoParaEventoLoadDelForm();
+                    }
+                    {
+                    else//en caso contrario
+                        CboxAccionRealizar.SelectedItem = "Modificar";//seleccioname el 'Modificar' del combobox
+                        MetodoParaEventoLoadDelForm();
+                    }
+                }
+                else//en caso contrario es otro dia
+                {
+                    if (horaactual.Hour >= 22 && horaactual.Minute >= 0)//y la hora es mas de las 22:00 horas(10:00 PM)
+                    {
+                        CboxAccionRealizar.SelectedItem = "Sumar todo";//Seleccioname el 'Sumar todo' del combobox 
+                        MetodoParaEventoLoadDelForm();
+                    }
+                    else//en caso contrario
+                    {
+                        CboxAccionRealizar.SelectedItem = "Modificar";//Seleccioname el 'Modificar' del Combobox
+                        MetodoParaEventoLoadDelForm();
+                    }
+                }
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ocurrio un error al intentar cargar el form.\ntipo de error:\n{ex}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void MetodoParaEventoLoadDelForm()
+        {
+            dtgDiasCompra.ClearSelection();
+            string diaActual = DateTime.Now.ToString("dddd");
+            lblFechaActual.Text = DateTime.Now.ToString("dddd, d 'de' MMMM 'de' yyyy");
+            DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
+            string DiaActual = conectar.ObtenerDiaActual(diaActual);
+            RefrescarFormululario(DiaActual, date);
+            dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
+            dtgDiasCompra.ClearSelection();
+            AgregarBotonAlaFila();
+            borrarContenidoTextbox();
+            //verificar si se agarro dinero
+            DateTime fechaActual1 = DateTime.Now.Date;//esto lo utilizaremos cuando de la hora para el dia de manana
+            DateTime fechaAnterior = fechaActual1.AddDays(-1);
+            int MostrarEnTextbox = conectar.VerificarDineroAgarradoDiaAnterior(fechaAnterior);
+            txtPresupuesto.Text = MostrarEnTextbox.ToString();
+            llenarComboboxSinFechaFijo();
+            LlenarComboboxProveedorAdelanto();
+            dtgDiasCompra.ClearSelection();
         }
 
         private List<int> VerificarProveedorEspecifico(List<int> obtenerProveedorDeTablaProveedores, List<int> proveedoresDiascompra, DateTime dia)
@@ -83,7 +114,7 @@ namespace tienda
             }
         }
 
-        private bool CompararListas(List<int> lista1, List<int> lista2)
+        private bool CompararListas(List<int> lista1, List<int> lista2)//este metodo no lo utilizo
         {
             try
             {
@@ -387,6 +418,8 @@ namespace tienda
                 BtnGuardar.Text = "Agregar";
                 lblCompra.Text = "Compra:";
                 txtCompra.Text = "";
+                txtAgregarComentario.Text = "Agrege un Comentario";
+                txtAgregarComentario.ForeColor = Color.DarkGray;
                 //lblProveedor.Text = "Proveedor e agregar:";
                 BtnGuardar.Click -= BtnAgregar_Click;
                 BtnGuardar.Click += BtnAgregar_Click;
@@ -412,6 +445,7 @@ namespace tienda
                 lblProveedor.Text = "Proveedor a eliminar:";
                 lblCompra.Text = "Compra:";
                 txtCompra.Text = "";
+                txtAgregarComentario.Text = "";
                 BtnGuardar.Click -= BtnBorrar_Click;
                 BtnGuardar.Click += BtnBorrar_Click;
                 BtnGuardar.Click -= BtnAgregar_Click;
@@ -452,6 +486,7 @@ namespace tienda
                         BtnGuardar.Click -= BtnBorrar_Click;
                         dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
                         BtnGuardar.Text = "Sumar";
+                        txtCompra.Text = "";
                         BtnGuardar.BackColor = Color.Yellow;
                         BtnGuardar.ForeColor = Color.Black;
                     }
@@ -474,6 +509,7 @@ namespace tienda
                         RdbProveedorSFechaFijo.Visible = false;
                         txtAgregarComentario.Visible = false;
                         lblCompra.Text = "Resultado:";
+                        txtCompra.Text = "";
                         BtnGuardar.Click -= BtnSumarTodo_Click;
                         BtnGuardar.Click += BtnSumarTodo_Click;
                         BtnGuardar.Click -= BtnAgregar_Click;
@@ -499,6 +535,8 @@ namespace tienda
                 lblProveedor.Text = "Proveedor a modificar:";
                 lblCompra.Text = "Compra:";
                 txtCompra.Text = "";
+                txtAgregarComentario.Text = "Agrege un Comentario";
+                txtAgregarComentario.ForeColor = Color.DarkGray;
                 BtnGuardar.Click -= BtnAgregar_Click;
                 BtnGuardar.Click -= BtnBorrar_Click;
                 BtnGuardar.Click -= BtnGuardar_Click;
@@ -528,10 +566,13 @@ namespace tienda
                 double resultado = conectar.SumarTodosLosProveedoresFechaActual(FechaActual);
                 txtCompra.Text = resultado.ToString();
                 double ne = Convert.ToDouble(txtPresupuesto.Text);
-                double restar = ne - resultado;
-                MessageBox.Show($"el resultado de la resta de {ne} - {resultado} = {restar}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                double decasa = Convert.ToDouble(txtAhorroCasaOcomplemento.Text);
+                double restar = (ne + decasa) - resultado;
+                string result = restar.ToString("N2");
+                MessageBox.Show($"el resultado de la resta de {ne} - {resultado} = {result}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if(restar < 0)//si el resultado de la resta de tara existente y la suma de los proveedores da un numero negativo -1
                 {
+                    VerificarSiEsNumeroNegativo(restar);
                     double numeronegativo = Math.Abs(restar);
                     double numeroredondeado = Math.Round(numeronegativo);
                     Properties.Settings.Default.Delacaja = numeroredondeado;
@@ -547,8 +588,9 @@ namespace tienda
                         MessageBox.Show("Ocurrio algo desde el form cuentas diarias");
                     }
                 }
-                else//en caso contrario se almacenara para preguntar despues di desean agregarlo o no
+                else//en caso contrario se almacenara para preguntar despues si desean agregarlo o no
                 {
+                    VerificarSiEsNumeroNegativo(restar);
                     double redondear = Math.Round(restar);
                     Properties.Settings.Default.Delacaja = redondear;
                     Properties.Settings.Default.Save();
@@ -568,6 +610,12 @@ namespace tienda
             {
 
             }
+        }
+
+        private void VerificarSiEsNumeroNegativo(double restar)
+        {
+            Properties.Settings.Default.NumeroNegativoOno = restar;
+            Properties.Settings.Default.Save();
         }
 
         DateTime FechaActual = DateTime.Now.Date;
@@ -597,6 +645,7 @@ namespace tienda
                     borrarContenidoTextbox();
                     EnviarMensaje("Se guardaron los cambios.", false);
                     txtAgregarComentario.Text = "";
+                    txtCompra.Text = "";
                 }
                 else
                 {
@@ -683,6 +732,9 @@ namespace tienda
                         if(resultado > 0)
                         {
                             EnviarMensaje("Se agrego correctamente los datos.", false);
+                            txtCompra.Text = "";
+                            txtAgregarComentario.Text = "Agrege un Comentario";
+                            txtAgregarComentario.ForeColor = Color.DarkGray;
                         }
                         else
                         {
@@ -701,6 +753,9 @@ namespace tienda
                         if (resultado > 0)
                         {
                             EnviarMensaje("Se agrego correctamente los datos.", false);
+                            txtCompra.Text = "";
+                            txtAgregarComentario.Text = "Agrege un Comentario";
+                            txtAgregarComentario.ForeColor = Color.DarkGray;
                         }
                         else
                         {
@@ -821,7 +876,7 @@ namespace tienda
             if (txtAgregarComentario.Text == "Agrege un Comentario")
             {
                 txtAgregarComentario.Text = "";
-                txtAgregarComentario.ForeColor = Color.Black; // Opcional: restaura el color del texto
+                txtAgregarComentario.ForeColor = Color.Black;
             }
         }
 
@@ -830,7 +885,7 @@ namespace tienda
             if (string.IsNullOrWhiteSpace(txtAgregarComentario.Text))
             {
                 txtAgregarComentario.Text = "Agrege un Comentario";
-                txtAgregarComentario.ForeColor = Color.DarkGray; // Opcional: cambia el color del texto a gris
+                txtAgregarComentario.ForeColor = Color.DarkGray;
             }
         }
         //private void Provedores_FormClosed(object sender, FormClosedEventArgs e)

@@ -46,5 +46,17 @@ namespace tienda.Properties {
                 this["Delacaja"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double NumeroNegativoOno {
+            get {
+                return ((double)(this["NumeroNegativoOno"]));
+            }
+            set {
+                this["NumeroNegativoOno"] = value;
+            }
+        }
     }
 }
