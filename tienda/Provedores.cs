@@ -37,8 +37,8 @@ namespace tienda
                         CboxAccionRealizar.SelectedItem = "Sumar todo";//Seleccioname el 'Sumar todo' del combobox
                         MetodoParaEventoLoadDelForm();
                     }
-                    {
-                    else//en caso contrario
+                    else
+                    {    //en caso contrario
                         CboxAccionRealizar.SelectedItem = "Modificar";//seleccioname el 'Modificar' del combobox
                         MetodoParaEventoLoadDelForm();
                     }
