@@ -58,6 +58,7 @@
             this.CboxElegirAhorroOcomplemento = new System.Windows.Forms.ComboBox();
             this.txtAhorroCasaOcomplemento = new System.Windows.Forms.TextBox();
             this.lblAhoroCasaOcomplemento = new System.Windows.Forms.Label();
+            this.txtAgregarComentario = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dtgDiasCompra)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -140,9 +141,9 @@
             // txtCompra
             // 
             this.txtCompra.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCompra.Location = new System.Drawing.Point(421, 109);
+            this.txtCompra.Location = new System.Drawing.Point(419, 70);
             this.txtCompra.Name = "txtCompra";
-            this.txtCompra.Size = new System.Drawing.Size(236, 38);
+            this.txtCompra.Size = new System.Drawing.Size(281, 38);
             this.txtCompra.TabIndex = 4;
             this.txtCompra.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCompra_KeyPress);
             // 
@@ -150,7 +151,7 @@
             // 
             this.lblCompra.AutoSize = true;
             this.lblCompra.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCompra.Location = new System.Drawing.Point(415, 69);
+            this.lblCompra.Location = new System.Drawing.Point(413, 30);
             this.lblCompra.Name = "lblCompra";
             this.lblCompra.Size = new System.Drawing.Size(122, 32);
             this.lblCompra.TabIndex = 5;
@@ -160,7 +161,7 @@
             // 
             this.lblProveedor.AutoSize = true;
             this.lblProveedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProveedor.Location = new System.Drawing.Point(19, 69);
+            this.lblProveedor.Location = new System.Drawing.Point(17, 30);
             this.lblProveedor.Name = "lblProveedor";
             this.lblProveedor.Size = new System.Drawing.Size(153, 32);
             this.lblProveedor.TabIndex = 6;
@@ -169,7 +170,7 @@
             // txtProveedor
             // 
             this.txtProveedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProveedor.Location = new System.Drawing.Point(25, 109);
+            this.txtProveedor.Location = new System.Drawing.Point(23, 70);
             this.txtProveedor.Name = "txtProveedor";
             this.txtProveedor.Size = new System.Drawing.Size(285, 38);
             this.txtProveedor.TabIndex = 7;
@@ -222,7 +223,7 @@
             this.CboxProveedoresSinFechaFijo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CboxProveedoresSinFechaFijo.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CboxProveedoresSinFechaFijo.FormattingEnabled = true;
-            this.CboxProveedoresSinFechaFijo.Location = new System.Drawing.Point(25, 109);
+            this.CboxProveedoresSinFechaFijo.Location = new System.Drawing.Point(23, 70);
             this.CboxProveedoresSinFechaFijo.Name = "CboxProveedoresSinFechaFijo";
             this.CboxProveedoresSinFechaFijo.Size = new System.Drawing.Size(285, 39);
             this.CboxProveedoresSinFechaFijo.TabIndex = 12;
@@ -246,6 +247,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox1.Controls.Add(this.txtAgregarComentario);
             this.groupBox1.Controls.Add(this.lblMensage);
             this.groupBox1.Controls.Add(this.CboxProveedorAdelantado);
             this.groupBox1.Controls.Add(this.lblCompra);
@@ -274,7 +276,7 @@
             this.CboxProveedorAdelantado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CboxProveedorAdelantado.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CboxProveedorAdelantado.FormattingEnabled = true;
-            this.CboxProveedorAdelantado.Location = new System.Drawing.Point(25, 109);
+            this.CboxProveedorAdelantado.Location = new System.Drawing.Point(23, 70);
             this.CboxProveedorAdelantado.Name = "CboxProveedorAdelantado";
             this.CboxProveedorAdelantado.Size = new System.Drawing.Size(285, 39);
             this.CboxProveedorAdelantado.TabIndex = 13;
@@ -368,6 +370,16 @@
             this.lblAhoroCasaOcomplemento.Size = new System.Drawing.Size(0, 32);
             this.lblAhoroCasaOcomplemento.TabIndex = 19;
             // 
+            // txtAgregarComentario
+            // 
+            this.txtAgregarComentario.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAgregarComentario.Location = new System.Drawing.Point(23, 126);
+            this.txtAgregarComentario.Name = "txtAgregarComentario";
+            this.txtAgregarComentario.Size = new System.Drawing.Size(677, 38);
+            this.txtAgregarComentario.TabIndex = 20;
+            this.txtAgregarComentario.Enter += new System.EventHandler(this.txtAgregarComentario_Enter);
+            this.txtAgregarComentario.Leave += new System.EventHandler(this.txtAgregarComentario_Leave);
+            // 
             // Provedores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -431,5 +443,6 @@
         private System.Windows.Forms.ComboBox CboxElegirAhorroOcomplemento;
         private System.Windows.Forms.TextBox txtAhorroCasaOcomplemento;
         private System.Windows.Forms.Label lblAhoroCasaOcomplemento;
+        private System.Windows.Forms.TextBox txtAgregarComentario;
     }
 }

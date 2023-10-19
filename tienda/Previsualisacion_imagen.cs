@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,23 +13,41 @@ namespace tienda
 {
     public partial class Previsualisacion_imagen : Form
     {
-        public Previsualisacion_imagen(string imagen, string CambiarImagen)
+        public Previsualisacion_imagen(byte[] imagen, string CambiarImagen)
         {
             InitializeComponent();
             try
             {
                 if(CambiarImagen == "si")
                 {
-                    pictureBox1.Image = Image.FromFile(imagen);
-                    BtnGuardar.Text = "Aceptar";
-                    BtnCancelar.Enabled = false;
+                    using (MemoryStream ms = new MemoryStream(imagen))
+                    {
+                        Image image = Image.FromStream(ms);
+
+                        // Mostrar la imagen en el PictureBox
+                        pictureBox1.Image = image;
+                        //pictureBox1.Image = Image.FromFile(imagen);
+                        BtnGuardar.Text = "Aceptar";
+                        BtnCancelar.Enabled = false;
+                    }
+                    
                     //BtnCancelar.Enabled = false;
                     //BtnCambiarImagen.Enabled = true;
                 }
                 else
                 {
-                    pictureBox1.Image = Image.FromFile(imagen);
-                    BtnGuardar.Text = "Guardar";
+                    using (MemoryStream ms = new MemoryStream(imagen))
+                    {
+                        Image image = Image.FromStream(ms);
+
+                        // Mostrar la imagen en el PictureBox
+                        pictureBox1.Image = image;
+                        //pictureBox1.Image = Image.FromFile(imagen);
+                        BtnGuardar.Text = "Guardar";
+                        //pictureBox1.Image = Image.FromFile(imagen);
+
+                    }
+                    
                     //BtnCancelar.Enabled = true;
                 }
             }

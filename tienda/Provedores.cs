@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Datos;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 //using static System.Net.Mime.MediaTypeNames;
 
 namespace tienda
@@ -27,15 +28,16 @@ namespace tienda
         {
             try
             {
+                dtgDiasCompra.ClearSelection();
                 string diaActual = DateTime.Now.ToString("dddd");
                 lblFechaActual.Text = DateTime.Now.ToString("dddd, d 'de' MMMM 'de' yyyy");
                 DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
                 string DiaActual = conectar.ObtenerDiaActual(diaActual);
                 RefrescarFormululario(DiaActual, date);
                 dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
+                dtgDiasCompra.ClearSelection();
                 AgregarBotonAlaFila();
                 borrarContenidoTextbox();
-
                 //verificar si se agarro dinero
                 DateTime fechaActual1 = DateTime.Now.Date;//esto lo utilizaremos cuando de la hora para el dia de manana
                 DateTime fechaAnterior = fechaActual1.AddDays(-1);
@@ -45,6 +47,7 @@ namespace tienda
                 CboxAccionRealizar.SelectedItem = "Modificar";
                 llenarComboboxSinFechaFijo();
                 LlenarComboboxProveedorAdelanto();
+                dtgDiasCompra.ClearSelection();
             }
             catch (Exception ex)
             {
@@ -191,7 +194,8 @@ namespace tienda
                             if (previsualisacion.ShowDialog() == DialogResult.OK)
                             {
                                 string obtenernuevaruta = previsualisacion.ObtenerNuevaRuta();
-                                conectar.GuardarImagenProveedor(proveedorID, date, obtenernuevaruta, registroDC);
+                                byte[] bytesguardarimagen = File.ReadAllBytes(obtenernuevaruta);
+                                conectar.GuardarImagenProveedor(proveedorID, date, bytesguardarimagen, registroDC);
                                 dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
                                 EnviarMensaje("Se cambio la imagen correctamente.", false);
                             }
@@ -205,12 +209,13 @@ namespace tienda
                             if (OfdElegirImagen.ShowDialog() == DialogResult.OK)
                             {
                                 string imagen = OfdElegirImagen.FileName;
-                                Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(imagen, "no");
+                                byte[] rutaimagengua = File.ReadAllBytes(imagen);
+                                Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(rutaimagengua, "no");
                                 if (previsualisacion.ShowDialog() == DialogResult.OK)
                                 {
                                     int indice1 = e.RowIndex;
                                     int proveedorID1 = (int)dtgDiasCompra.Rows[indice1].Cells["ProveedorID"].Value;
-                                    conectar.GuardarImagenProveedor(proveedorID1, date, imagen, registroDC);
+                                    conectar.GuardarImagenProveedor(proveedorID1, date, rutaimagengua, registroDC);
                                     dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
                                     //dtgDiasCompra.Columns["ProveedorID"].Visible = false;
                                     EnviarMensaje("Se guardo correctamente la imagen", false);
@@ -222,7 +227,7 @@ namespace tienda
                             }
                         }
                     }
-                    else if (e.ColumnIndex == dtgDiasCompra.Columns["Compra"].Index || e.ColumnIndex == dtgDiasCompra.Columns["Imagen"].Index || e.ColumnIndex == dtgDiasCompra.Columns["Proveedor"].Index)
+                    else if (e.ColumnIndex == dtgDiasCompra.Columns["Compra"].Index || e.ColumnIndex == dtgDiasCompra.Columns["Proveedor"].Index || e.ColumnIndex == dtgDiasCompra.Columns["Comentario"].Index)
                     {
                         int indice = e.RowIndex;
                         proveedorID = (int)dtgDiasCompra.Rows[indice].Cells["ProveedorID"].Value;
@@ -259,6 +264,17 @@ namespace tienda
 
                     txtCompra.Text = row.Cells["Compra"].Value.ToString().Replace(",",".");
                     txtProveedor.Text = row.Cells["Proveedor"].Value.ToString();
+                    string comentario = row.Cells["Comentario"].Value.ToString();
+                    if (string.IsNullOrEmpty(comentario))
+                    {
+                        txtAgregarComentario.Text = "Agrege un Comentario";
+                        txtAgregarComentario.ForeColor = Color.Gray;
+                    }
+                    else
+                    {
+                        txtAgregarComentario.Text = comentario;
+                        txtAgregarComentario.ForeColor = Color.Black;
+                    }
                 }
             }
             catch (Exception a)
@@ -293,6 +309,7 @@ namespace tienda
             //    dtgDiasCompra.Columns["ProveedorID"].Visible = false;
             //}
             dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
+            dtgDiasCompra.ClearSelection();
             borrarContenidoTextbox();
             llenarComboboxSinFechaFijo();
             LlenarComboboxProveedorAdelanto();
@@ -310,6 +327,7 @@ namespace tienda
                     //si le hace falta ala tabla diascompra, que me agrege lo que falta y me lo recarge
                     conectar.llenarTablaDiasCompra(nuevoproveedores, FechaActual);
                     dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                    dtgDiasCompra.ClearSelection();
                     dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
                     dtgDiasCompra.Columns["ProveedorID"].Visible = false; //luego lo descomentamos < -------------------------------
                     dtgDiasCompra.Columns["ProveedorDiaID"].Visible = false;
@@ -318,6 +336,7 @@ namespace tienda
                 {
                     //si ya existen proveedores con la fecha actual que solo me recarge la tabla.
                     dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                    dtgDiasCompra.ClearSelection();
                     dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
                     dtgDiasCompra.Columns["ProveedorID"].Visible = false; //luego lo descomentamos < -------------------------------
                     dtgDiasCompra.Columns["ProveedorDiaID"].Visible = false;
@@ -327,6 +346,7 @@ namespace tienda
                     //si es un nuevo dia que me agrege todos lo proveedores que pasan en el dia actual
                     conectar.llenarTablaDiasCompra(ProveedoresID, FechaActual);
                     dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                    dtgDiasCompra.ClearSelection();
                     dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
                     dtgDiasCompra.Columns["ProveedorID"].Visible = false; //luego lo descomentamos < -------------------------------
                     dtgDiasCompra.Columns["ProveedorDiaID"].Visible = false;
@@ -393,6 +413,7 @@ namespace tienda
             {
                 BtnGuardar.Text = "Agregar";
                 lblCompra.Text = "Compra:";
+                txtCompra.Text = "";
                 //lblProveedor.Text = "Proveedor e agregar:";
                 BtnGuardar.Click -= BtnAgregar_Click;
                 BtnGuardar.Click += BtnAgregar_Click;
@@ -407,6 +428,7 @@ namespace tienda
                 //CboxProveedorAdelantado.Visible = true;
                 RdbProveedorSFechaFijo.Visible = true;
                 RdbProveedorAdelanto.Visible = true;
+                txtAgregarComentario.Visible = true;
                 QuitarCheckedRadiobutton(true, false);
                 //nesesitaremos el ProveedorID donde DiaVisita sea igual a 'Sin dia fijo',
                 //la fecha y la compra sera opcional
@@ -416,6 +438,7 @@ namespace tienda
                 BtnGuardar.Text = "Borrar";
                 lblProveedor.Text = "Proveedor a eliminar:";
                 lblCompra.Text = "Compra:";
+                txtCompra.Text = "";
                 BtnGuardar.Click -= BtnBorrar_Click;
                 BtnGuardar.Click += BtnBorrar_Click;
                 BtnGuardar.Click -= BtnAgregar_Click;
@@ -427,6 +450,7 @@ namespace tienda
                 CboxProveedoresSinFechaFijo.Visible = false;
                 txtProveedor.Enabled = false;
                 txtProveedor.Visible = true;
+                txtAgregarComentario.Visible = true;
                 txtProveedor.BackColor = Color.Silver;
                 CboxProveedorAdelantado.Visible = false;
                 RdbProveedorSFechaFijo.Visible = false;
@@ -446,6 +470,7 @@ namespace tienda
                         CboxProveedorAdelantado.Visible = false;
                         RdbProveedorAdelanto.Visible = false;
                         RdbProveedorSFechaFijo.Visible = false;
+                        txtAgregarComentario.Visible = false;
                         lblCompra.Text = "Resultado:";
                         BtnGuardar.Click -= BtnSumarTodo_Click;
                         BtnGuardar.Click += BtnSumarTodo_Click;
@@ -474,6 +499,7 @@ namespace tienda
                         CboxProveedorAdelantado.Visible = false;
                         RdbProveedorAdelanto.Visible = false;
                         RdbProveedorSFechaFijo.Visible = false;
+                        txtAgregarComentario.Visible = false;
                         lblCompra.Text = "Resultado:";
                         BtnGuardar.Click -= BtnSumarTodo_Click;
                         BtnGuardar.Click += BtnSumarTodo_Click;
@@ -499,6 +525,7 @@ namespace tienda
                 BtnGuardar.Text = "Guardar cambios";
                 lblProveedor.Text = "Proveedor a modificar:";
                 lblCompra.Text = "Compra:";
+                txtCompra.Text = "";
                 BtnGuardar.Click -= BtnAgregar_Click;
                 BtnGuardar.Click -= BtnBorrar_Click;
                 BtnGuardar.Click -= BtnGuardar_Click;
@@ -511,6 +538,7 @@ namespace tienda
                 txtProveedor.Visible = true;
                 txtProveedor.Enabled = false;
                 txtProveedor.BackColor = Color.Silver;
+                txtAgregarComentario.Visible = true;
                 CboxProveedorAdelantado.Visible = false;
                 RdbProveedorSFechaFijo.Visible = false;
                 RdbProveedorAdelanto.Visible = false;
@@ -582,7 +610,12 @@ namespace tienda
                 int obtenerindiceProveedorID = proveedorID;
                 int obtenerRegistroDC = registroDC;
                 double compra = double.Parse(txtCompra.Text.Replace(".",","));
-                int resultado = conectar.AgregarCompraTablaDiasCompra(obtenerindiceProveedorID, date, compra, obtenerRegistroDC);
+                string comentario = txtAgregarComentario.Text;
+                if(comentario == "Agrege un Comentario")
+                {
+                    comentario = "";
+                }
+                int resultado = conectar.AgregarCompraTablaDiasCompra(obtenerindiceProveedorID, date, compra, obtenerRegistroDC, comentario);
                 if(resultado > 0)
                 {
                     dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
@@ -590,6 +623,7 @@ namespace tienda
                     dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
                     borrarContenidoTextbox();
                     EnviarMensaje("Se guardaron los cambios.", false);
+                    txtAgregarComentario.Text = "";
                 }
                 else
                 {
@@ -667,7 +701,12 @@ namespace tienda
                     if (RdbProveedorAdelanto.Checked)
                     {
                         proveedorSeleccionado = (int)CboxProveedorAdelantado.SelectedValue;
-                        int resultado = conectar.AgregarNuevoProveedorEnTablaDiasCompra(proveedorSeleccionado, compra, FechaActual);
+                        string comentario = txtAgregarComentario.Text;
+                        if(comentario == "Agrege un Comentario")
+                        {
+                            comentario = "";
+                        }
+                        int resultado = conectar.AgregarNuevoProveedorEnTablaDiasCompra(proveedorSeleccionado, compra, FechaActual, comentario);
                         if(resultado > 0)
                         {
                             EnviarMensaje("Se agrego correctamente los datos.", false);
@@ -680,7 +719,12 @@ namespace tienda
                     else if(RdbProveedorSFechaFijo.Checked)
                     {
                         proveedorSeleccionado = (int)CboxProveedoresSinFechaFijo.SelectedValue;
-                        int resultado = conectar.AgregarNuevoProveedorEnTablaDiasCompra(proveedorSeleccionado, compra, FechaActual);
+                        string comentario = txtAgregarComentario.Text;
+                        if (comentario == "Agrege un Comentario")
+                        {
+                            comentario = "";
+                        }
+                        int resultado = conectar.AgregarNuevoProveedorEnTablaDiasCompra(proveedorSeleccionado, compra, FechaActual, comentario);
                         if (resultado > 0)
                         {
                             EnviarMensaje("Se agrego correctamente los datos.", false);
@@ -762,7 +806,7 @@ namespace tienda
                 e.Handled = true; // Bloquear la tecla
             }
 
-            if (e.KeyChar == '.' && (sender as TextBox).Text.Contains("."))// Si ya hay un punto
+            if (e.KeyChar == '.' && (sender as System.Windows.Forms.TextBox).Text.Contains("."))// Si ya hay un punto
             {
                 e.Handled = true;// Bloquear la tecla
             }
@@ -796,6 +840,24 @@ namespace tienda
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true; // Bloquear la tecla
+            }
+        }
+
+        private void txtAgregarComentario_Enter(object sender, EventArgs e)
+        {
+            if (txtAgregarComentario.Text == "Agrege un Comentario")
+            {
+                txtAgregarComentario.Text = "";
+                txtAgregarComentario.ForeColor = Color.Black; // Opcional: restaura el color del texto
+            }
+        }
+
+        private void txtAgregarComentario_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtAgregarComentario.Text))
+            {
+                txtAgregarComentario.Text = "Agrege un Comentario";
+                txtAgregarComentario.ForeColor = Color.DarkGray; // Opcional: cambia el color del texto a gris
             }
         }
         //private void Provedores_FormClosed(object sender, FormClosedEventArgs e)

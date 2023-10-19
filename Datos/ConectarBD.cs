@@ -669,7 +669,7 @@ namespace Datos
                     conn.Open();
                 }
 
-                string consultar = "SELECT DC.ProveedorDiaID, P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra, DC.ImagenCompras AS Imagen " +
+                string consultar = "SELECT DC.ProveedorDiaID, P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra, DC.Comentario " +
                                    "FROM DiasCompra AS DC " +
                                    "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
                                    "WHERE DC.Fecha = @fecha";
@@ -736,7 +736,7 @@ namespace Datos
 
                 foreach (int provedorID in proveedorID)
                 {
-                    string insertarProveedor = $"INSERT INTO DiasCompra(ProveedorID, Compra, Fecha, ImagenCompras) VALUES (@Proveedor, 0, @Fecha, null)";
+                    string insertarProveedor = $"INSERT INTO DiasCompra(ProveedorID, Comentario, Compra, Fecha, ImagenCompras) VALUES (@Proveedor, '', 0, @Fecha, null)";
                     using (SqlCommand insertar = new SqlCommand(insertarProveedor, conn))
                     {
                         insertar.Parameters.AddWithValue("@Proveedor", provedorID);
@@ -881,7 +881,7 @@ namespace Datos
 
 
         //aqui se ara el guardado de la imagen
-        public void GuardarImagenProveedor(int idproveedor, DateTime fechaactual, string imagenguardar, int registroDC)
+        public void GuardarImagenProveedor(int idproveedor, DateTime fechaactual, byte[] imagenguardar, int registroDC)
         {
             if (conn.State != ConnectionState.Open)
             {
@@ -901,7 +901,7 @@ namespace Datos
 
         }
 
-        public (int,string) VerificarImagenEnProveedor(DateTime fecha, int proveedorID, int ProveedorDC)
+        public (int, byte[]) VerificarImagenEnProveedor(DateTime fecha, int proveedorID, int ProveedorDC)
         {
             if (conn.State != ConnectionState.Open)
             {
@@ -910,7 +910,10 @@ namespace Datos
             //List<int> ObtenerProveedoresImagen = new List<int>();
             string verificarImagen = "SELECT ProveedorID AS Proveedor, ImagenCompras AS Imagen " +
                                      "FROM DiasCompra " +
-                                     "WHERE ImagenCompras <> '' AND Fecha = @fechaVerificar AND ProveedorID = @proveedor AND ProveedorDiaID = @proveedorDC";
+                                     "WHERE ImagenCompras IS NOT NULL AND Fecha = @fechaVerificar AND ProveedorID = @proveedor AND ProveedorDiaID = @proveedorDC";
+            //string verificarImagen = "SELECT ProveedorID AS Proveedor, ImagenCompras AS Imagen " +
+            //                         "FROM DiasCompra " +
+            //                         "WHERE ImagenCompras <> '' AND Fecha = @fechaVerificar AND ProveedorID = @proveedor AND ProveedorDiaID = @proveedorDC";
             //string verificarImagen = "SELECT ProveedorID AS Proveedor, ImagenCompras AS Imagen " +
             //                         "FROM DiasCompra " +
             //                         "WHERE (ImagenCompras IS NULL OR ImagenCompras <> '') AND Fecha = @fechaVerificar AND ProveedorID = @proveedor";
@@ -924,31 +927,28 @@ namespace Datos
                     if (leer.Read())
                     {
                         int proveedor = Convert.ToInt32(leer["Proveedor"]);
-                        string rutaimagen = leer["Imagen"].ToString();
-                        return (proveedor, rutaimagen);
+                        if (leer["Imagen"] != DBNull.Value)
+                        {
+                            byte[] datosImagen = (byte[])leer["Imagen"];
+                            return (proveedor, datosImagen);
+                        }
+                        ////string rutaimagen = leer["Imagen"].ToString();
+                        //byte[] datosImagen = (byte[])leer["Imagen"];
+                        //return (proveedor, datosImagen);
                     }
                     return (0, null);
                 }
-                //using (SqlDataReader datareader = comando.ExecuteReader())
-                //{
-                //    while (datareader.Read())
-                //    {
-                //        int proveedorID = datareader.GetInt32(0);
-                //        ObtenerProveedoresImagen.Add(proveedorID);
-                //    }
-                //    return ObtenerProveedoresImagen;
-                //}
             }
         }
 
-        public int AgregarCompraTablaDiasCompra(int ProveedorID, DateTime fecha, double compra, int proveedorDC)
+        public int AgregarCompraTablaDiasCompra(int ProveedorID, DateTime fecha, double compra, int proveedorDC, string comentario)
         {
             if (conn.State != ConnectionState.Open)
             {
                 conn.Open();
             }
             string agregarCompra = "UPDATE DiasCompra " +
-                                   "SET Compra = @compraProveedor " +
+                                   "SET Compra = @compraProveedor, Comentario = @AgregarComentario " +
                                    "WHERE ProveedorID = @Proveedor AND Fecha = @fecha AND ProveedorDiaID = @proveedorDC";
             using (SqlCommand ejecutar = new SqlCommand(agregarCompra, conn))
             {
@@ -956,6 +956,7 @@ namespace Datos
                 ejecutar.Parameters.AddWithValue("@Proveedor", ProveedorID);
                 ejecutar.Parameters.AddWithValue("@fecha", fecha);
                 ejecutar.Parameters.AddWithValue("@proveedorDC", proveedorDC);
+                ejecutar.Parameters.AddWithValue("@AgregarComentario", comentario);
                 int resultado = ejecutar.ExecuteNonQuery();
                 return resultado;
             }
@@ -987,7 +988,7 @@ namespace Datos
             return dt;
         }
 
-        public int AgregarNuevoProveedorEnTablaDiasCompra(int proveedorID, double compra, DateTime fecha)
+        public int AgregarNuevoProveedorEnTablaDiasCompra(int proveedorID, double compra, DateTime fecha, string comentario)
         {
             if (conn.State != ConnectionState.Open)
             {
@@ -996,12 +997,13 @@ namespace Datos
             int verificar = VerificarAntesDeInsertar(proveedorID, fecha);
             if (verificar == 0)
             {
-                string agregar = "INSERT INTO DiasCompra(ProveedorID, Compra, Fecha) " +
-                             "VALUES(@proveedor, @compra, @fecha)";
+                string agregar = "INSERT INTO DiasCompra(ProveedorID, Compra, Fecha, Comentario) " +
+                             "VALUES(@proveedor, @compra, @fecha, @AgregarComentario)";
                 SqlCommand ejecutar = new SqlCommand(agregar, conn);
                 ejecutar.Parameters.AddWithValue("@proveedor", proveedorID);
                 ejecutar.Parameters.AddWithValue("@compra", compra);
                 ejecutar.Parameters.AddWithValue("@fecha", fecha);
+                ejecutar.Parameters.AddWithValue("@AgregarComentario", comentario);
                 int resultado = ejecutar.ExecuteNonQuery();
                 if (resultado >= 1)
                 {
