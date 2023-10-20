@@ -28,38 +28,6 @@ namespace tienda
         }
 
         int obtenerDinero;
-        private void BtnRestarDineroAgarrar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                //int ne = int.Parse(lblNE.Text);//13,000
-                
-                //-------------------------------------
-                //int r = Agarrardinero - ne;
-                //double r1 = Convert.ToDouble(r);
-                //double restar = Math.Abs(r1);
-                //int res = Convert.ToInt32(restar);
-                //int rest = ne - res;
-                //lblResultadoDineroAgarrado.Text = rest.ToString();
-                //BtnGuardar.Enabled = true;
-                //BtnRestarDineroAgarrar.Enabled = false;
-                //obtenerDinero = rest;
-                //--------------------------------------
-                //int resultado = ne - Agarrardinero;
-                //lblResultadoDineroAgarrado.Text = resultado.ToString();
-                //BtnGuardar.Enabled = true;
-                //BtnRestarDineroAgarrar.Enabled = false;
-                //obtenerDinero = resultado;
-            }
-            catch(FormatException)
-            {
-                MessageBox.Show("Ingrese valores", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch(Exception df)
-            {
-                MessageBox.Show($"Ocurrio un error\ntipo de error:\n {df}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
 
         public int ObtenerNEoProveedor()

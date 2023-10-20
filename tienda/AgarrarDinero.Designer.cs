@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.BtnRestarDineroAgarrar = new System.Windows.Forms.Button();
             this.BtnGuardar = new System.Windows.Forms.Button();
             this.lblNE = new System.Windows.Forms.Label();
             this.lblResultadoDineroAgarrado = new System.Windows.Forms.Label();
@@ -36,25 +35,13 @@
             this.lblSobroOagarrar = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // BtnRestarDineroAgarrar
-            // 
-            this.BtnRestarDineroAgarrar.Enabled = false;
-            this.BtnRestarDineroAgarrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnRestarDineroAgarrar.Location = new System.Drawing.Point(39, 305);
-            this.BtnRestarDineroAgarrar.Name = "BtnRestarDineroAgarrar";
-            this.BtnRestarDineroAgarrar.Size = new System.Drawing.Size(190, 46);
-            this.BtnRestarDineroAgarrar.TabIndex = 0;
-            this.BtnRestarDineroAgarrar.Text = "Agarrar dinero";
-            this.BtnRestarDineroAgarrar.UseVisualStyleBackColor = true;
-            this.BtnRestarDineroAgarrar.Click += new System.EventHandler(this.BtnRestarDineroAgarrar_Click);
-            // 
             // BtnGuardar
             // 
             this.BtnGuardar.Enabled = false;
             this.BtnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnGuardar.Location = new System.Drawing.Point(251, 305);
+            this.BtnGuardar.Location = new System.Drawing.Point(30, 305);
             this.BtnGuardar.Name = "BtnGuardar";
-            this.BtnGuardar.Size = new System.Drawing.Size(190, 46);
+            this.BtnGuardar.Size = new System.Drawing.Size(411, 46);
             this.BtnGuardar.TabIndex = 1;
             this.BtnGuardar.Text = "Guardar";
             this.BtnGuardar.UseVisualStyleBackColor = true;
@@ -109,7 +96,6 @@
             this.Controls.Add(this.lblResultadoDineroAgarrado);
             this.Controls.Add(this.lblNE);
             this.Controls.Add(this.BtnGuardar);
-            this.Controls.Add(this.BtnRestarDineroAgarrar);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AgarrarDinero";
@@ -122,8 +108,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button BtnRestarDineroAgarrar;
         private System.Windows.Forms.Button BtnGuardar;
         private System.Windows.Forms.Label lblNE;
         private System.Windows.Forms.Label lblResultadoDineroAgarrado;

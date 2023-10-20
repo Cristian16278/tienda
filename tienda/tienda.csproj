@@ -7,7 +7,7 @@
     <ProjectGuid>{66F5B75F-1939-4FED-941E-6EE898AD3A68}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>tienda</RootNamespace>
-    <AssemblyName>Tienda</AssemblyName>
+    <AssemblyName>Control proveedores</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -50,7 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>logo.tienda.ico</ApplicationIcon>
+    <ApplicationIcon>icons8_task.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>56EE15D355166040B82CD43AB57F9633539A25B8</ManifestCertificateThumbprint>
@@ -204,6 +204,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="icons8_task.ico" />
     <Content Include="logo.tienda.ico" />
   </ItemGroup>
   <ItemGroup>

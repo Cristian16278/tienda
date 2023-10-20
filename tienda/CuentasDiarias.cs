@@ -48,17 +48,6 @@ namespace tienda
 
         private void CuentasDiarias_Load(object sender, EventArgs e)
         {
-            //DateTime fechaactual = DateTime.Today;
-            //if (cone.ActivarBotonAgarrarDinero(fechaactual) >= 1)
-            //{
-            //    BtnAgarrarDinero.Enabled = false;
-            //    BtnAgarrarDinero.Visible = false;
-            //}
-            //else
-            //{
-            //    BtnAgarrarDinero.Enabled = true;
-            //    BtnAgarrarDinero.Visible = true;
-            //}
 
             if(lo.ShowDialog() == DialogResult.OK)
             {
@@ -414,7 +403,7 @@ namespace tienda
         }
 
         private void agregarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+         {
             try
             {
                 agregar agre = new agregar(() => loginAbrir = false);
