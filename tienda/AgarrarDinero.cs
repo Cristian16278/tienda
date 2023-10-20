@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -36,18 +37,6 @@ namespace tienda
         }
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            //DateTime fecha = DateTime.Now.Date;
-            //int guardar = int.Parse(lblResultadoDineroAgarrado.Text);
-            //int resultado = Conectar.GuardarMostrarNEDiaSiguiente(fecha, guardar);
-            //if(resultado > 0)
-            //{
-            //    DialogResult = DialogResult.OK;
-            //}
-            //else
-            //{
-            //    DialogResult = DialogResult.Cancel;
-            //}
-            
             int Agarrardinero = int.Parse(txtAgarrarDinero.Text);//8,000
             DialogResult respuesta = MessageBox.Show($"Esta seguro de almacenar ${Agarrardinero}?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (respuesta == DialogResult.Yes)
@@ -82,14 +71,10 @@ namespace tienda
             {
                 BtnGuardar.Enabled = false;
             }
-            //if (string.IsNullOrEmpty(txtAgarrarDinero.Text))
-            //{
-            //    BtnRestarDineroAgarrar.Enabled = false;
-            //}
-            //else
-            //{
-            //    BtnRestarDineroAgarrar.Enabled = true;
-            //}
+            catch(Exception f)
+            {
+                MessageBox.Show($"Ocurrio un error\ntipo de error:\n{f}");
+            }
         }
     }
 }
