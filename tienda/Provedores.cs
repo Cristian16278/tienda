@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Datos;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 //using static System.Net.Mime.MediaTypeNames;
 
 namespace tienda
@@ -54,6 +54,7 @@ namespace tienda
                     {
                         CboxAccionRealizar.SelectedItem = "Modificar";//Seleccioname el 'Modificar' del Combobox
                         MetodoParaEventoLoadDelForm();
+                        
                     }
                 }
                 
@@ -66,15 +67,15 @@ namespace tienda
 
         private void MetodoParaEventoLoadDelForm()
         {
-            dtgDiasCompra.ClearSelection();
+            //dtgDiasCompra.ClearSelection();
             string diaActual = DateTime.Now.ToString("dddd");
             lblFechaActual.Text = DateTime.Now.ToString("dddd, d 'de' MMMM 'de' yyyy");
             DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
             string DiaActual = conectar.ObtenerDiaActual(diaActual);
             RefrescarFormululario(DiaActual, date);
             dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
-            dtgDiasCompra.ClearSelection();
             AgregarBotonAlaFila();
+            dtgDiasCompra.ClearSelection();
             borrarContenidoTextbox();
             //verificar si se agarro dinero
             DateTime fechaActual1 = DateTime.Now.Date;//esto lo utilizaremos cuando de la hora para el dia de manana
@@ -83,7 +84,7 @@ namespace tienda
             txtPresupuesto.Text = MostrarEnTextbox.ToString();
             llenarComboboxSinFechaFijo();
             LlenarComboboxProveedorAdelanto();
-            dtgDiasCompra.ClearSelection();
+            //dtgDiasCompra.ClearSelection();
         }
 
         private List<int> VerificarProveedorEspecifico(List<int> obtenerProveedorDeTablaProveedores, List<int> proveedoresDiascompra, DateTime dia)
@@ -328,17 +329,6 @@ namespace tienda
             DateTime date = DateTime.Now.Date;//<----para obtener solo lafecha(yyyy-MM-dd)
             string DiaActual = conectar.ObtenerDiaActual(diaActual);
             RefrescarFormululario(DiaActual, date);
-            //if (conectar.VerificarSiSeAgregoProveedorSinFechaFijo() > 0)
-            //{
-            //    llenarComboboxSinFechaFijo();
-            //    dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
-            //    dtgDiasCompra.Columns["ProveedorID"].Visible = false;
-            //}
-            //else
-            //{
-            //    dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
-            //    dtgDiasCompra.Columns["ProveedorID"].Visible = false;
-            //}
             dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
             dtgDiasCompra.ClearSelection();
             borrarContenidoTextbox();
@@ -358,7 +348,7 @@ namespace tienda
                     //si le hace falta ala tabla diascompra, que me agrege lo que falta y me lo recarge
                     conectar.llenarTablaDiasCompra(nuevoproveedores, FechaActual);
                     dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
-                    dtgDiasCompra.ClearSelection();
+                    //dtgDiasCompra.ClearSelection();
                     dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
                     dtgDiasCompra.Columns["ProveedorID"].Visible = false; //luego lo descomentamos < -------------------------------
                     dtgDiasCompra.Columns["ProveedorDiaID"].Visible = false;
@@ -367,7 +357,7 @@ namespace tienda
                 {
                     //si ya existen proveedores con la fecha actual que solo me recarge la tabla.
                     dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
-                    dtgDiasCompra.ClearSelection();
+                    //dtgDiasCompra.ClearSelection();
                     dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
                     dtgDiasCompra.Columns["ProveedorID"].Visible = false; //luego lo descomentamos < -------------------------------
                     dtgDiasCompra.Columns["ProveedorDiaID"].Visible = false;
@@ -377,7 +367,7 @@ namespace tienda
                     //si es un nuevo dia que me agrege todos lo proveedores que pasan en el dia actual
                     conectar.llenarTablaDiasCompra(ProveedoresID, FechaActual);
                     dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
-                    dtgDiasCompra.ClearSelection();
+                    //dtgDiasCompra.ClearSelection();
                     dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
                     dtgDiasCompra.Columns["ProveedorID"].Visible = false; //luego lo descomentamos < -------------------------------
                     dtgDiasCompra.Columns["ProveedorDiaID"].Visible = false;
@@ -834,7 +824,7 @@ namespace tienda
                 e.Handled = true; // Bloquear la tecla
             }
 
-            if (e.KeyChar == '.' && (sender as System.Windows.Forms.TextBox).Text.Contains("."))// Si ya hay un punto
+            if (e.KeyChar == '.' && (sender as TextBox).Text.Contains("."))// Si ya hay un punto
             {
                 e.Handled = true;// Bloquear la tecla
             }
@@ -858,7 +848,7 @@ namespace tienda
             else if(agregar == "Sel..")
             {
                 lblAhoroCasaOcomplemento.Text = "";
-                txtAhorroCasaOcomplemento.Text = "";
+                txtAhorroCasaOcomplemento.Text = "0";
                 txtAhorroCasaOcomplemento.Enabled = false;
             }
         }
