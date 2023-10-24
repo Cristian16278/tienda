@@ -21,8 +21,80 @@ namespace tienda
         public CuentasDiarias(double seAgarroDelacaja = 0)
         {
             InitializeComponent();
-            int DelaCaja = redondearSeagarrodelacaja(seAgarroDelacaja);
+            int DelaCaja = seagarrocaja(seAgarroDelacaja);
             txtDelacaja.Text = DelaCaja.ToString();
+        }
+
+
+        private int seagarrocaja(double caja)
+        {
+            int redondear = (int)caja;
+
+            string Redondear = redondear.ToString();
+            //asi se convierte de string a una lista de string
+            var lista = from x in Redondear select x.ToString();
+            List<string> str = new List<string>(lista);
+
+            //se convierte a lista de enteros
+            List<int> ints = str.Select(int.Parse).ToList();
+            RedondearSeAgarrodelacaja(ints);
+
+            List<string> strings = ints.ConvertAll(x => x.ToString());
+            string une = string.Join("", strings);//<-------si da error utilizar este ---->  string une = String.Join("", strings);
+
+            //asi se convierte un string a int
+            int delacaja = int.Parse(une);
+            return delacaja;
+        }
+        private void RedondearSeAgarrodelacaja(List<int> redondear)
+        {
+            try
+            {
+                if(redondear.Count == 2)
+                {
+                    if (redondear[redondear.Count - 1] <= 5)
+                    {
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                    else
+                    {
+                        redondear[redondear.Count - 2] = redondear[redondear.Count - 2] + 1;
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                }
+                else
+                {
+                    if (redondear[redondear.Count - 1] <= 5)
+                    {
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                    if (redondear[redondear.Count - 3] <= 8 && redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)
+                    {
+
+                        //redondear[redondear.Count - 3] = +1;
+                        redondear[redondear.Count - 3] = redondear[redondear.Count - 3] + 1;
+                        redondear[redondear.Count - 2] = 0;
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                    if (redondear[redondear.Count - 3] == 9 && redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)
+                    {
+                        redondear[redondear.Count - 4] = redondear[redondear.Count - 4] + 1;
+                        redondear[redondear.Count - 3] = 0;
+                        redondear[redondear.Count - 2] = 0;
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                    else
+                    {
+                        redondear[redondear.Count - 2] = redondear[redondear.Count - 2] + 1;
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                }
+                
+            }
+            catch (Exception n)
+            {
+                MessageBox.Show($"Ocurrio un error(Probablemente sea de que es menor que 1000)\n\ntipo de error:\n {n}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private int redondearSeagarrodelacaja(double caja)
@@ -308,7 +380,7 @@ namespace tienda
                 {
                     redondear[redondear.Count - 1] = 0;
                 }
-                else if (redondear[redondear.Count - 3] <= 8 && redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)
+                if (redondear[redondear.Count - 3] <= 8 && redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)
                 {
                     
                     //redondear[redondear.Count - 3] = +1;
@@ -316,7 +388,7 @@ namespace tienda
                     redondear[redondear.Count - 2] = 0;
                     redondear[redondear.Count - 1] = 0;
                 }
-                else if (redondear[redondear.Count - 3] == 9 && redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)
+                if (redondear[redondear.Count - 3] == 9 && redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)
                 {
                     redondear[redondear.Count - 4] = redondear[redondear.Count - 4] + 1;
                     redondear[redondear.Count - 3] = 0;

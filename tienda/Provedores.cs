@@ -415,6 +415,7 @@ namespace tienda
                 BtnGuardar.Click += BtnAgregar_Click;
                 BtnGuardar.Click -= BtnBorrar_Click;
                 BtnGuardar.Click -= BtnGuardar_Click;
+                BtnGuardar.Click -= BtnSumarTodo_Click;
                 dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
                 BtnGuardar.BackColor = Color.Green;
                 BtnGuardar.ForeColor = Color.White;
@@ -440,6 +441,7 @@ namespace tienda
                 BtnGuardar.Click += BtnBorrar_Click;
                 BtnGuardar.Click -= BtnAgregar_Click;
                 BtnGuardar.Click -= BtnGuardar_Click;
+                BtnGuardar.Click -= BtnSumarTodo_Click;
                 dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
                 dtgDiasCompra.SelectionChanged += dtgDiasCompra_SelectionChanged;
                 BtnGuardar.BackColor = Color.Red;
@@ -488,7 +490,7 @@ namespace tienda
                 }
                 else//para los demas dias
                 {
-                    if (horaactual.Hour >= 22 && horaactual.Minute >= 0)//solo se podra hacer la suma asta las 10:00 pm
+                    if (horaactual.Hour >= 7 && horaactual.Minute >= 0)//solo se podra hacer la suma asta las 10:00 pm
                     {
                         //MessageBox.Show("Se activaran los botones");
                         lblProveedor.Visible = false;
@@ -529,6 +531,7 @@ namespace tienda
                 txtAgregarComentario.ForeColor = Color.DarkGray;
                 BtnGuardar.Click -= BtnAgregar_Click;
                 BtnGuardar.Click -= BtnBorrar_Click;
+                BtnGuardar.Click -= BtnSumarTodo_Click;
                 BtnGuardar.Click -= BtnGuardar_Click;
                 BtnGuardar.Click += BtnGuardar_Click;
                 dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
@@ -553,6 +556,7 @@ namespace tienda
             DialogResult respuesta = MessageBox.Show("No hace falta ningun proveedor?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (respuesta == DialogResult.No)
             {
+                dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
                 double resultado = conectar.SumarTodosLosProveedoresFechaActual(FechaActual);
                 txtCompra.Text = resultado.ToString();
                 double ne = Convert.ToDouble(txtPresupuesto.Text);
