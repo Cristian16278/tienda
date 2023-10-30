@@ -74,7 +74,6 @@
             // 
             // txtDelacaja
             // 
-            this.txtDelacaja.Enabled = false;
             this.txtDelacaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDelacaja.ForeColor = System.Drawing.Color.Teal;
             this.txtDelacaja.Location = new System.Drawing.Point(55, 370);

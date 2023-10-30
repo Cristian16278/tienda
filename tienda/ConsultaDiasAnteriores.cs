@@ -8,12 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace tienda
 {
     public partial class ConsultaDiasAnteriores : Form
     {
         ConectarBD ConectarBD = new ConectarBD();
+        
         private DateTime fechaActual = DateTime.Now.Date;
         public ConsultaDiasAnteriores()
         {
@@ -152,24 +154,64 @@ namespace tienda
                         string fechaFormateada = fecharetrocedida.ToString("dddd, d 'de' MMMM 'de' yyyy");
                         label1.Text = fechaFormateada;
                         fechadtg1 = fecharetrocedida;
+                        if(ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
+                        {
+                            BtnSacarCuentas1.Enabled = true;
+                            BtnSacarCuentas1.Visible = true;
+                        }
+                        else
+                        {
+                            BtnSacarCuentas1.Enabled = false;
+                            BtnSacarCuentas1.Visible = false;
+                        }
                         break;
                     case 1:
                         dataGridView2.DataSource = dt;
                         string fechaFormateada1 = fecharetrocedida.ToString("dddd, d 'de' MMMM 'de' yyyy");
                         label2.Text = fechaFormateada1;
                         fechadtg2 = fecharetrocedida;
+                        if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
+                        {
+                            BtnSacarCuentas2.Enabled = true;
+                            BtnSacarCuentas2.Visible = true;
+                        }
+                        else
+                        {
+                            BtnSacarCuentas2.Enabled = false;
+                            BtnSacarCuentas2.Visible = false;
+                        }
                         break;
                     case 2:
                         dataGridView3.DataSource = dt;
                         string fechaFormateada2 = fecharetrocedida.ToString("dddd, d 'de' MMMM 'de' yyyy");
                         label3.Text = fechaFormateada2;
                         fechadtg3 = fecharetrocedida;
+                        if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
+                        {
+                            BtnSacarCuentas3.Enabled = true;
+                            BtnSacarCuentas3.Visible = true;
+                        }
+                        else
+                        {
+                            BtnSacarCuentas3.Enabled = false;
+                            BtnSacarCuentas3.Visible = false;
+                        }
                         break;
                     case 3:
                         dataGridView4.DataSource = dt;
                         string fechaFormateada3 = fecharetrocedida.ToString("dddd, d 'de' MMMM 'de' yyyy");
                         label4.Text = fechaFormateada3;
                         fechadtg4 = fecharetrocedida;
+                        if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
+                        {
+                            BtnSacarCuentas4.Enabled = true;
+                            BtnSacarCuentas4.Visible = true;
+                        }
+                        else
+                        {
+                            BtnSacarCuentas4.Enabled = false;
+                            BtnSacarCuentas4.Visible = false;
+                        }
                         break;
                 }
             }
@@ -194,6 +236,102 @@ namespace tienda
             botonVisualizarImagen.Text = "Visualizar imagen";
             botonVisualizarImagen.UseColumnTextForButtonValue = true;
             dataGrid.Columns.Add(botonVisualizarImagen);
+        }
+
+        DateTime obtenerfecha;
+        DateTime guardarfecha;
+        private void BtnSacarCuentas1_Click(object sender, EventArgs e)
+        {
+            obtenerfecha = fechadtg1;//para sumar los proveedores de ese dia
+            DateTime fechaanterior = obtenerfecha.AddDays(-1);//para obtener el neto existente del dia anterior al dia que se cunsulta para poder restarlo.
+            LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+        }
+
+        private void LogicaParaCalcularGuardar(DateTime fechaSumarProveedor, DateTime fechaObtenerNEanterior)
+        {
+            double SumaProveedoresFechaPersonalizada = ConectarBD.SumarTodosLosProveedoresFechaActual(fechaSumarProveedor);
+            double NEfechaPersonalizada = ConectarBD.TraerNetoExistenteDiaAnterior(fechaObtenerNEanterior);
+            double resultado = NEfechaPersonalizada - SumaProveedoresFechaPersonalizada;
+            string re = resultado.ToString("N2");
+            guardarFechaPersonalizada(fechaSumarProveedor);
+            DialogResult respuesta = MessageBox.Show($"El resultado de la resta de N.E(${NEfechaPersonalizada}) y la suma de todos los proveedores(${SumaProveedoresFechaPersonalizada}) de la fecha {obtenerfecha} es ${re}.\nEsta de acuerdo con el resultado?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (respuesta == DialogResult.Yes)
+            {
+                this.Hide();
+                if (resultado < 0)//si es negativo
+                {
+                    VerificarSiEsNumeroNegativo(resultado);
+                    double numeronegativo = Math.Abs(resultado);
+                    double numeroredondeado = Math.Round(numeronegativo);
+                    GuardarAgarroDeLaCaja(numeroredondeado);
+                    CuentasDiarias cuentas = new CuentasDiarias(numeroredondeado, "Si");
+                    if (cuentas.ShowDialog() == DialogResult.Cancel)
+                    {
+                        this.Show();
+                    }
+                }
+                else//si no es negativo
+                {
+                    VerificarSiEsNumeroNegativo(resultado);
+                    double redondear = Math.Round(resultado);
+                    GuardarAgarroDeLaCaja(redondear);
+                    CuentasDiarias cuentas = new CuentasDiarias();
+                    if (cuentas.ShowDialog() == DialogResult.Cancel)
+                    {
+                        this.Show();
+                    }
+                }
+
+            }
+            else
+            {
+
+            }
+        }
+
+        private void BtnSacarCuentas2_Click(object sender, EventArgs e)
+        {
+            obtenerfecha = fechadtg2;
+            DateTime fechaanterior = obtenerfecha.AddDays(-1);
+            LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+        }
+
+        private void BtnSacarCuentas3_Click(object sender, EventArgs e)
+        {
+            obtenerfecha = fechadtg3;
+            DateTime fechaanterior = obtenerfecha.AddDays(-1);
+            LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+        }
+
+        private void BtnSacarCuentas4_Click(object sender, EventArgs e)
+        {
+            obtenerfecha = fechadtg4;
+            DateTime fechaanterior = obtenerfecha.AddDays(-1);
+            LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+        }
+
+        public DateTime ObtenerFechaAguardar()//con este metodo guardaremos la fecha que se quiere guardar
+        {
+            DateTime obtenerfecha = Properties.Settings.Default.FechaPersonalizadaGuardar;
+            return obtenerfecha;
+        }
+
+        public void guardarFechaPersonalizada(DateTime fechaAguardar)
+        {
+            Properties.Settings.Default.FechaPersonalizadaGuardar = fechaAguardar;
+            Properties.Settings.Default.Save();
+        }
+
+        public void VerificarSiEsNumeroNegativo(double restar)
+        {
+            Properties.Settings.Default.NumeroNegativoOno = restar;
+            Properties.Settings.Default.Save();
+        }
+
+        private void GuardarAgarroDeLaCaja(double guardar)
+        {
+            Properties.Settings.Default.Delacaja = guardar;
+            Properties.Settings.Default.Save();
         }
     }
 }

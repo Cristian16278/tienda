@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Net.NetworkInformation;
 using System.Reflection.Emit;
 using System.Security.Policy;
 using System.Text;
@@ -17,12 +19,32 @@ namespace tienda
     {
         ConectarBD cone = new ConectarBD();
         loging lo = new loging();
-        
-        public CuentasDiarias(double seAgarroDelacaja = 0)
+        ConsultaDiasAnteriores cons = new ConsultaDiasAnteriores();
+        string fechapersonalizada;
+
+        public CuentasDiarias(double seAgarroDelacaja = 0, string FechaPersonalizada = "No")
         {
             InitializeComponent();
-            int DelaCaja = seagarrocaja(seAgarroDelacaja);
-            txtDelacaja.Text = DelaCaja.ToString();
+            if (FechaPersonalizada == "Si")
+            {
+                fechapersonalizada = FechaPersonalizada;
+                //aqui se modificara algunas cosas del form para guardar los datos en la fecha correcta
+            }
+            else
+            {
+                double verificar = Properties.Settings.Default.NumeroNegativoOno;
+                if (verificar < 0)
+                {
+                    fechapersonalizada = FechaPersonalizada;
+                    int DelaCaja = seagarrocaja(seAgarroDelacaja);
+                    txtDelacaja.Text = DelaCaja.ToString();
+                }
+                else
+                {
+                    txtDelacaja.Text = seAgarroDelacaja.ToString();
+                }
+                
+            }
         }
 
 
@@ -120,39 +142,70 @@ namespace tienda
 
         private void CuentasDiarias_Load(object sender, EventArgs e)
         {
-
-            if(lo.ShowDialog() == DialogResult.OK)
+            if(fechapersonalizada == "No")
             {
-                if(cone.desacbtnSHFechahoy() == DateTime.Today)
+                if (lo.ShowDialog() == DialogResult.OK)
                 {
-                    btnGuardar.Enabled = false;
-                    btnGuardar.BackColor = Color.LightGray;
-                    BtnBilletesCalcular.Enabled = false;
-                    //BtnAgarrarDinero.Enabled = true;
-                    //BtnAgarrarDinero.Visible = true;
-                    BtnBilletesCalcular.BackColor = Color.LightGray;
-                    lblRegistrohoy.Text = "Ya hay un registro para la fecha de hoy";
-                    lblRegistrohoy.ForeColor = Color.Red;
-                    txtBilletes.Enabled = false;
-                    txtMonedas.Enabled = false;
-                    txtDelacaja.Enabled = false;
-                    txtConsumoDiario.Enabled = false;
-                    txtBilletes.BackColor = Color.LightGray;
-                    txtMonedas.BackColor = Color.LightGray;
-                    txtDelacaja.BackColor = Color.LightGray;
-                    txtConsumoDiario.BackColor = Color.LightGray;
+                    if (cone.desacbtnSHFechahoy() == DateTime.Today)
+                    {
+                        btnGuardar.Enabled = false;
+                        btnGuardar.BackColor = Color.LightGray;
+                        BtnBilletesCalcular.Enabled = false;
+                        //BtnAgarrarDinero.Enabled = true;
+                        //BtnAgarrarDinero.Visible = true;
+                        BtnBilletesCalcular.BackColor = Color.LightGray;
+                        lblRegistrohoy.Text = "Ya hay un registro para la fecha de hoy";
+                        lblRegistrohoy.ForeColor = Color.Red;
+                        txtBilletes.Enabled = false;
+                        txtMonedas.Enabled = false;
+                        txtDelacaja.Enabled = false;
+                        txtConsumoDiario.Enabled = false;
+                        txtBilletes.BackColor = Color.LightGray;
+                        txtMonedas.BackColor = Color.LightGray;
+                        txtDelacaja.BackColor = Color.LightGray;
+                        txtConsumoDiario.BackColor = Color.LightGray;
+                    }
+                    else
+                    {
+                        btnGuardar.Enabled = true;
+                        btnGuardar.BackColor = Color.White;
+                    }
                 }
                 else
                 {
-                    btnGuardar.Enabled = true;
-                    btnGuardar.BackColor = Color.White;
+                    MessageBox.Show("Intentelo de nuevo mas tarde", "Error al ingresar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Application.Exit();
                 }
             }
             else
             {
-                MessageBox.Show("Intentelo de nuevo mas tarde","Error al ingresar",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                Application.Exit();
+                if (lo.ShowDialog() == DialogResult.OK)
+                {
+                    btnGuardar.Enabled = true;
+                    //btnGuardar.BackColor = Color.LightGray;
+                    BtnBilletesCalcular.Enabled = true;
+                    BtnAgarrarDinero.Enabled = true;
+                    BtnAgarrarDinero.Visible = false;
+                    //BtnBilletesCalcular.BackColor = Color.LightGray;
+                    //lblRegistrohoy.Text = "Ya hay un registro para la fecha de hoy";
+                    //lblRegistrohoy.ForeColor = Color.Red;
+                    lblRegistrohoy.Text = "";
+                    txtBilletes.Enabled = true;
+                    txtMonedas.Enabled = true;
+                    txtDelacaja.Enabled = true;
+                    txtConsumoDiario.Enabled = true;
+                    //txtBilletes.BackColor = Color.LightGray;
+                    //txtMonedas.BackColor = Color.LightGray;
+                    //txtDelacaja.BackColor = Color.LightGray;
+                    //txtConsumoDiario.BackColor = Color.LightGray;
+                }
+                else
+                {
+                    MessageBox.Show("Intentelo de nuevo mas tarde", "Error al ingresar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult = DialogResult.Cancel;
+                }
             }
+            
         }
         int ObtenerNE;
         private void btnCalcular_Click(object sender, EventArgs e)
@@ -160,16 +213,36 @@ namespace tienda
             int respuesta = calcularCuentas(txtBilletes.Text, txtMonedas.Text, txtDelacaja.Text, txtConsumoDiario.Text);//se guardara luego preguntara
             if (respuesta == 1)//si todo salio bien me hara toda la logica
             {
-                double numeroNegativo = NumeroNegativoOno();
-                if (numeroNegativo < 0)//si es un numero negativo es que se agarro de la caja
+                if(fechapersonalizada == "No")
                 {
-                    BtnAgarrarDinero.Visible = true;
-                    BtnAgarrarDinero.Enabled = true;
+                    //para el dia actual
+                    double numeroNegativo = NumeroNegativoOno();
+                    if (numeroNegativo < 0)//si es un numero negativo es que se agarro de la caja
+                    {
+                        BtnAgarrarDinero.Visible = true;
+                        BtnAgarrarDinero.Enabled = true;
+                    }
+                    else//en caso contrario, es que sobro
+                    {
+                        
+                        MandarMensagesParaSumarProveedoresConNE("No");
+                    }
                 }
-                else//sino es que sobro
+                else
                 {
-                    MandarMensagesParaSumarProveedoresConNE();
+                    //para fecha personalizada
+                    double numeroNegativo = NumeroNegativoOno();
+                    if (numeroNegativo < 0)//si es un numero negativo es que se agarro de la caja
+                    {
+                        BtnAgarrarDinero.Visible = true;
+                        BtnAgarrarDinero.Enabled = true;
+                    }
+                    else//sino es que sobro
+                    {
+                        MandarMensagesParaSumarProveedoresConNE("Si");
+                    }
                 }
+                
             }
             else//sino no se hara nada
             {
@@ -183,10 +256,34 @@ namespace tienda
             return verificar;
         }
 
-        private void MandarMensagesParaSumarProveedoresConNE()
+        private void MandarMensagesParaSumarProveedoresConNE(string logica)
         {
             DateTime fechaActual = DateTime.Now.Date;
-            double agarardinero = Properties.Settings.Default.Delacaja;//puede que aga una condicion para que solo si es mayor a 200 se pueda agregar al neto existente.
+            double agarardinero = Properties.Settings.Default.Delacaja;
+            if(logica == "No")
+            {
+                LogicaGuardarAgarroCaja(fechaActual, agarardinero);
+            }
+            else
+            {
+                DateTime fe = cons.ObtenerFechaAguardar();
+                DateTime diassuperior = fe.AddDays(1);
+                int resp = cone.VerificarNEFechaSuperior(diassuperior);
+                if (resp > 0)
+                {
+
+                }
+                else
+                {
+                    LogicaGuardarAgarroCaja(diassuperior, agarardinero);
+                }
+            }
+            
+            
+        }
+
+        private void LogicaGuardarAgarroCaja(DateTime fecha, double agarardinero)
+        {
             if (agarardinero >= 20)//solamente se redondeara si es mayor o igual a $20.
             {
                 int agarar = redondearSeagarrodelacaja(agarardinero);
@@ -200,7 +297,7 @@ namespace tienda
                         {
                             int NEhoy = Properties.Settings.Default.AgarrarDinero;//AgarrarDinero se almacena Neto existente del calculo que se muestrar en el listbox
                             int sumar = NEhoy + agarar;
-                            int resultado = cone.GuardarMostrarNEDiaSiguiente(fechaActual, sumar);
+                            int resultado = cone.GuardarMostrarNEDiaSiguiente(fecha, sumar);
                             if (resultado > 0)
                             {
                                 MessageBox.Show($"Se guardo correctamente el resultado ${sumar} de la suma de ${NEhoy} y ${agarar}.");
@@ -224,7 +321,7 @@ namespace tienda
                                 int resultado = Partedinero.ObtenerNEoProveedor();
                                 int NEsumarConLaparte = Properties.Settings.Default.AgarrarDinero;
                                 int sumarresultado = NEsumarConLaparte + resultado;
-                                int resul = cone.GuardarMostrarNEDiaSiguiente(fechaActual, sumarresultado);
+                                int resul = cone.GuardarMostrarNEDiaSiguiente(fecha, sumarresultado);
                                 if (resul > 0)
                                 {
                                     MessageBox.Show($"Se guardo correctamente el resultado ${sumarresultado} de la suma de {NEsumarConLaparte} y {resultado} para mostrar\ncomo tara existente del siguiente dia.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -323,34 +420,70 @@ namespace tienda
                     int u_netao = int.Parse(une);//<-------------si da error utilizar este -----> int u_netao = Int32.Parse(une);
                     int resto_utilidad = u_netao - consumoDiario;
                     int n_exi = billetes + monedas - resto_utilidad;
-                    string fecha = DateTime.Today.ToString();
-                    string fechamostrar = DateTime.Now.ToString();
-                    listMostrar.Items.Add(fechamostrar);
-                    listMostrar.Items.Add($"Billetes = {billetes}");
-                    listMostrar.Items.Add($"Monedas = {monedas}");
-                    listMostrar.Items.Add($"De la caja = {delaCaja}");
-                    listMostrar.Items.Add($"V.T = {vt}");
-                    listMostrar.Items.Add($"U.N = {u_netao}");
-                    listMostrar.Items.Add($"C.D = {consumoDiario}");
-                    listMostrar.Items.Add($"R.U = {resto_utilidad}");
-                    listMostrar.Items.Add($"N.E = {n_exi}");
-                    TimeSpan horare = DateTime.Now.TimeOfDay;
-                    bool berificar = cone.guardar(vt, resto_utilidad, consumoDiario, n_exi, fecha, horare);
-                    if (berificar)
+                    if(fechapersonalizada == "No")//osea es para el dia de hoy
                     {
-                        MessageBox.Show("Se guardo correctamente", "Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        btnGuardar.Enabled = false;
-                        btnGuardar.BackColor = Color.LightGray;
-                        
-                        ObtenerNE = n_exi;
-                        GuardarNEconfiguracionDefault(ObtenerNE);
-                        return 1;
+                        string fecha = DateTime.Today.ToString();
+                        string fechamostrar = DateTime.Now.ToString();
+                        listMostrar.Items.Add(fechamostrar);
+                        listMostrar.Items.Add($"Billetes = {billetes}");
+                        listMostrar.Items.Add($"Monedas = {monedas}");
+                        listMostrar.Items.Add($"De la caja = {delaCaja}");
+                        listMostrar.Items.Add($"V.T = {vt}");
+                        listMostrar.Items.Add($"U.N = {u_netao}");
+                        listMostrar.Items.Add($"C.D = {consumoDiario}");
+                        listMostrar.Items.Add($"R.U = {resto_utilidad}");
+                        listMostrar.Items.Add($"N.E = {n_exi}");
+                        TimeSpan horare = DateTime.Now.TimeOfDay;
+                        bool berificar = cone.guardar(vt, resto_utilidad, consumoDiario, n_exi, fecha, horare);
+                        if (berificar)
+                        {
+                            MessageBox.Show("Se guardo correctamente", "Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            btnGuardar.Enabled = false;
+                            btnGuardar.BackColor = Color.LightGray;
+
+                            ObtenerNE = n_exi;
+                            GuardarNEconfiguracionDefault(ObtenerNE);
+                            return 1;
+                        }
+                        else
+                        {
+                            MessageBox.Show("la fecha que desea guardar ya existe", "Advertencia!!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return 0;
+                        }
                     }
-                    else
+                    else//para la fecha personalizada
                     {
-                        MessageBox.Show("la fecha que desea guardar ya existe", "Advertencia!!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return 0;
+                        DateTime obtenerfecha = cons.ObtenerFechaAguardar();
+                        string fechamostrar = obtenerfecha.ToString();
+                        listMostrar.Items.Add(fechamostrar);
+                        listMostrar.Items.Add($"Billetes = {billetes}");
+                        listMostrar.Items.Add($"Monedas = {monedas}");
+                        listMostrar.Items.Add($"De la caja = {delaCaja}");
+                        listMostrar.Items.Add($"V.T = {vt}");
+                        listMostrar.Items.Add($"U.N = {u_netao}");
+                        listMostrar.Items.Add($"C.D = {consumoDiario}");
+                        listMostrar.Items.Add($"R.U = {resto_utilidad}");
+                        listMostrar.Items.Add($"N.E = {n_exi}");
+                        TimeSpan horare = DateTime.Now.TimeOfDay;
+                        bool verificar = cone.guardar(vt, resto_utilidad, consumoDiario, n_exi, fechamostrar, horare);
+                        if (verificar)
+                        {
+                            MessageBox.Show("Se guardo correctamente", "Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            btnGuardar.Enabled = false;
+                            btnGuardar.BackColor = Color.LightGray;
+
+                            ObtenerNE = n_exi;
+                            GuardarNEconfiguracionDefault(ObtenerNE);
+                            return 1;
+                        }
+                        else
+                        {
+                            MessageBox.Show("la fecha que desea guardar ya existe", "Advertencia!!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return 0;
+                        }
+                        //caso contrario se guardara con la fecha personalizada
                     }
+                    
                 }
                 else
                 {
@@ -625,7 +758,14 @@ namespace tienda
 
         private void BtnAgregarSumarProveedor_Click(object sender, EventArgs e)
         {
-            MandarMensagesParaSumarProveedoresConNE();
+            if(fechapersonalizada == "No")
+            {
+                MandarMensagesParaSumarProveedoresConNE("No");
+            }
+            else
+            {
+                MandarMensagesParaSumarProveedoresConNE("Si");
+            }
         }
     }
 }

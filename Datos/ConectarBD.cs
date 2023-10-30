@@ -1113,7 +1113,7 @@ namespace Datos
             }
         }
 
-        public int ActivarBotonAgarrarDinero(DateTime fechaActual)
+        public int ActivarBotonAgarrarDinero(DateTime fechaActualoFechaAnterior)//este metodo utilizaremos para verificar si no se agrego dinero para ese dia
         {
             if (conn.State != ConnectionState.Open)
             {
@@ -1124,14 +1124,35 @@ namespace Datos
                                "FROM AgarrarDinero " +
                                "WHERE Fecha = @fechaActual";
             SqlCommand comando = new SqlCommand(verificar, conn);
-            comando.Parameters.AddWithValue("@fechaActual", fechaActual);
+            comando.Parameters.AddWithValue("@fechaActual", fechaActualoFechaAnterior);
             int SiexisteDineroAgarrado = Convert.ToInt32(comando.ExecuteScalar());
             return SiexisteDineroAgarrado;
         }
 
-        private int TraerNetoExistenteDiaAnterior(DateTime NEfechaAnterior)
+        public int TraerNetoExistenteDiaAnterior(DateTime NEfechaAnterior)//Este metodo utilizaremos para verificar si existe NE de la fecha anterior
         {
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
+
             string traer = "SELECT N_E " +
+                           "FROM cuentas_Diarias " +
+                           "WHERE fecha_registro = @fechaAnterior";
+            SqlCommand comando = new SqlCommand(traer, conn);
+            comando.Parameters.AddWithValue("@fechaAnterior", NEfechaAnterior);
+            int obtenerNE = Convert.ToInt32(comando.ExecuteScalar());
+            return obtenerNE;
+        }
+
+        public int VerificarNEFechaSuperior(DateTime NEfechaAnterior)//Este metodo verificara si ya hay N.E para la fecha actual mas 1
+        {
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
+
+            string traer = "SELECT COUNT(N_E) " +
                            "FROM cuentas_Diarias " +
                            "WHERE fecha_registro = @fechaAnterior";
             SqlCommand comando = new SqlCommand(traer, conn);
@@ -1142,13 +1163,26 @@ namespace Datos
 
         public double SumarTodosLosProveedoresFechaActual(DateTime fechaActual)
         {
-            string sumar = "SELECT SUM(Compra) " +
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+
+                string sumar = "SELECT SUM(Compra) " +
                            "FROM DiasCompra " +
                            "WHERE Fecha = @fecha";
-            SqlCommand comando = new SqlCommand(sumar, conn);
-            comando.Parameters.AddWithValue("@fecha", fechaActual);
-            double resultado = Convert.ToDouble(comando.ExecuteScalar());
-            return resultado;
+                SqlCommand comando = new SqlCommand(sumar, conn);
+                comando.Parameters.AddWithValue("@fecha", fechaActual);
+                double resultado = Convert.ToDouble(comando.ExecuteScalar());
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"ocurrio un error.\ntipo de error:\n{ex}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
         }
         #endregion
     }

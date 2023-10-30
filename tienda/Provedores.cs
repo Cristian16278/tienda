@@ -36,11 +36,13 @@ namespace tienda
                     {
                         CboxAccionRealizar.SelectedItem = "Sumar todo";//Seleccioname el 'Sumar todo' del combobox
                         MetodoParaEventoLoadDelForm();
+                        CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
                     }
                     else
                     {    //en caso contrario
                         CboxAccionRealizar.SelectedItem = "Modificar";//seleccioname el 'Modificar' del combobox
                         MetodoParaEventoLoadDelForm();
+                        CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
                     }
                 }
                 else//en caso contrario es otro dia
@@ -49,12 +51,14 @@ namespace tienda
                     {
                         CboxAccionRealizar.SelectedItem = "Sumar todo";//Seleccioname el 'Sumar todo' del combobox 
                         MetodoParaEventoLoadDelForm();
+                        CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
                     }
                     else//en caso contrario
                     {
                         CboxAccionRealizar.SelectedItem = "Modificar";//Seleccioname el 'Modificar' del Combobox
                         MetodoParaEventoLoadDelForm();
-                        
+                        CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+
                     }
                 }
                 
@@ -563,7 +567,8 @@ namespace tienda
                 double decasa = Convert.ToDouble(txtAhorroCasaOcomplemento.Text);
                 double restar = (ne + decasa) - resultado;
                 string result = restar.ToString("N2");
-                MessageBox.Show($"el resultado de la resta de {ne} - {resultado} = {result}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string elegido = CboxElegirAhorroOcomplemento.SelectedItem.ToString();
+                MessageBox.Show($"el resultado de la resta de (T.E: ${ne} + {elegido}: ${decasa}) - {resultado} = {result}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if(restar < 0)//si el resultado de la resta de tara existente y la suma de los proveedores da un numero negativo -1
                 {
                     VerificarSiEsNumeroNegativo(restar);

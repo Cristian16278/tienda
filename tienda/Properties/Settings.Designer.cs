@@ -58,5 +58,16 @@ namespace tienda.Properties {
                 this["NumeroNegativoOno"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime FechaPersonalizadaGuardar {
+            get {
+                return ((global::System.DateTime)(this["FechaPersonalizadaGuardar"]));
+            }
+            set {
+                this["FechaPersonalizadaGuardar"] = value;
+            }
+        }
     }
 }
