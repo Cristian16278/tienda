@@ -1089,7 +1089,7 @@ namespace Datos
             }
         }
 
-        public int VerificarDineroAgarradoDiaAnterior(DateTime FechaAnterior)
+        public int VerificarDineroAgarradoDiaAnterior(DateTime FechaAnterior)//si no hay dinero que se agarro en esa fecha que me traiga el neto existente de esa fecha
         {
             if (conn.State != ConnectionState.Open)
             {

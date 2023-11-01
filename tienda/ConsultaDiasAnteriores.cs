@@ -239,22 +239,30 @@ namespace tienda
         }
 
         DateTime obtenerfecha;
-        DateTime guardarfecha;
+        //DateTime guardarfecha;
         private void BtnSacarCuentas1_Click(object sender, EventArgs e)
         {
-            obtenerfecha = fechadtg1;//para sumar los proveedores de ese dia
-            DateTime fechaanterior = obtenerfecha.AddDays(-1);//para obtener el neto existente del dia anterior al dia que se cunsulta para poder restarlo.
-            LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+            DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label1.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if(r == DialogResult.Yes)
+            {
+                obtenerfecha = fechadtg1;//para sumar los proveedores de ese dia
+                DateTime fechaanterior = obtenerfecha.AddDays(-1);//para obtener el neto existente del dia anterior al dia que se cunsulta para poder restarlo.
+                LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+            }
+            else
+            {
+
+            }
         }
 
         private void LogicaParaCalcularGuardar(DateTime fechaSumarProveedor, DateTime fechaObtenerNEanterior)
         {
             double SumaProveedoresFechaPersonalizada = ConectarBD.SumarTodosLosProveedoresFechaActual(fechaSumarProveedor);
-            double NEfechaPersonalizada = ConectarBD.TraerNetoExistenteDiaAnterior(fechaObtenerNEanterior);
+            double NEfechaPersonalizada = ConectarBD.VerificarDineroAgarradoDiaAnterior(fechaObtenerNEanterior);
             double resultado = NEfechaPersonalizada - SumaProveedoresFechaPersonalizada;
             string re = resultado.ToString("N2");
             guardarFechaPersonalizada(fechaSumarProveedor);
-            DialogResult respuesta = MessageBox.Show($"El resultado de la resta de N.E(${NEfechaPersonalizada}) y la suma de todos los proveedores(${SumaProveedoresFechaPersonalizada}) de la fecha {obtenerfecha} es ${re}.\nEsta de acuerdo con el resultado?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            DialogResult respuesta = MessageBox.Show($"El resultado de la resta de N.E(${NEfechaPersonalizada}) de la fecha {fechaObtenerNEanterior} y la suma de todos los proveedores(${SumaProveedoresFechaPersonalizada}) de la fecha {obtenerfecha} es ${re}.\nEsta de acuerdo con el resultado?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (respuesta == DialogResult.Yes)
             {
                 this.Hide();
@@ -275,13 +283,12 @@ namespace tienda
                     VerificarSiEsNumeroNegativo(resultado);
                     double redondear = Math.Round(resultado);
                     GuardarAgarroDeLaCaja(redondear);
-                    CuentasDiarias cuentas = new CuentasDiarias();
+                    CuentasDiarias cuentas = new CuentasDiarias(0,"Si");
                     if (cuentas.ShowDialog() == DialogResult.Cancel)
                     {
                         this.Show();
                     }
                 }
-
             }
             else
             {
@@ -291,32 +298,59 @@ namespace tienda
 
         private void BtnSacarCuentas2_Click(object sender, EventArgs e)
         {
-            obtenerfecha = fechadtg2;
-            DateTime fechaanterior = obtenerfecha.AddDays(-1);
-            LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+            DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label2.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if(r == DialogResult.Yes)
+            {
+                obtenerfecha = fechadtg2;
+                DateTime fechaanterior = obtenerfecha.AddDays(-1);
+                LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+            }
+            else
+            {
+
+            }
+            
         }
 
         private void BtnSacarCuentas3_Click(object sender, EventArgs e)
         {
-            obtenerfecha = fechadtg3;
-            DateTime fechaanterior = obtenerfecha.AddDays(-1);
-            LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+            DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label3.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if(r == DialogResult.Yes)
+            {
+                obtenerfecha = fechadtg3;
+                DateTime fechaanterior = obtenerfecha.AddDays(-1);
+                LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+            }
+            else
+            {
+
+            }
+            
         }
 
         private void BtnSacarCuentas4_Click(object sender, EventArgs e)
         {
-            obtenerfecha = fechadtg4;
-            DateTime fechaanterior = obtenerfecha.AddDays(-1);
-            LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+            DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label4.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if(r == DialogResult.Yes)
+            {
+                obtenerfecha = fechadtg4;
+                DateTime fechaanterior = obtenerfecha.AddDays(-1);
+                LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+            }
+            else
+            {
+
+            }
+            
         }
 
-        public DateTime ObtenerFechaAguardar()//con este metodo guardaremos la fecha que se quiere guardar
+        public DateTime ObtenerFechaAguardar()//con este metodo obtendremos la fecha guardada.
         {
             DateTime obtenerfecha = Properties.Settings.Default.FechaPersonalizadaGuardar;
             return obtenerfecha;
         }
 
-        public void guardarFechaPersonalizada(DateTime fechaAguardar)
+        public void guardarFechaPersonalizada(DateTime fechaAguardar)//con este metodo guardaremos la fecha que se quiere guardar.
         {
             Properties.Settings.Default.FechaPersonalizadaGuardar = fechaAguardar;
             Properties.Settings.Default.Save();

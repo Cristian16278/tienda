@@ -271,11 +271,12 @@
             // BtnSacarCuentas1
             // 
             this.BtnSacarCuentas1.Enabled = false;
-            this.BtnSacarCuentas1.Location = new System.Drawing.Point(1353, 70);
+            this.BtnSacarCuentas1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnSacarCuentas1.Location = new System.Drawing.Point(1329, 70);
             this.BtnSacarCuentas1.Name = "BtnSacarCuentas1";
-            this.BtnSacarCuentas1.Size = new System.Drawing.Size(142, 36);
+            this.BtnSacarCuentas1.Size = new System.Drawing.Size(166, 36);
             this.BtnSacarCuentas1.TabIndex = 14;
-            this.BtnSacarCuentas1.Text = "button1";
+            this.BtnSacarCuentas1.Text = "Sacar cuentas";
             this.BtnSacarCuentas1.UseVisualStyleBackColor = true;
             this.BtnSacarCuentas1.Visible = false;
             this.BtnSacarCuentas1.Click += new System.EventHandler(this.BtnSacarCuentas1_Click);
@@ -283,11 +284,12 @@
             // BtnSacarCuentas2
             // 
             this.BtnSacarCuentas2.Enabled = false;
-            this.BtnSacarCuentas2.Location = new System.Drawing.Point(606, 70);
+            this.BtnSacarCuentas2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnSacarCuentas2.Location = new System.Drawing.Point(582, 70);
             this.BtnSacarCuentas2.Name = "BtnSacarCuentas2";
-            this.BtnSacarCuentas2.Size = new System.Drawing.Size(142, 36);
+            this.BtnSacarCuentas2.Size = new System.Drawing.Size(166, 36);
             this.BtnSacarCuentas2.TabIndex = 15;
-            this.BtnSacarCuentas2.Text = "button2";
+            this.BtnSacarCuentas2.Text = "Sacar cuentas";
             this.BtnSacarCuentas2.UseVisualStyleBackColor = true;
             this.BtnSacarCuentas2.Visible = false;
             this.BtnSacarCuentas2.Click += new System.EventHandler(this.BtnSacarCuentas2_Click);
@@ -295,11 +297,12 @@
             // BtnSacarCuentas3
             // 
             this.BtnSacarCuentas3.Enabled = false;
-            this.BtnSacarCuentas3.Location = new System.Drawing.Point(1353, 464);
+            this.BtnSacarCuentas3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnSacarCuentas3.Location = new System.Drawing.Point(1329, 464);
             this.BtnSacarCuentas3.Name = "BtnSacarCuentas3";
-            this.BtnSacarCuentas3.Size = new System.Drawing.Size(142, 36);
+            this.BtnSacarCuentas3.Size = new System.Drawing.Size(166, 36);
             this.BtnSacarCuentas3.TabIndex = 16;
-            this.BtnSacarCuentas3.Text = "button3";
+            this.BtnSacarCuentas3.Text = "Sacar cuentas";
             this.BtnSacarCuentas3.UseVisualStyleBackColor = true;
             this.BtnSacarCuentas3.Visible = false;
             this.BtnSacarCuentas3.Click += new System.EventHandler(this.BtnSacarCuentas3_Click);
@@ -307,11 +310,12 @@
             // BtnSacarCuentas4
             // 
             this.BtnSacarCuentas4.Enabled = false;
-            this.BtnSacarCuentas4.Location = new System.Drawing.Point(606, 457);
+            this.BtnSacarCuentas4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnSacarCuentas4.Location = new System.Drawing.Point(582, 462);
             this.BtnSacarCuentas4.Name = "BtnSacarCuentas4";
-            this.BtnSacarCuentas4.Size = new System.Drawing.Size(142, 36);
+            this.BtnSacarCuentas4.Size = new System.Drawing.Size(166, 36);
             this.BtnSacarCuentas4.TabIndex = 17;
-            this.BtnSacarCuentas4.Text = "button4";
+            this.BtnSacarCuentas4.Text = "Sacar cuentas";
             this.BtnSacarCuentas4.UseVisualStyleBackColor = true;
             this.BtnSacarCuentas4.Visible = false;
             this.BtnSacarCuentas4.Click += new System.EventHandler(this.BtnSacarCuentas4_Click);

@@ -28,6 +28,18 @@ namespace tienda
             if (FechaPersonalizada == "Si")
             {
                 fechapersonalizada = FechaPersonalizada;
+                double verificar = Properties.Settings.Default.NumeroNegativoOno;
+                if (verificar < 0)//si es numero negativo se convertira en un numero positivo y se redondeara
+                {
+                    fechapersonalizada = FechaPersonalizada;
+                    int DelaCaja = seagarrocaja(seAgarroDelacaja);
+                    txtDelacaja.Text = DelaCaja.ToString();
+                }
+                else//en caso contrario solo se mostrara un 0.
+                {
+                    fechapersonalizada = FechaPersonalizada;
+                    txtDelacaja.Text = seAgarroDelacaja.ToString();
+                }
                 //aqui se modificara algunas cosas del form para guardar los datos en la fecha correcta
             }
             else
@@ -36,11 +48,12 @@ namespace tienda
                 if (verificar < 0)
                 {
                     fechapersonalizada = FechaPersonalizada;
-                    int DelaCaja = seagarrocaja(seAgarroDelacaja);
+                    int DelaCaja = seagarrocaja(seAgarroDelacaja);//si se agarro de la caja se redondeara la cantidad dada
                     txtDelacaja.Text = DelaCaja.ToString();
                 }
                 else
                 {
+                    fechapersonalizada = FechaPersonalizada;
                     txtDelacaja.Text = seAgarroDelacaja.ToString();
                 }
                 
@@ -59,7 +72,7 @@ namespace tienda
 
             //se convierte a lista de enteros
             List<int> ints = str.Select(int.Parse).ToList();
-            RedondearSeAgarrodelacaja(ints);
+            RedondearUn(ints);
 
             List<string> strings = ints.ConvertAll(x => x.ToString());
             string une = string.Join("", strings);//<-------si da error utilizar este ---->  string une = String.Join("", strings);
@@ -67,56 +80,6 @@ namespace tienda
             //asi se convierte un string a int
             int delacaja = int.Parse(une);
             return delacaja;
-        }
-        private void RedondearSeAgarrodelacaja(List<int> redondear)
-        {
-            try
-            {
-                if(redondear.Count == 2)
-                {
-                    if (redondear[redondear.Count - 1] <= 5)
-                    {
-                        redondear[redondear.Count - 1] = 0;
-                    }
-                    else
-                    {
-                        redondear[redondear.Count - 2] = redondear[redondear.Count - 2] + 1;
-                        redondear[redondear.Count - 1] = 0;
-                    }
-                }
-                else
-                {
-                    if (redondear[redondear.Count - 1] <= 5)
-                    {
-                        redondear[redondear.Count - 1] = 0;
-                    }
-                    if (redondear[redondear.Count - 3] <= 8 && redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)
-                    {
-
-                        //redondear[redondear.Count - 3] = +1;
-                        redondear[redondear.Count - 3] = redondear[redondear.Count - 3] + 1;
-                        redondear[redondear.Count - 2] = 0;
-                        redondear[redondear.Count - 1] = 0;
-                    }
-                    if (redondear[redondear.Count - 3] == 9 && redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)
-                    {
-                        redondear[redondear.Count - 4] = redondear[redondear.Count - 4] + 1;
-                        redondear[redondear.Count - 3] = 0;
-                        redondear[redondear.Count - 2] = 0;
-                        redondear[redondear.Count - 1] = 0;
-                    }
-                    else
-                    {
-                        redondear[redondear.Count - 2] = redondear[redondear.Count - 2] + 1;
-                        redondear[redondear.Count - 1] = 0;
-                    }
-                }
-                
-            }
-            catch (Exception n)
-            {
-                MessageBox.Show($"Ocurrio un error(Probablemente sea de que es menor que 1000)\n\ntipo de error:\n {n}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private int redondearSeagarrodelacaja(double caja)
@@ -505,33 +468,82 @@ namespace tienda
         }
 
         //aqui se hace el redondeo
-        private void RedondearUn(List<int> redondear)
+        private void RedondearUn(List<int> redondear)//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         {
             try
             {
-                if (redondear[redondear.Count - 1] <= 5)
+                if (redondear.Count == 2)
                 {
-                    redondear[redondear.Count - 1] = 0;
+                    if (redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)//99 ---> 100
+                    {
+                        redondear[redondear.Count - 2] = redondear[redondear.Count - 2] + 1;
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                    else if (redondear[redondear.Count - 1] >= 5)//56  --> 60
+                    {
+                        redondear[redondear.Count - 2] = redondear[redondear.Count - 2] + 1;
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                    else if (redondear[redondear.Count - 1] < 5)//54  --> 50
+                    {
+                        redondear[redondear.Count - 1] = 0;
+                    }
                 }
-                if (redondear[redondear.Count - 3] <= 8 && redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)
+                else if (redondear.Count == 3)
                 {
-                    
-                    //redondear[redondear.Count - 3] = +1;
-                    redondear[redondear.Count - 3] = redondear[redondear.Count - 3] + 1;
-                    redondear[redondear.Count - 2] = 0;
-                    redondear[redondear.Count - 1] = 0;
+                    if (redondear[redondear.Count - 3] == 9 && redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)//999 ---> 1000
+                    {
+                        redondear[redondear.Count - 3] = redondear[redondear.Count - 3] + 1;
+                        redondear[redondear.Count - 2] = 0;
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                    else if (redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)//699 --> 700
+                    {
+                        redondear[redondear.Count - 3] = redondear[redondear.Count - 3] + 1;
+                        redondear[redondear.Count - 2] = 0;
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                    else if (redondear[redondear.Count - 1] < 5)//684 --> 680
+                    {
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                    else if (redondear[redondear.Count - 1] >= 5)//686 --> 690
+                    {
+                        redondear[redondear.Count - 2] = redondear[redondear.Count - 2] + 1;
+                        redondear[redondear.Count - 1] = 0;
+                    }
                 }
-                if (redondear[redondear.Count - 3] == 9 && redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)
+                else if (redondear.Count == 4)
                 {
-                    redondear[redondear.Count - 4] = redondear[redondear.Count - 4] + 1;
-                    redondear[redondear.Count - 3] = 0;
-                    redondear[redondear.Count - 2] = 0;
-                    redondear[redondear.Count - 1] = 0;
-                }
-                else
-                {
-                    redondear[redondear.Count - 2] = redondear[redondear.Count - 2] + 1;
-                    redondear[redondear.Count - 1] = 0;
+                    if (redondear[redondear.Count - 4] == 9 && redondear[redondear.Count - 3] == 9 && redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)//9999 -- > 10000
+                    {
+                        redondear[redondear.Count - 4] = redondear[redondear.Count - 4] + 1;
+                        redondear[redondear.Count - 3] = 0;
+                        redondear[redondear.Count - 2] = 0;
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                    else if (redondear[redondear.Count - 3] == 9 && redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)//8999 --> 9000
+                    {
+                        redondear[redondear.Count - 4] = redondear[redondear.Count - 4] + 1;
+                        redondear[redondear.Count - 3] = 0;
+                        redondear[redondear.Count - 2] = 0;
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                    else if (redondear[redondear.Count - 2] == 9 && redondear[redondear.Count - 1] >= 5)//5699 --> 5700
+                    {
+                        redondear[redondear.Count - 3] = redondear[redondear.Count - 3] + 1;
+                        redondear[redondear.Count - 2] = 0;
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                    else if (redondear[redondear.Count - 1] >= 5)//5356 --> 5360
+                    {
+                        redondear[redondear.Count - 2] = redondear[redondear.Count - 2] + 1;
+                        redondear[redondear.Count - 1] = 0;
+                    }
+                    else if (redondear[redondear.Count - 1] < 5)//5354 --> 5350
+                    {
+                        redondear[redondear.Count - 1] = 0;
+                    }
                 }
             }
             catch (Exception n)

@@ -494,7 +494,7 @@ namespace tienda
                 }
                 else//para los demas dias
                 {
-                    if (horaactual.Hour >= 7 && horaactual.Minute >= 0)//solo se podra hacer la suma asta las 10:00 pm
+                    if (horaactual.Hour >= 22 && horaactual.Minute >= 0)//solo se podra hacer la suma asta las 10:00 pm
                     {
                         //MessageBox.Show("Se activaran los botones");
                         lblProveedor.Visible = false;
