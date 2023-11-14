@@ -51,6 +51,8 @@
             this.CheckboxNoPasa = new System.Windows.Forms.CheckBox();
             this.lblObtenerDias = new System.Windows.Forms.Label();
             this.lblDiaAcambiar = new System.Windows.Forms.Label();
+            this.txtBuscarProveedor = new System.Windows.Forms.TextBox();
+            this.lblBuscarProveedor = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DtgvProveedores)).BeginInit();
             this.GropboxVariosDias.SuspendLayout();
             this.SuspendLayout();
@@ -85,7 +87,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.DtgvProveedores.DefaultCellStyle = dataGridViewCellStyle3;
-            this.DtgvProveedores.Location = new System.Drawing.Point(395, 12);
+            this.DtgvProveedores.Location = new System.Drawing.Point(395, 113);
             this.DtgvProveedores.MultiSelect = false;
             this.DtgvProveedores.Name = "DtgvProveedores";
             this.DtgvProveedores.ReadOnly = true;
@@ -93,7 +95,7 @@
             this.DtgvProveedores.RowHeadersWidth = 51;
             this.DtgvProveedores.RowTemplate.Height = 24;
             this.DtgvProveedores.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DtgvProveedores.Size = new System.Drawing.Size(497, 740);
+            this.DtgvProveedores.Size = new System.Drawing.Size(497, 639);
             this.DtgvProveedores.TabIndex = 0;
             this.DtgvProveedores.SelectionChanged += new System.EventHandler(this.DtgvProveedores_SelectionChanged);
             // 
@@ -303,11 +305,32 @@
             this.lblDiaAcambiar.TabIndex = 20;
             this.lblDiaAcambiar.Text = "C";
             // 
+            // txtBuscarProveedor
+            // 
+            this.txtBuscarProveedor.Font = new System.Drawing.Font("Modern No. 20", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBuscarProveedor.Location = new System.Drawing.Point(395, 56);
+            this.txtBuscarProveedor.Name = "txtBuscarProveedor";
+            this.txtBuscarProveedor.Size = new System.Drawing.Size(497, 47);
+            this.txtBuscarProveedor.TabIndex = 21;
+            this.txtBuscarProveedor.TextChanged += new System.EventHandler(this.txtBuscarProveedor_TextChanged);
+            // 
+            // lblBuscarProveedor
+            // 
+            this.lblBuscarProveedor.AutoSize = true;
+            this.lblBuscarProveedor.Font = new System.Drawing.Font("Modern No. 20", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBuscarProveedor.Location = new System.Drawing.Point(390, 23);
+            this.lblBuscarProveedor.Name = "lblBuscarProveedor";
+            this.lblBuscarProveedor.Size = new System.Drawing.Size(216, 30);
+            this.lblBuscarProveedor.TabIndex = 22;
+            this.lblBuscarProveedor.Text = "Buscar proveedor:";
+            // 
             // AgregarProveedores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 764);
+            this.Controls.Add(this.lblBuscarProveedor);
+            this.Controls.Add(this.txtBuscarProveedor);
             this.Controls.Add(this.lblDiaAcambiar);
             this.Controls.Add(this.lblObtenerDias);
             this.Controls.Add(this.GropboxVariosDias);
@@ -323,6 +346,7 @@
             this.MaximumSize = new System.Drawing.Size(1173, 811);
             this.MinimumSize = new System.Drawing.Size(922, 811);
             this.Name = "AgregarProveedores";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Agregar proveedor";
             this.Load += new System.EventHandler(this.AgregarProveedores_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DtgvProveedores)).EndInit();
@@ -354,5 +378,7 @@
         private System.Windows.Forms.CheckBox CheckboxNoPasa;
         private System.Windows.Forms.Label lblDiaAcambiar;
         private System.Windows.Forms.CheckBox CheckBoxSinDiaFijo;
+        private System.Windows.Forms.TextBox txtBuscarProveedor;
+        private System.Windows.Forms.Label lblBuscarProveedor;
     }
 }

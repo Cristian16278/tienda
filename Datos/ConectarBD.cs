@@ -1184,6 +1184,77 @@ namespace Datos
                 return 0;
             }
         }
+
+        public DataTable BuscarProveedorAdelantado(string proveedor)
+        {
+            try
+            {
+                string procedimiento = "SP_MOSTRARPROVEEDORESESPECIFICOADELANTO";
+                using (SqlCommand comando = new SqlCommand(procedimiento, conn))
+                {
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.AddWithValue("@ProveedorParam", proveedor);
+                    using (SqlDataReader reader = comando.ExecuteReader())
+                    {
+                        DataTable dt = new DataTable();
+                        dt.Load(reader);
+                        return dt;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("ocurrio un error");
+                return null;
+            }
+        }
+
+        public DataTable BuscarProveedorSinDiaFijo(string proveedor)
+        {
+            try
+            {
+                string procedimiento = "SP_MOSTRARPROVEEDORESESPECIFICOSINDIAFIJO";
+                using (SqlCommand comando = new SqlCommand(procedimiento, conn))
+                {
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.AddWithValue("@ProveedorParam", proveedor);
+                    using (SqlDataReader reader = comando.ExecuteReader())
+                    {
+                        DataTable dt = new DataTable();
+                        dt.Load(reader);
+                        return dt;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("ocurrio un error");
+                return null;
+            }
+        }
+        #endregion
+
+        #region para el form de AgregarProveedores para buscar un proveedor en especifico
+        public DataTable BuscarProveedor(string proveedor)
+        {
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
+
+            string buscar = "SELECT NombreProveedor AS Proveedor, DiaVisita AS Dia_visita " +
+                            "FROM Proveedores " +
+                            "WHERE NombreProveedor LIKE @provedor + '%'";
+            SqlCommand comando = new SqlCommand(buscar, conn);
+            comando.Parameters.AddWithValue("@provedor", proveedor);
+            using (SqlDataReader reader = comando.ExecuteReader())
+            {
+                DataTable dt = new DataTable();
+                dt.Load(reader);
+                return dt;
+            }
+
+        }
         #endregion
     }
 }

@@ -169,7 +169,7 @@ namespace tienda
         {
             string provedor = TxtProveedor.Text;
             string diavisita = lblObtenerDias.Text;
-            string Modificardiavisita = lblObtenerDias.Text;
+            string Modificardiavisita = lblDiaAcambiar.Text;
             if (string.IsNullOrEmpty(Modificardiavisita))
             {
                 MessageBox.Show("Eliga al menos un dia.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -427,6 +427,20 @@ namespace tienda
             else
             {
                 lblObtenerDias.Text = "";
+            }
+        }
+
+        private void txtBuscarProveedor_TextChanged(object sender, EventArgs e)
+        {
+            //aqui ira el metodo para buscar lo que se escriba en el textbox
+            if (!string.IsNullOrEmpty(txtBuscarProveedor.Text))
+            {
+                string proveedor = txtBuscarProveedor.Text;
+                DtgvProveedores.DataSource = conectar.BuscarProveedor(proveedor);
+            }
+            else
+            {
+                DtgvProveedores.DataSource = conectar.MostrarTablaProveedores();
             }
         }
     }
