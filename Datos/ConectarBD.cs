@@ -783,6 +783,7 @@ namespace Datos
             }
             catch (Exception ex)
             {
+                MessageBox.Show($"Ocurrio un error:\n{ex}","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             //finally { conn.Close(); }

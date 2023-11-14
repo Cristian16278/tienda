@@ -49,6 +49,7 @@
             this.CboxProveedoresSinFechaFijo = new System.Windows.Forms.ComboBox();
             this.CboxAccionRealizar = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtProveedorEspecifico = new System.Windows.Forms.TextBox();
             this.txtAgregarComentario = new System.Windows.Forms.TextBox();
             this.lblMensage = new System.Windows.Forms.Label();
             this.CboxProveedorAdelantado = new System.Windows.Forms.ComboBox();
@@ -142,7 +143,7 @@
             // txtCompra
             // 
             this.txtCompra.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCompra.Location = new System.Drawing.Point(419, 70);
+            this.txtCompra.Location = new System.Drawing.Point(396, 100);
             this.txtCompra.Name = "txtCompra";
             this.txtCompra.Size = new System.Drawing.Size(281, 38);
             this.txtCompra.TabIndex = 4;
@@ -152,7 +153,7 @@
             // 
             this.lblCompra.AutoSize = true;
             this.lblCompra.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCompra.Location = new System.Drawing.Point(413, 30);
+            this.lblCompra.Location = new System.Drawing.Point(390, 30);
             this.lblCompra.Name = "lblCompra";
             this.lblCompra.Size = new System.Drawing.Size(122, 32);
             this.lblCompra.TabIndex = 5;
@@ -171,7 +172,7 @@
             // txtProveedor
             // 
             this.txtProveedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProveedor.Location = new System.Drawing.Point(23, 70);
+            this.txtProveedor.Location = new System.Drawing.Point(23, 100);
             this.txtProveedor.Name = "txtProveedor";
             this.txtProveedor.Size = new System.Drawing.Size(285, 38);
             this.txtProveedor.TabIndex = 7;
@@ -201,9 +202,9 @@
             this.BtnGuardar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BtnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BtnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnGuardar.Location = new System.Drawing.Point(6, 152);
+            this.BtnGuardar.Location = new System.Drawing.Point(6, 239);
             this.BtnGuardar.Name = "BtnGuardar";
-            this.BtnGuardar.Size = new System.Drawing.Size(313, 44);
+            this.BtnGuardar.Size = new System.Drawing.Size(313, 58);
             this.BtnGuardar.TabIndex = 10;
             this.BtnGuardar.Text = "Guardar cambios";
             this.BtnGuardar.UseVisualStyleBackColor = false;
@@ -224,7 +225,7 @@
             this.CboxProveedoresSinFechaFijo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CboxProveedoresSinFechaFijo.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CboxProveedoresSinFechaFijo.FormattingEnabled = true;
-            this.CboxProveedoresSinFechaFijo.Location = new System.Drawing.Point(23, 70);
+            this.CboxProveedoresSinFechaFijo.Location = new System.Drawing.Point(23, 143);
             this.CboxProveedoresSinFechaFijo.Name = "CboxProveedoresSinFechaFijo";
             this.CboxProveedoresSinFechaFijo.Size = new System.Drawing.Size(285, 39);
             this.CboxProveedoresSinFechaFijo.TabIndex = 12;
@@ -248,6 +249,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox1.Controls.Add(this.txtProveedorEspecifico);
             this.groupBox1.Controls.Add(this.txtAgregarComentario);
             this.groupBox1.Controls.Add(this.lblMensage);
             this.groupBox1.Controls.Add(this.CboxProveedorAdelantado);
@@ -259,15 +261,24 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(27, 516);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(749, 221);
+            this.groupBox1.Size = new System.Drawing.Size(749, 303);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ingresar valores";
             // 
+            // txtProveedorEspecifico
+            // 
+            this.txtProveedorEspecifico.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProveedorEspecifico.Location = new System.Drawing.Point(23, 85);
+            this.txtProveedorEspecifico.Name = "txtProveedorEspecifico";
+            this.txtProveedorEspecifico.Size = new System.Drawing.Size(285, 38);
+            this.txtProveedorEspecifico.TabIndex = 22;
+            this.txtProveedorEspecifico.TextChanged += new System.EventHandler(this.txtProveedorEspecifico_TextChanged);
+            // 
             // txtAgregarComentario
             // 
             this.txtAgregarComentario.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAgregarComentario.Location = new System.Drawing.Point(23, 126);
+            this.txtAgregarComentario.Location = new System.Drawing.Point(23, 199);
             this.txtAgregarComentario.Name = "txtAgregarComentario";
             this.txtAgregarComentario.Size = new System.Drawing.Size(677, 38);
             this.txtAgregarComentario.TabIndex = 20;
@@ -277,7 +288,7 @@
             // lblMensage
             // 
             this.lblMensage.AutoSize = true;
-            this.lblMensage.Location = new System.Drawing.Point(29, 167);
+            this.lblMensage.Location = new System.Drawing.Point(26, 253);
             this.lblMensage.Name = "lblMensage";
             this.lblMensage.Size = new System.Drawing.Size(0, 29);
             this.lblMensage.TabIndex = 14;
@@ -287,7 +298,7 @@
             this.CboxProveedorAdelantado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CboxProveedorAdelantado.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CboxProveedorAdelantado.FormattingEnabled = true;
-            this.CboxProveedorAdelantado.Location = new System.Drawing.Point(23, 70);
+            this.CboxProveedorAdelantado.Location = new System.Drawing.Point(23, 143);
             this.CboxProveedorAdelantado.Name = "CboxProveedorAdelantado";
             this.CboxProveedorAdelantado.Size = new System.Drawing.Size(285, 39);
             this.CboxProveedorAdelantado.TabIndex = 13;
@@ -302,7 +313,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(782, 516);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(325, 221);
+            this.groupBox2.Size = new System.Drawing.Size(325, 303);
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Acciones";
@@ -310,10 +321,10 @@
             // RdbProveedorSFechaFijo
             // 
             this.RdbProveedorSFechaFijo.AutoSize = true;
-            this.RdbProveedorSFechaFijo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RdbProveedorSFechaFijo.Location = new System.Drawing.Point(162, 109);
+            this.RdbProveedorSFechaFijo.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RdbProveedorSFechaFijo.Location = new System.Drawing.Point(159, 149);
             this.RdbProveedorSFechaFijo.Name = "RdbProveedorSFechaFijo";
-            this.RdbProveedorSFechaFijo.Size = new System.Drawing.Size(122, 29);
+            this.RdbProveedorSFechaFijo.Size = new System.Drawing.Size(146, 33);
             this.RdbProveedorSFechaFijo.TabIndex = 15;
             this.RdbProveedorSFechaFijo.TabStop = true;
             this.RdbProveedorSFechaFijo.Text = "Sin dia fijo";
@@ -323,10 +334,10 @@
             // RdbProveedorAdelanto
             // 
             this.RdbProveedorAdelanto.AutoSize = true;
-            this.RdbProveedorAdelanto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RdbProveedorAdelanto.Location = new System.Drawing.Point(22, 109);
+            this.RdbProveedorAdelanto.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RdbProveedorAdelanto.Location = new System.Drawing.Point(14, 149);
             this.RdbProveedorAdelanto.Name = "RdbProveedorAdelanto";
-            this.RdbProveedorAdelanto.Size = new System.Drawing.Size(111, 29);
+            this.RdbProveedorAdelanto.Size = new System.Drawing.Size(129, 33);
             this.RdbProveedorAdelanto.TabIndex = 14;
             this.RdbProveedorAdelanto.TabStop = true;
             this.RdbProveedorAdelanto.Text = "Adelanto";
@@ -387,7 +398,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1119, 749);
+            this.ClientSize = new System.Drawing.Size(1119, 831);
             this.Controls.Add(this.lblAhoroCasaOcomplemento);
             this.Controls.Add(this.txtAhorroCasaOcomplemento);
             this.Controls.Add(this.CboxElegirAhorroOcomplemento);
@@ -401,8 +412,8 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1137, 796);
-            this.MinimumSize = new System.Drawing.Size(1137, 796);
+            this.MaximumSize = new System.Drawing.Size(1137, 878);
+            this.MinimumSize = new System.Drawing.Size(1137, 878);
             this.Name = "Provedores";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Control de proveedores";
@@ -447,5 +458,6 @@
         private System.Windows.Forms.TextBox txtAhorroCasaOcomplemento;
         private System.Windows.Forms.Label lblAhoroCasaOcomplemento;
         private System.Windows.Forms.TextBox txtAgregarComentario;
+        private System.Windows.Forms.TextBox txtProveedorEspecifico;
     }
 }

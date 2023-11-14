@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Datos;
 //using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-//using static System.Net.Mime.MediaTypeNames;
+//using static System.Net.Mime.MediaTypeNames;1137; 796
 
 namespace tienda
 {
@@ -430,7 +430,12 @@ namespace tienda
                 RdbProveedorSFechaFijo.Visible = true;
                 RdbProveedorAdelanto.Visible = true;
                 txtAgregarComentario.Visible = true;
+                txtProveedorEspecifico.Visible = true;
+                txtProveedorEspecifico.Enabled = true;
                 QuitarCheckedRadiobutton(true, false);
+                llenarComboboxSinFechaFijo();
+                LlenarComboboxProveedorAdelanto();
+                
                 //nesesitaremos el ProveedorID donde DiaVisita sea igual a 'Sin dia fijo',
                 //la fecha y la compra sera opcional
             }
@@ -458,6 +463,8 @@ namespace tienda
                 CboxProveedorAdelantado.Visible = false;
                 RdbProveedorSFechaFijo.Visible = false;
                 RdbProveedorAdelanto.Visible = false;
+                txtProveedorEspecifico.Visible = false;
+                txtProveedorEspecifico.Enabled = false;
                 QuitarCheckedRadiobutton(false, false);
                 //nesesitaremos el ProveedorID y la fecha
             }
@@ -474,6 +481,8 @@ namespace tienda
                         RdbProveedorAdelanto.Visible = false;
                         RdbProveedorSFechaFijo.Visible = false;
                         txtAgregarComentario.Visible = false;
+                        txtProveedorEspecifico.Visible = false;
+                        txtProveedorEspecifico.Enabled = false;
                         lblCompra.Text = "Resultado:";
                         BtnGuardar.Click -= BtnSumarTodo_Click;
                         BtnGuardar.Click += BtnSumarTodo_Click;
@@ -504,6 +513,8 @@ namespace tienda
                         RdbProveedorAdelanto.Visible = false;
                         RdbProveedorSFechaFijo.Visible = false;
                         txtAgregarComentario.Visible = false;
+                        txtProveedorEspecifico.Visible = false;
+                        txtProveedorEspecifico.Enabled = false;
                         lblCompra.Text = "Resultado:";
                         txtCompra.Text = "";
                         BtnGuardar.Click -= BtnSumarTodo_Click;
@@ -550,6 +561,8 @@ namespace tienda
                 CboxProveedorAdelantado.Visible = false;
                 RdbProveedorSFechaFijo.Visible = false;
                 RdbProveedorAdelanto.Visible = false;
+                txtProveedorEspecifico.Visible = false;
+                txtProveedorEspecifico.Enabled = false;
                 QuitarCheckedRadiobutton(false, false);
                 //nesecitaremos el ProveedroID, la compra y la fecha
             }
@@ -763,6 +776,7 @@ namespace tienda
                     }
                     dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
                     dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
+                    txtProveedorEspecifico.Text = "";
                 }
                 else
                 {
@@ -887,6 +901,52 @@ namespace tienda
                 txtAgregarComentario.ForeColor = Color.DarkGray;
             }
         }
+
+        private void txtProveedorEspecifico_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtProveedorEspecifico.Text))//si el textbox no esta vacio, hara la logica
+            {
+                if (RdbProveedorAdelanto.Checked)
+                {
+                    //aqui ira para proveedor adelantado
+                    string proveedorA = txtProveedorEspecifico.Text;
+                    LlenarComboboxProveedorEspecificoAdelantado(proveedorA);
+                }
+                else if (RdbProveedorSFechaFijo.Checked)
+                {
+                    //aqui ira para proveedor sindiafijo
+                    string proveedorSDF = txtProveedorEspecifico.Text;
+                    LlenarComboboxProveedorEspecificoSinDiaFijo(proveedorSDF);
+                }
+            }
+            else//si esta vacio que me muestre todos dependiendo que radiobutton esta elegido
+            {
+                if (RdbProveedorAdelanto.Checked)
+                {
+                    LlenarComboboxProveedorAdelanto();
+                }
+                else if (RdbProveedorSFechaFijo.Checked)
+                {
+                    llenarComboboxSinFechaFijo();
+                }
+                
+            }
+        }
+
+        private void LlenarComboboxProveedorEspecificoAdelantado(string proveedorEA)
+        {
+            CboxProveedorAdelantado.DataSource = conectar.BuscarProveedorAdelantado(proveedorEA);
+            CboxProveedorAdelantado.DisplayMember = "NombreProveedor";
+            CboxProveedorAdelantado.ValueMember = "ProveedorID";
+        }
+
+        private void LlenarComboboxProveedorEspecificoSinDiaFijo(string proveedorSDF)
+        {
+            CboxProveedoresSinFechaFijo.DataSource = conectar.BuscarProveedorSinDiaFijo(proveedorSDF);
+            CboxProveedoresSinFechaFijo.DisplayMember = "NombreProveedor";
+            CboxProveedoresSinFechaFijo.ValueMember = "ProveedorID";
+        }
+
         //private void Provedores_FormClosed(object sender, FormClosedEventArgs e)
         //{
         //    agregarProveedores = null;

@@ -37,7 +37,7 @@ namespace tienda
         }
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            int Agarrardinero = int.Parse(txtAgarrarDinero.Text);//8,000
+            int Agarrardinero = int.Parse(txtAgarrarDinero.Text);
             DialogResult respuesta = MessageBox.Show($"Esta seguro de almacenar ${Agarrardinero}?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (respuesta == DialogResult.Yes)
             {
@@ -59,7 +59,7 @@ namespace tienda
                 int txt = int.Parse(txtAgarrarDinero.Text);
                 if (txt > lbl)
                 {
-                    MessageBox.Show($"No puede dejar mas que {texto}{lbl}");
+                    MessageBox.Show($"No puede dejar mas que {texto}{lbl}","Mensage del program", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     BtnGuardar.Enabled = false;
                 }
                 else
@@ -73,7 +73,7 @@ namespace tienda
             }
             catch(Exception f)
             {
-                MessageBox.Show($"Ocurrio un error\ntipo de error:\n{f}");
+                MessageBox.Show($"Ocurrio un error\ntipo de error:\n{f}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

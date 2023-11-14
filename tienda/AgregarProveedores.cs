@@ -196,6 +196,7 @@ namespace tienda
                 }
                 TxtProveedor.Text = "";
                 lblDiaAcambiar.Text = "";
+                txtBuscarProveedor.Text = "";
                 QuitarOmarcarChecked(false);
             }
         }
@@ -210,12 +211,12 @@ namespace tienda
             }
             else if (string.IsNullOrEmpty(lblObtenerDias.Text))
             {
-                MessageBox.Show("Debe al menos ingresar un dia que baya a pasar.", "Mensage del program", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Debe al menos elegir un dia.", "Mensage del program", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
                 string diavisita = lblObtenerDias.Text;
-                DialogResult respuesta = MessageBox.Show("Esta seguro que quiero guardar estos datos?", "Advertencia!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult respuesta = MessageBox.Show("Esta seguro que quiere guardar estos datos?", "Advertencia!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (respuesta == DialogResult.Yes)
                 {
                     if (conectar.AgregarProveedor(provedor, diavisita) == 0)
@@ -234,6 +235,7 @@ namespace tienda
                 }
                 TxtProveedor.Text = "";
                 QuitarOmarcarChecked(false);
+                txtBuscarProveedor.Text = "";
             }
         }
 
