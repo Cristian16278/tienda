@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Datos;
 //using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-//using static System.Net.Mime.MediaTypeNames;1137; 796
+//using static System.Net.Mime.MediaTypeNames;
 
 namespace tienda
 {

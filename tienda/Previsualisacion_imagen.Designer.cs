@@ -28,18 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.BtnGuardar = new System.Windows.Forms.Button();
             this.BtnCancelar = new System.Windows.Forms.Button();
             this.BtnCambiarImagen = new System.Windows.Forms.Button();
+            this.BtnAbriConFotos = new System.Windows.Forms.Button();
+            this.Borrarimagen = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(55, 34);
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Location = new System.Drawing.Point(55, 56);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(626, 571);
+            this.pictureBox1.Size = new System.Drawing.Size(636, 549);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -77,17 +83,38 @@
             this.BtnCambiarImagen.UseVisualStyleBackColor = true;
             this.BtnCambiarImagen.Click += new System.EventHandler(this.BtnCambiarImagen_Click);
             // 
+            // BtnAbriConFotos
+            // 
+            this.BtnAbriConFotos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnAbriConFotos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnAbriConFotos.Location = new System.Drawing.Point(515, 12);
+            this.BtnAbriConFotos.Name = "BtnAbriConFotos";
+            this.BtnAbriConFotos.Size = new System.Drawing.Size(176, 38);
+            this.BtnAbriConFotos.TabIndex = 4;
+            this.BtnAbriConFotos.Text = "Abri con Fotos";
+            this.BtnAbriConFotos.UseVisualStyleBackColor = true;
+            this.BtnAbriConFotos.Click += new System.EventHandler(this.BtnAbriConFotos_Click);
+            // 
+            // Borrarimagen
+            // 
+            this.Borrarimagen.Interval = 3000;
+            this.Borrarimagen.Tick += new System.EventHandler(this.Borrarimagen_Tick);
+            // 
             // Previsualisacion_imagen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(752, 718);
+            this.ClientSize = new System.Drawing.Size(748, 718);
+            this.Controls.Add(this.BtnAbriConFotos);
             this.Controls.Add(this.BtnCambiarImagen);
             this.Controls.Add(this.BtnCancelar);
             this.Controls.Add(this.BtnGuardar);
             this.Controls.Add(this.pictureBox1);
-            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(766, 765);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(766, 765);
             this.Name = "Previsualisacion_imagen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Previsualisacion_imagen";
@@ -102,5 +129,7 @@
         private System.Windows.Forms.Button BtnGuardar;
         private System.Windows.Forms.Button BtnCancelar;
         private System.Windows.Forms.Button BtnCambiarImagen;
+        private System.Windows.Forms.Button BtnAbriConFotos;
+        private System.Windows.Forms.Timer Borrarimagen;
     }
 }
