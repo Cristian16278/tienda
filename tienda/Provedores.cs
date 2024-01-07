@@ -28,37 +28,80 @@ namespace tienda
         {
             try
             {
+                int ano = DateTime.Now.Year;
                 DayOfWeek dia = DateTime.Now.DayOfWeek;
                 DateTime horaactual = DateTime.Now;
                 if (dia == DayOfWeek.Sunday)//si hoy es domingo
                 {
-                    if (horaactual.Hour >= 17 && horaactual.Minute >= 0)//y la hora es mas de las 17:00 horas(5:00 PM)
+                    DateTime diafestivo = DateTime.Now.Date;
+                    DateTime festivo25 = new DateTime(ano, 12, 25);//para la fecha 25-12-(cualquier año)
+                    DateTime festivoprimero = new DateTime(ano, 1, 1);//para la fecha 01-01-(cualquier año)
+                    if (diafestivo == festivo25 || diafestivo == festivoprimero)//si es domingo y es dia primero de enero o 25 de diciembre
                     {
-                        CboxAccionRealizar.SelectedItem = "Sumar todo";//Seleccioname el 'Sumar todo' del combobox
-                        MetodoParaEventoLoadDelForm();
-                        CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                        if(horaactual.Hour >= 14 && horaactual.Minute >= 0)
+                        {
+                            CboxAccionRealizar.SelectedItem = "Sumar todo";//Seleccioname el 'Sumar todo' del combobox
+                            MetodoParaEventoLoadDelForm();
+                            CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                        }
+                        else
+                        {
+                            CboxAccionRealizar.SelectedItem = "Modificar";//seleccioname el 'Modificar' del combobox
+                            MetodoParaEventoLoadDelForm();
+                            CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                        }
                     }
-                    else
-                    {    //en caso contrario
-                        CboxAccionRealizar.SelectedItem = "Modificar";//seleccioname el 'Modificar' del combobox
-                        MetodoParaEventoLoadDelForm();
-                        CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                    else//si no son esas fechas quiere decir que es un dia normal.
+                    {
+                        if (horaactual.Hour >= 17 && horaactual.Minute >= 0)//y la hora es mas de las 17:00 horas(5:00 PM)
+                        {
+                            CboxAccionRealizar.SelectedItem = "Sumar todo";//Seleccioname el 'Sumar todo' del combobox
+                            MetodoParaEventoLoadDelForm();
+                            CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                        }
+                        else
+                        {    //en caso contrario
+                            CboxAccionRealizar.SelectedItem = "Modificar";//seleccioname el 'Modificar' del combobox
+                            MetodoParaEventoLoadDelForm();
+                            CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                        }
                     }
                 }
                 else//en caso contrario es otro dia
                 {
-                    if (horaactual.Hour >= 22 && horaactual.Minute >= 0)//y la hora es mas de las 22:00 horas(10:00 PM)
+                    DateTime diafestivo = DateTime.Now.Date;
+                    DateTime festivo25 = new DateTime(ano,12,25);//para la fecha 25-12-(cualquier año)
+                    DateTime festivoprimero = new DateTime(ano, 1, 1);//para la fecha 01-01-(cualquier año)
+                    if (diafestivo == festivo25 || diafestivo == festivoprimero)//si es un dia de la semana que no sea domingo y es dia primero de enero o 25 de diciembre
                     {
-                        CboxAccionRealizar.SelectedItem = "Sumar todo";//Seleccioname el 'Sumar todo' del combobox 
-                        MetodoParaEventoLoadDelForm();
-                        CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                        if (horaactual.Hour >= 14 && horaactual.Minute >= 0)
+                        {
+                            CboxAccionRealizar.SelectedItem = "Sumar todo";//Seleccioname el 'Sumar todo' del combobox
+                            MetodoParaEventoLoadDelForm();
+                            CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                        }
+                        else
+                        {
+                            CboxAccionRealizar.SelectedItem = "Modificar";//seleccioname el 'Modificar' del combobox
+                            MetodoParaEventoLoadDelForm();
+                            CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                        }
                     }
-                    else//en caso contrario
+                    else//si no son esas fechas quire decir que es un dia normal
                     {
-                        CboxAccionRealizar.SelectedItem = "Modificar";//Seleccioname el 'Modificar' del Combobox
-                        MetodoParaEventoLoadDelForm();
-                        CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                        if (horaactual.Hour >= 22 && horaactual.Minute >= 0)//y la hora es mas de las 22:00 horas(10:00 PM)
+                        {
+                            CboxAccionRealizar.SelectedItem = "Sumar todo";//Seleccioname el 'Sumar todo' del combobox 
+                            MetodoParaEventoLoadDelForm();
+                            CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                        }
+                        else//en caso contrario
+                        {
+                            CboxAccionRealizar.SelectedItem = "Modificar";//Seleccioname el 'Modificar' del Combobox
+                            MetodoParaEventoLoadDelForm();
+                            CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
 
+                        }
                     }
                 }
                 
@@ -405,6 +448,7 @@ namespace tienda
         {
             DateTime horaactual = DateTime.Now;
             DayOfWeek dia = DateTime.Now.DayOfWeek;
+            int ano = DateTime.Now.Year;
             //MessageBox.Show($"Test{dia}");
             string elegiraccion = CboxAccionRealizar.SelectedItem.ToString();
             if (elegiraccion == "Agregar proveedor")
@@ -472,65 +516,139 @@ namespace tienda
             {
                 if(dia == DayOfWeek.Sunday)//para domingo
                 {
-                    if (horaactual.Hour >= 17 && horaactual.Minute >= 0)// solo se podra hacer la suma asta las 5:00pm
+                    DateTime diafestivo = DateTime.Now.Date;
+                    DateTime festivo25 = new DateTime(ano, 12, 25);//para la fecha 25-12-(cualquier año)
+                    DateTime festivoprimero = new DateTime(ano, 1, 1);//para la fecha 01-01-(cualquier año)
+                    if (diafestivo == festivo25 || diafestivo == festivoprimero)//si es domingo y es dia primero de enero o 25 de diciembre
                     {
-                        lblProveedor.Visible = false;
-                        txtProveedor.Visible = false;
-                        CboxProveedoresSinFechaFijo.Visible = false;
-                        CboxProveedorAdelantado.Visible = false;
-                        RdbProveedorAdelanto.Visible = false;
-                        RdbProveedorSFechaFijo.Visible = false;
-                        txtAgregarComentario.Visible = false;
-                        txtProveedorEspecifico.Visible = false;
-                        txtProveedorEspecifico.Enabled = false;
-                        lblCompra.Text = "Resultado:";
-                        BtnGuardar.Click -= BtnSumarTodo_Click;
-                        BtnGuardar.Click += BtnSumarTodo_Click;
-                        BtnGuardar.Click -= BtnAgregar_Click;
-                        BtnGuardar.Click -= BtnGuardar_Click;
-                        BtnGuardar.Click -= BtnBorrar_Click;
-                        dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
-                        BtnGuardar.Text = "Sumar";
-                        txtCompra.Text = "";
-                        BtnGuardar.BackColor = Color.Yellow;
-                        BtnGuardar.ForeColor = Color.Black;
+                        if(horaactual.Hour >= 14 && horaactual.Minute >= 0)
+                        {
+                            lblProveedor.Visible = false;
+                            txtProveedor.Visible = false;
+                            CboxProveedoresSinFechaFijo.Visible = false;
+                            CboxProveedorAdelantado.Visible = false;
+                            RdbProveedorAdelanto.Visible = false;
+                            RdbProveedorSFechaFijo.Visible = false;
+                            txtAgregarComentario.Visible = false;
+                            txtProveedorEspecifico.Visible = false;
+                            txtProveedorEspecifico.Enabled = false;
+                            lblCompra.Text = "Resultado:";
+                            BtnGuardar.Click -= BtnSumarTodo_Click;
+                            BtnGuardar.Click += BtnSumarTodo_Click;
+                            BtnGuardar.Click -= BtnAgregar_Click;
+                            BtnGuardar.Click -= BtnGuardar_Click;
+                            BtnGuardar.Click -= BtnBorrar_Click;
+                            dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                            BtnGuardar.Text = "Sumar";
+                            txtCompra.Text = "";
+                            BtnGuardar.BackColor = Color.Yellow;
+                            BtnGuardar.ForeColor = Color.Black;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Solo se podra sumar los proveedores alas \n14:00 horas(2:00 PM).", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CboxAccionRealizar.SelectedItem = "Modificar";
+                        }
                     }
-                    else
+                    else//si no son esas fechas es que es un dia normal
                     {
-                        MessageBox.Show("Solo se podra sumar los proveedores alas \n17:00 horas(5:00 PM).", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        CboxAccionRealizar.SelectedItem = "Modificar";
+                        if (horaactual.Hour >= 17 && horaactual.Minute >= 0)// solo se podra hacer la suma asta las 5:00pm
+                        {
+                            lblProveedor.Visible = false;
+                            txtProveedor.Visible = false;
+                            CboxProveedoresSinFechaFijo.Visible = false;
+                            CboxProveedorAdelantado.Visible = false;
+                            RdbProveedorAdelanto.Visible = false;
+                            RdbProveedorSFechaFijo.Visible = false;
+                            txtAgregarComentario.Visible = false;
+                            txtProveedorEspecifico.Visible = false;
+                            txtProveedorEspecifico.Enabled = false;
+                            lblCompra.Text = "Resultado:";
+                            BtnGuardar.Click -= BtnSumarTodo_Click;
+                            BtnGuardar.Click += BtnSumarTodo_Click;
+                            BtnGuardar.Click -= BtnAgregar_Click;
+                            BtnGuardar.Click -= BtnGuardar_Click;
+                            BtnGuardar.Click -= BtnBorrar_Click;
+                            dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                            BtnGuardar.Text = "Sumar";
+                            txtCompra.Text = "";
+                            BtnGuardar.BackColor = Color.Yellow;
+                            BtnGuardar.ForeColor = Color.Black;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Solo se podra sumar los proveedores alas \n17:00 horas(5:00 PM).", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CboxAccionRealizar.SelectedItem = "Modificar";
+                        }
                     }
                 }
                 else//para los demas dias
                 {
-                    if (horaactual.Hour >= 22 && horaactual.Minute >= 0)//solo se podra hacer la suma asta las 10:00 pm
+                    DateTime diafestivo = DateTime.Now.Date;
+                    DateTime festivo25 = new DateTime(ano, 12, 25);//para la fecha 25-12-(cualquier año)
+                    DateTime festivoprimero = new DateTime(ano, 1, 1);//para la fecha 01-01-(cualquier año)
+                    if (diafestivo == festivo25 || diafestivo == festivoprimero)//si es un dia de la semana que no sea domingo y es dia primero de enero o 25 de diciembre
                     {
-                        //MessageBox.Show("Se activaran los botones");
-                        lblProveedor.Visible = false;
-                        txtProveedor.Visible = false;
-                        CboxProveedoresSinFechaFijo.Visible = false;
-                        CboxProveedorAdelantado.Visible = false;
-                        RdbProveedorAdelanto.Visible = false;
-                        RdbProveedorSFechaFijo.Visible = false;
-                        txtAgregarComentario.Visible = false;
-                        txtProveedorEspecifico.Visible = false;
-                        txtProveedorEspecifico.Enabled = false;
-                        lblCompra.Text = "Resultado:";
-                        txtCompra.Text = "";
-                        BtnGuardar.Click -= BtnSumarTodo_Click;
-                        BtnGuardar.Click += BtnSumarTodo_Click;
-                        BtnGuardar.Click -= BtnAgregar_Click;
-                        BtnGuardar.Click -= BtnGuardar_Click;
-                        BtnGuardar.Click -= BtnBorrar_Click;
-                        dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
-                        BtnGuardar.Text = "Sumar";
-                        BtnGuardar.BackColor = Color.Yellow;
-                        BtnGuardar.ForeColor = Color.Black;
+                        if(horaactual.Hour >= 14 && horaactual.Minute >= 0)
+                        {
+                            lblProveedor.Visible = false;
+                            txtProveedor.Visible = false;
+                            CboxProveedoresSinFechaFijo.Visible = false;
+                            CboxProveedorAdelantado.Visible = false;
+                            RdbProveedorAdelanto.Visible = false;
+                            RdbProveedorSFechaFijo.Visible = false;
+                            txtAgregarComentario.Visible = false;
+                            txtProveedorEspecifico.Visible = false;
+                            txtProveedorEspecifico.Enabled = false;
+                            lblCompra.Text = "Resultado:";
+                            txtCompra.Text = "";
+                            BtnGuardar.Click -= BtnSumarTodo_Click;
+                            BtnGuardar.Click += BtnSumarTodo_Click;
+                            BtnGuardar.Click -= BtnAgregar_Click;
+                            BtnGuardar.Click -= BtnGuardar_Click;
+                            BtnGuardar.Click -= BtnBorrar_Click;
+                            dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                            BtnGuardar.Text = "Sumar";
+                            BtnGuardar.BackColor = Color.Yellow;
+                            BtnGuardar.ForeColor = Color.Black;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Solo se podra sumar los proveedores alas \n14:00 horas(2:00 PM).", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CboxAccionRealizar.SelectedItem = "Modificar";
+                        }
                     }
-                    else
+                    else//si no son esas fechas, es un dia normal
                     {
-                        MessageBox.Show("Solo se podra sumar los proveedores alas \n22:00 horas(10:00 PM).", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        CboxAccionRealizar.SelectedItem = "Modificar";
+                        if (horaactual.Hour >= 22 && horaactual.Minute >= 0)//solo se podra hacer la suma asta las 10:00 pm
+                        {
+                            //MessageBox.Show("Se activaran los botones");
+                            lblProveedor.Visible = false;
+                            txtProveedor.Visible = false;
+                            CboxProveedoresSinFechaFijo.Visible = false;
+                            CboxProveedorAdelantado.Visible = false;
+                            RdbProveedorAdelanto.Visible = false;
+                            RdbProveedorSFechaFijo.Visible = false;
+                            txtAgregarComentario.Visible = false;
+                            txtProveedorEspecifico.Visible = false;
+                            txtProveedorEspecifico.Enabled = false;
+                            lblCompra.Text = "Resultado:";
+                            txtCompra.Text = "";
+                            BtnGuardar.Click -= BtnSumarTodo_Click;
+                            BtnGuardar.Click += BtnSumarTodo_Click;
+                            BtnGuardar.Click -= BtnAgregar_Click;
+                            BtnGuardar.Click -= BtnGuardar_Click;
+                            BtnGuardar.Click -= BtnBorrar_Click;
+                            dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                            BtnGuardar.Text = "Sumar";
+                            BtnGuardar.BackColor = Color.Yellow;
+                            BtnGuardar.ForeColor = Color.Black;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Solo se podra sumar los proveedores alas \n22:00 horas(10:00 PM).", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            CboxAccionRealizar.SelectedItem = "Modificar";
+                        }
                     }
                 }
                 

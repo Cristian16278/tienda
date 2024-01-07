@@ -55,6 +55,13 @@
             this.BtnSacarCuentas2 = new System.Windows.Forms.Button();
             this.BtnSacarCuentas3 = new System.Windows.Forms.Button();
             this.BtnSacarCuentas4 = new System.Windows.Forms.Button();
+            this.CboxElegirDia = new System.Windows.Forms.ComboBox();
+            this.BtnConsultar = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.lblSumaProveedor4 = new System.Windows.Forms.Label();
+            this.lblSumaProveedor3 = new System.Windows.Forms.Label();
+            this.lblSumaProveedor2 = new System.Windows.Forms.Label();
+            this.lblSumaProveedor1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
@@ -65,7 +72,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(785, 77);
+            this.label1.Location = new System.Drawing.Point(872, 77);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(79, 29);
             this.label1.TabIndex = 4;
@@ -75,7 +82,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(35, 77);
+            this.label2.Location = new System.Drawing.Point(20, 77);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 29);
             this.label2.TabIndex = 5;
@@ -85,7 +92,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(785, 464);
+            this.label3.Location = new System.Drawing.Point(872, 464);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(79, 29);
             this.label3.TabIndex = 6;
@@ -95,7 +102,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(35, 464);
+            this.label4.Location = new System.Drawing.Point(20, 464);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(79, 29);
             this.label4.TabIndex = 7;
@@ -156,7 +163,7 @@
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(727, 309);
+            this.dataGridView2.Size = new System.Drawing.Size(819, 309);
             this.dataGridView2.TabIndex = 10;
             // 
             // dataGridView1
@@ -186,14 +193,14 @@
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dataGridView1.Location = new System.Drawing.Point(768, 119);
+            this.dataGridView1.Location = new System.Drawing.Point(874, 119);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(727, 309);
+            this.dataGridView1.Size = new System.Drawing.Size(819, 309);
             this.dataGridView1.TabIndex = 11;
             // 
             // dataGridView3
@@ -222,14 +229,14 @@
             dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView3.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridView3.Location = new System.Drawing.Point(768, 511);
+            this.dataGridView3.Location = new System.Drawing.Point(874, 511);
             this.dataGridView3.MultiSelect = false;
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
             this.dataGridView3.RowHeadersVisible = false;
             this.dataGridView3.RowHeadersWidth = 51;
             this.dataGridView3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView3.Size = new System.Drawing.Size(727, 288);
+            this.dataGridView3.Size = new System.Drawing.Size(819, 288);
             this.dataGridView3.TabIndex = 12;
             // 
             // dataGridView4
@@ -265,14 +272,14 @@
             this.dataGridView4.RowHeadersVisible = false;
             this.dataGridView4.RowHeadersWidth = 51;
             this.dataGridView4.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView4.Size = new System.Drawing.Size(727, 288);
+            this.dataGridView4.Size = new System.Drawing.Size(819, 288);
             this.dataGridView4.TabIndex = 13;
             // 
             // BtnSacarCuentas1
             // 
             this.BtnSacarCuentas1.Enabled = false;
             this.BtnSacarCuentas1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnSacarCuentas1.Location = new System.Drawing.Point(1329, 70);
+            this.BtnSacarCuentas1.Location = new System.Drawing.Point(1519, 70);
             this.BtnSacarCuentas1.Name = "BtnSacarCuentas1";
             this.BtnSacarCuentas1.Size = new System.Drawing.Size(166, 36);
             this.BtnSacarCuentas1.TabIndex = 14;
@@ -285,7 +292,7 @@
             // 
             this.BtnSacarCuentas2.Enabled = false;
             this.BtnSacarCuentas2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnSacarCuentas2.Location = new System.Drawing.Point(582, 70);
+            this.BtnSacarCuentas2.Location = new System.Drawing.Point(674, 70);
             this.BtnSacarCuentas2.Name = "BtnSacarCuentas2";
             this.BtnSacarCuentas2.Size = new System.Drawing.Size(166, 36);
             this.BtnSacarCuentas2.TabIndex = 15;
@@ -298,7 +305,7 @@
             // 
             this.BtnSacarCuentas3.Enabled = false;
             this.BtnSacarCuentas3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnSacarCuentas3.Location = new System.Drawing.Point(1329, 464);
+            this.BtnSacarCuentas3.Location = new System.Drawing.Point(1519, 464);
             this.BtnSacarCuentas3.Name = "BtnSacarCuentas3";
             this.BtnSacarCuentas3.Size = new System.Drawing.Size(166, 36);
             this.BtnSacarCuentas3.TabIndex = 16;
@@ -311,7 +318,7 @@
             // 
             this.BtnSacarCuentas4.Enabled = false;
             this.BtnSacarCuentas4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnSacarCuentas4.Location = new System.Drawing.Point(582, 462);
+            this.BtnSacarCuentas4.Location = new System.Drawing.Point(674, 464);
             this.BtnSacarCuentas4.Name = "BtnSacarCuentas4";
             this.BtnSacarCuentas4.Size = new System.Drawing.Size(166, 36);
             this.BtnSacarCuentas4.TabIndex = 17;
@@ -320,11 +327,104 @@
             this.BtnSacarCuentas4.Visible = false;
             this.BtnSacarCuentas4.Click += new System.EventHandler(this.BtnSacarCuentas4_Click);
             // 
+            // CboxElegirDia
+            // 
+            this.CboxElegirDia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CboxElegirDia.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CboxElegirDia.FormattingEnabled = true;
+            this.CboxElegirDia.Items.AddRange(new object[] {
+            "Todos los dias existentes",
+            "Lunes",
+            "Martes",
+            "Miércoles",
+            "Jueves",
+            "Viernes",
+            "Sábado",
+            "Domingo"});
+            this.CboxElegirDia.Location = new System.Drawing.Point(529, 16);
+            this.CboxElegirDia.Name = "CboxElegirDia";
+            this.CboxElegirDia.Size = new System.Drawing.Size(379, 39);
+            this.CboxElegirDia.TabIndex = 18;
+            // 
+            // BtnConsultar
+            // 
+            this.BtnConsultar.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnConsultar.Location = new System.Drawing.Point(918, 14);
+            this.BtnConsultar.Name = "BtnConsultar";
+            this.BtnConsultar.Size = new System.Drawing.Size(153, 41);
+            this.BtnConsultar.TabIndex = 19;
+            this.BtnConsultar.Text = "Consultar";
+            this.BtnConsultar.UseVisualStyleBackColor = true;
+            this.BtnConsultar.Click += new System.EventHandler(this.BtnConsultar_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox1.Location = new System.Drawing.Point(248, 19);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(270, 36);
+            this.checkBox1.TabIndex = 20;
+            this.checkBox1.Text = "Dias de la semana";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // lblSumaProveedor4
+            // 
+            this.lblSumaProveedor4.AutoSize = true;
+            this.lblSumaProveedor4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSumaProveedor4.ForeColor = System.Drawing.Color.Green;
+            this.lblSumaProveedor4.Location = new System.Drawing.Point(514, 466);
+            this.lblSumaProveedor4.Name = "lblSumaProveedor4";
+            this.lblSumaProveedor4.Size = new System.Drawing.Size(79, 29);
+            this.lblSumaProveedor4.TabIndex = 21;
+            this.lblSumaProveedor4.Text = "label5";
+            // 
+            // lblSumaProveedor3
+            // 
+            this.lblSumaProveedor3.AutoSize = true;
+            this.lblSumaProveedor3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSumaProveedor3.ForeColor = System.Drawing.Color.Green;
+            this.lblSumaProveedor3.Location = new System.Drawing.Point(1318, 466);
+            this.lblSumaProveedor3.Name = "lblSumaProveedor3";
+            this.lblSumaProveedor3.Size = new System.Drawing.Size(79, 29);
+            this.lblSumaProveedor3.TabIndex = 22;
+            this.lblSumaProveedor3.Text = "label6";
+            // 
+            // lblSumaProveedor2
+            // 
+            this.lblSumaProveedor2.AutoSize = true;
+            this.lblSumaProveedor2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSumaProveedor2.ForeColor = System.Drawing.Color.Green;
+            this.lblSumaProveedor2.Location = new System.Drawing.Point(514, 77);
+            this.lblSumaProveedor2.Name = "lblSumaProveedor2";
+            this.lblSumaProveedor2.Size = new System.Drawing.Size(79, 29);
+            this.lblSumaProveedor2.TabIndex = 23;
+            this.lblSumaProveedor2.Text = "label7";
+            // 
+            // lblSumaProveedor1
+            // 
+            this.lblSumaProveedor1.AutoSize = true;
+            this.lblSumaProveedor1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSumaProveedor1.ForeColor = System.Drawing.Color.Green;
+            this.lblSumaProveedor1.Location = new System.Drawing.Point(1318, 77);
+            this.lblSumaProveedor1.Name = "lblSumaProveedor1";
+            this.lblSumaProveedor1.Size = new System.Drawing.Size(79, 29);
+            this.lblSumaProveedor1.TabIndex = 24;
+            this.lblSumaProveedor1.Text = "label8";
+            // 
             // ConsultaDiasAnteriores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1514, 819);
+            this.ClientSize = new System.Drawing.Size(1711, 823);
+            this.Controls.Add(this.lblSumaProveedor1);
+            this.Controls.Add(this.lblSumaProveedor2);
+            this.Controls.Add(this.lblSumaProveedor3);
+            this.Controls.Add(this.lblSumaProveedor4);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.BtnConsultar);
+            this.Controls.Add(this.CboxElegirDia);
             this.Controls.Add(this.BtnSacarCuentas4);
             this.Controls.Add(this.BtnSacarCuentas3);
             this.Controls.Add(this.BtnSacarCuentas2);
@@ -341,12 +441,9 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1532, 866);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(1532, 866);
             this.Name = "ConsultaDiasAnteriores";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ConsultaDiasAnteriores";
+            this.Text = "Consultar fechas";
             this.Load += new System.EventHandler(this.ConsultaDiasAnteriores_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -372,5 +469,12 @@
         private System.Windows.Forms.Button BtnSacarCuentas2;
         private System.Windows.Forms.Button BtnSacarCuentas3;
         private System.Windows.Forms.Button BtnSacarCuentas4;
+        private System.Windows.Forms.ComboBox CboxElegirDia;
+        private System.Windows.Forms.Button BtnConsultar;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label lblSumaProveedor4;
+        private System.Windows.Forms.Label lblSumaProveedor3;
+        private System.Windows.Forms.Label lblSumaProveedor2;
+        private System.Windows.Forms.Label lblSumaProveedor1;
     }
 }

@@ -170,6 +170,7 @@ namespace tienda
             }
             
         }
+
         int ObtenerNE;
         private void btnCalcular_Click(object sender, EventArgs e)
         {
@@ -351,10 +352,10 @@ namespace tienda
         {
             try
             {
-                int billetes = Int32.Parse(bill);
-                int monedas = Int32.Parse(mone);
-                int delaCaja = Int32.Parse(delaC);
-                int consumoDiario = Int32.Parse(consumoD);
+                int billetes = int.Parse(bill);
+                int monedas = int.Parse(mone);
+                int delaCaja = int.Parse(delaC);
+                int consumoDiario = int.Parse(consumoD);
                 DialogResult res = MessageBox.Show("Se agarro el dinero de los empleados?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (res == DialogResult.Yes)
                 {
@@ -741,25 +742,67 @@ namespace tienda
 
         private void BtnAgarrarDinero_Click(object sender, EventArgs e)
         {
-            DateTime fechaActual = DateTime.Today;
+            if(fechapersonalizada == "Si")
+            {
+                DateTime fechapersonalizada = Properties.Settings.Default.FechaPersonalizadaGuardar;
+                logicaGuardarDinero(fechapersonalizada);
+            }
+            else
+            {
+                DateTime fechaActual = DateTime.Today;
+                logicaGuardarDinero(fechaActual);
+            }
+            
+        }
+
+        private void logicaGuardarDinero(DateTime fecha)
+        {
             int cargarNE = CargarValorNE();
             AgarrarDinero agarrar = new AgarrarDinero(cargarNE, "N.E:");
             if (agarrar.ShowDialog() == DialogResult.OK)
             {
                 int guardar = agarrar.ObtenerNEoProveedor();
-                int resultado = cone.GuardarMostrarNEDiaSiguiente(fechaActual, guardar);
-                if (resultado > 0)
+                int resultado = cone.GuardarMostrarNEDiaSiguiente(fecha, guardar);
+                if (resultado == 1)
                 {
                     BtnAgarrarDinero.Enabled = false;
-                    MessageBox.Show($"Se guardo exitosamente la cantidad ${guardar} para mostrar para el dia de mañana.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if(fechapersonalizada == "Si")
+                    {
+                        MessageBox.Show($"Se guardo exitosamente la cantidad ${guardar} para la fecha {fecha}.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        lblRegistrohoy.Text = $"Se guardo la cantidad ${guardar}\n para la fecha {fecha}.";
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Se guardo exitosamente la cantidad ${guardar} para la fecha {fecha}(Mañana).", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        lblRegistrohoy.Text = $"Se mostrara ${guardar}\n para la fecha {fecha}(Mañana).";
+                    }
                     BtnAgregarSumarProveedor.Enabled = false;
                     BtnAgregarSumarProveedor.Visible = false;
                 }
+                else if(resultado == 2)
+                {
+                    BtnAgarrarDinero.Enabled = false;
+                    if (fechapersonalizada == "Si")
+                    {
+                        //MessageBox.Show($"Se guardo exitosamente la cantidad ${guardar} para la fecha {fecha}.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        lblRegistrohoy.Text = $"Se guardo la nueva cantidad ${guardar}\n para la fecha {fecha}.";
+                    }
+                    else
+                    {
+                        //MessageBox.Show($"Se guardo exitosamente la cantidad ${guardar} para la fecha {fecha}(Mañana).", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        lblRegistrohoy.Text = $"Se mostrara la nueva cantidad ${guardar}\n para la fecha {fecha}(Mañana).";
+                    }
+                    BtnAgregarSumarProveedor.Enabled = false;
+                    BtnAgregarSumarProveedor.Visible = false;
+                }
+                else if(resultado == 3)
+                {
+
+                }
                 else
                 {
-                    MessageBox.Show("Alparecer hubo un problema");
+                    MessageBox.Show("Alparecer hubo un problema al intentar guardar los datos", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                
             }
             else
             {

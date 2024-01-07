@@ -120,14 +120,37 @@ namespace Datos
                 {
                     conn.Open();
                 }
-
-                string guardar = "INSERT INTO AgarrarDinero(DineroAgarrado, Fecha) " +
-                                 "VALUES(@guardarAgarrar, @fecha)";
-                SqlCommand cmdGuardar = new SqlCommand(guardar, conn);
-                cmdGuardar.Parameters.AddWithValue("@guardarAgarrar", cantidadGuardar);
-                cmdGuardar.Parameters.AddWithValue("@fecha", fechaActual);
-                int resultado = cmdGuardar.ExecuteNonQuery();
-                return resultado;
+                var (Consultar, Cantidad) = VerificarFechaAgarrarDinero(fechaActual);
+                if (Consultar > 0)
+                {
+                    int resultado = ModificarFechaAgarrarDinero(fechaActual, Cantidad, cantidadGuardar);
+                    if (resultado > 0)
+                    {
+                        MessageBox.Show($"Se modifico correctamente la cantidad ${Cantidad} a ${cantidadGuardar}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return 2;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"No se modificara ni tampoco se borrara la cantidad {Cantidad}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return 3;
+                    }
+                }
+                else
+                {
+                    string guardar = "INSERT INTO AgarrarDinero(DineroAgarrado, Fecha) " +
+                                     "VALUES(@guardarAgarrar, @fecha)";
+                    SqlCommand cmdGuardar = new SqlCommand(guardar, conn);
+                    cmdGuardar.Parameters.AddWithValue("@guardarAgarrar", cantidadGuardar);
+                    cmdGuardar.Parameters.AddWithValue("@fecha", fechaActual);
+                    int resultado = cmdGuardar.ExecuteNonQuery();
+                    if (resultado > 0)
+                    {
+                        return 1;
+                    }
+                    else { return 0; }
+                    
+                }
+                
             }
             catch (Exception a)
             {
@@ -136,6 +159,63 @@ namespace Datos
             }
             
         }
+
+        private int ModificarFechaAgarrarDinero(DateTime fe, int cantidadEncontrada, int cantidadAguardar)
+        {
+            try
+            {
+                DialogResult result = MessageBox.Show($"Alparecer ya hay un registro con esta fecha y cantidad({fe}, ${cantidadEncontrada})\n Desea reemplazarlo con esta nueva cantidad {cantidadAguardar}?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    string modificar = "UPDATE AgarrarDinero " +
+                                       "SET DineroAgarrado = @guardar " +
+                                       "WHERE Fecha = @fechaGuardar AND DineroAgarrado = @cantidadencontrada";
+                    SqlCommand cmd = new SqlCommand(modificar, conn);
+                    cmd.Parameters.AddWithValue("@guardar", cantidadAguardar);
+                    cmd.Parameters.AddWithValue("@fechaGuardar", fe);
+                    cmd.Parameters.AddWithValue("@cantidadencontrada", cantidadEncontrada);
+                    int resultado = cmd.ExecuteNonQuery();
+                    return resultado;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show($"Ocurrio un error\n {e}");
+                return 0;
+            }
+        }
+
+        private (int, int) VerificarFechaAgarrarDinero(DateTime fecha)
+        {
+            try
+            {
+                string verificar = "SELECT DineroAgarrado AS Dinero, COUNT(Fecha) AS VFecha FROM AgarrarDinero " +
+                                   "WHERE Fecha = @fec " +
+                                   "GROUP BY DineroAgarrado";
+                SqlCommand cmd = new SqlCommand(verificar, conn);
+                cmd.Parameters.AddWithValue("@fec", fecha);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        int cantidad = Convert.ToInt32(reader["Dinero"]);
+                        int consultar = Convert.ToInt32(reader["VFecha"]);
+                        return (consultar, cantidad);
+                    }
+                    return (0, 0);
+                }
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show($"Ocurrio un error \n {e}");
+                return (0, 0);
+            }
+        }
+
 
         //metodo para llenar un datagridview y ordenarlo de manera desendente por fecha_registro.
         public DataTable ConsultaBDtienda()
@@ -438,6 +518,9 @@ namespace Datos
                 conn.Close();
             }
         }
+
+
+
         #region Para los forms de diascompraproveedores, agregarProveedores y consultaProveedores
         //pendiente
         public DataTable MostrarTablaProveedores()//este metodo no lo utilizo
@@ -692,6 +775,108 @@ namespace Datos
             {
                 MessageBox.Show($"Hubo un erro {e}");
                 return null;
+            }
+        }
+
+
+        public List<DateTime> ConsultaDiasAnterioresDiasDelaSemana(int diadelasemana, DateTime inicioano, DateTime finano)
+        {
+            List<DateTime> fechas = new List<DateTime>();
+            string consultar = "SELECT DISTINCT DC.Fecha " +
+                               "FROM DiasCompra AS DC " +
+                               "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
+                               "WHERE DC.Fecha BETWEEN @FInicio AND @FFin AND DATEPART(DW, DC.Fecha) = @diadelasemana";
+            using (SqlCommand comando = new SqlCommand(consultar, conn))
+            {
+                comando.Parameters.AddWithValue("@diadelasemana", diadelasemana);
+                comando.Parameters.AddWithValue("@FInicio", inicioano);
+                comando.Parameters.AddWithValue("@FFin", finano);
+                using (SqlDataReader sqlDataReader = comando.ExecuteReader())
+                {
+                    while (sqlDataReader.Read())
+                    {
+                        DateTime dia = sqlDataReader.GetDateTime(0);
+                        fechas.Add(dia);
+                    }
+                    return fechas;
+                }
+            }
+            //string consultar = "SELECT DC.ProveedorDiaID, P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra, DC.Comentario " +
+            //                   "FROM DiasCompra AS DC " +
+            //                   "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
+            //                   "WHERE DC.Fecha BETWEEN @FInicio AND @FFin AND DATEPART(DW, DC.Fecha) = @diadelasemana";
+            //using (SqlCommand comando = new SqlCommand(consultar, conn))
+            //{
+            //    comando.Parameters.AddWithValue("@diadelasemana", diadelasemana);
+            //    comando.Parameters.AddWithValue("@FInicio", inicioano);
+            //    comando.Parameters.AddWithValue("@FFin", finano);
+            //    using (SqlDataReader sqlDataReader = comando.ExecuteReader())
+            //    {
+            //        DataTable dt = new DataTable();
+            //        dt.Load(sqlDataReader);
+            //        return dt;
+            //    }
+            //}
+
+            /*
+             using (SqlCommand comando = new SqlCommand(verificar, conn))
+                {
+                    comando.Parameters.AddWithValue("@Fecha", fechaActual);
+                    using (SqlDataReader datareader = comando.ExecuteReader())
+                    {
+                        while (datareader.Read())
+                        {
+                            int proveedorID = datareader.GetInt32(0);
+                            obtenerProveedorDeDiasCompra.Add(proveedorID);
+                        }
+                        return obtenerProveedorDeDiasCompra;
+                    }
+                }
+             
+             
+             */
+
+            /*
+             * SELECT DC.ProveedorDiaID, P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra, DC.Comentario
+                FROM DiasCompra AS DC
+                INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID
+                WHERE DATEPART(DW, DC.Fecha) = 6;
+             */
+        }
+
+        public DataTable DiasSemana(DateTime fecha)
+        {
+            string consultar = "SELECT DC.ProveedorDiaID, P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra, DC.Comentario " +
+                               "FROM DiasCompra AS DC " +
+                               "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
+                               "WHERE DC.Fecha = @diadelasemana";
+            SqlCommand com = new SqlCommand(consultar, conn);
+            com.Parameters.AddWithValue("@diadelasemana", fecha);
+            using (SqlDataReader datar = com.ExecuteReader())
+            {
+                DataTable dt = new DataTable();
+                dt.Load(datar);
+                return dt;
+            }
+        }
+
+
+        public double TraerSumaProveedores(DateTime fecha)
+        {
+            try
+            {
+                string consultar = "SELECT SUM(Compra) " +
+                               "FROM DiasCompra " +
+                               "WHERE Fecha = @fecha";
+                SqlCommand com = new SqlCommand(consultar, conn);
+                com.Parameters.AddWithValue("@fecha", fecha);
+                double suma = Convert.ToDouble(com.ExecuteScalar());
+                return suma;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Ocurrio un error {e}","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
             }
         }
 
@@ -1096,7 +1281,7 @@ namespace Datos
             {
                 conn.Open();
             }
-
+            
             string verificar = "SELECT DineroAgarrado " +
                                "FROM AgarrarDinero " +
                                "WHERE Fecha = @fechaAnterior";

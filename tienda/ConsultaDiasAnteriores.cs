@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlTypes;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -31,6 +33,9 @@ namespace tienda
             AgregarBotonAlaTabla(dataGridView3);
             AgregarBotonAlaTabla(dataGridView4);
             AgregarEventoCellClickAdataGridview(true);
+            BtnConsultar.Visible = false;
+            CboxElegirDia.Visible = false;
+            BtnDiaAvansar.Enabled = false;
         }
 
         private void QuitarColumnaProveedorID()
@@ -154,7 +159,9 @@ namespace tienda
                         string fechaFormateada = fecharetrocedida.ToString("dddd, d 'de' MMMM 'de' yyyy");
                         label1.Text = fechaFormateada;
                         fechadtg1 = fecharetrocedida;
-                        if(ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
+                        double suma1 = ConectarBD.TraerSumaProveedores(fecharetrocedida);
+                        lblSumaProveedor1.Text = "S.P = $" + suma1.ToString();
+                        if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
                         {
                             BtnSacarCuentas1.Enabled = true;
                             BtnSacarCuentas1.Visible = true;
@@ -170,6 +177,8 @@ namespace tienda
                         string fechaFormateada1 = fecharetrocedida.ToString("dddd, d 'de' MMMM 'de' yyyy");
                         label2.Text = fechaFormateada1;
                         fechadtg2 = fecharetrocedida;
+                        double suma2 = ConectarBD.TraerSumaProveedores(fecharetrocedida);
+                        lblSumaProveedor2.Text = "S.P = $" + suma2.ToString();
                         if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
                         {
                             BtnSacarCuentas2.Enabled = true;
@@ -186,6 +195,8 @@ namespace tienda
                         string fechaFormateada2 = fecharetrocedida.ToString("dddd, d 'de' MMMM 'de' yyyy");
                         label3.Text = fechaFormateada2;
                         fechadtg3 = fecharetrocedida;
+                        double suma3 = ConectarBD.TraerSumaProveedores(fecharetrocedida);
+                        lblSumaProveedor3.Text = "S.P = $" + suma3.ToString();
                         if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
                         {
                             BtnSacarCuentas3.Enabled = true;
@@ -202,6 +213,8 @@ namespace tienda
                         string fechaFormateada3 = fecharetrocedida.ToString("dddd, d 'de' MMMM 'de' yyyy");
                         label4.Text = fechaFormateada3;
                         fechadtg4 = fecharetrocedida;
+                        double suma4 = ConectarBD.TraerSumaProveedores(fecharetrocedida);
+                        lblSumaProveedor4.Text = "S.P = $" + suma4.ToString();
                         if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
                         {
                             BtnSacarCuentas4.Enabled = true;
@@ -217,16 +230,172 @@ namespace tienda
             }
         }
 
+
+        private int indice = 0;
+        private List<DateTime> dias = new List<DateTime>();
+        private void CargarDiaEspecifico(string opcion)
+        {
+            string diaelegido = CboxElegirDia.SelectedItem.ToString();
+            int dia = ObtenerDiaSemana(diaelegido);
+            int ano = DateTime.Now.Year;
+            int mes = DateTime.Now.Month;
+            int day = DateTime.Now.Day;
+            DateTime primerdiadelano = new DateTime(ano, 1, 1);
+            DateTime ultimodiadelano = new DateTime(ano, mes, day);
+            dias = ConectarBD.ConsultaDiasAnterioresDiasDelaSemana(dia, primerdiadelano, ultimodiadelano);
+            for (int i = 0; i < 4; i++)
+            {
+                if(opcion == "A")
+                {
+                    indice++;
+                }
+                else if(opcion == "R")
+                {
+                    indice--;
+                    
+                }
+                else
+                {
+                    
+                }
+                
+                try
+                {
+                    DataTable dt = ConectarBD.DiasSemana(dias[dias.Count -indice]);
+                    switch (i)
+                    {
+                        case 0:
+                            dataGridView1.DataSource = dt;
+                            string diaformateado1 = dias[dias.Count -indice].ToString("dddd, d 'de' MMMM 'de' yyyy");
+                            label1.Text = diaformateado1;
+                            double suma1 = ConectarBD.TraerSumaProveedores(dias[dias.Count -indice]);
+                            lblSumaProveedor1.Text = "S.P = $" + suma1.ToString();
+                            break;
+                        case 1:
+                            dataGridView2.DataSource = dt;
+                            string diaformateado2 = dias[dias.Count -indice].ToString("dddd, d 'de' MMMM 'de' yyyy");
+                            label2.Text = diaformateado2;
+                            double suma2 = ConectarBD.TraerSumaProveedores(dias[dias.Count - indice]);
+                            lblSumaProveedor1.Text = "S.P = $" + suma2.ToString();
+                            break;
+                        case 2:
+                            dataGridView3.DataSource = dt;
+                            string diaformateado3 = dias[dias.Count -indice].ToString("dddd, d 'de' MMMM 'de' yyyy");
+                            label3.Text = diaformateado3;
+                            double suma3 = ConectarBD.TraerSumaProveedores(dias[dias.Count - indice]);
+                            lblSumaProveedor1.Text = "S.P = $" + suma3.ToString();
+                            break;
+                        case 3:
+                            dataGridView4.DataSource = dt;
+                            string diaformateado4 = dias[dias.Count - indice].ToString("dddd, d 'de' MMMM 'de' yyyy");
+                            label4.Text = diaformateado4;
+                            double suma4 = ConectarBD.TraerSumaProveedores(dias[dias.Count - indice]);
+                            lblSumaProveedor1.Text = "S.P = $" + suma4.ToString();
+                            break;
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"ERROR\n\n {e}");
+                    BtnDiaAvansar.Enabled = false;
+                    break;
+                }
+                
+                
+            }
+        }
+
+        private int ObtenerDiaSemana(string dia)
+        {
+            switch (dia)
+            {
+                case "Lunes":
+                    return 1;
+                case "Martes":
+                    return 2;
+                case "Miércoles":
+                    return 3;
+                case "Jueves":
+                    return 4;
+                case "Viernes":
+                    return 5;
+                case "Sábado":
+                    return 6;
+                case "Domingo":
+                    return 7;
+            }
+            return 0;
+        }
+
+        private bool botonatras;
+        private bool botonavanzar;
         private void BtnDiaAtras_Click(object sender, EventArgs e)
         {
-            fechaActual = fechaActual.AddDays(-4);
-            CargarTablasDiasAtras();
+            botonatras = true;
+            BtnDiaAvansar.Enabled = true;
+            //botonavanzar = false;
+            if (checkBox1.Checked)
+            {
+                //if(indice - 4 >= 0)
+                //{
+                    if (botonavanzar)
+                    {
+                        //indice += 3;
+                        CargarDiaEspecifico("A");
+                    }
+                    else
+                    {
+                        CargarDiaEspecifico("A");
+                    }
+                    
+                    
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Test1");
+                //}
+            }
+            else
+            {
+                dias.Clear();
+                fechaActual = fechaActual.AddDays(-4);
+                CargarTablasDiasAtras();
+            }
+            
         }
 
         private void BtnDiaAvansar_Click(object sender, EventArgs e)
         {
-            fechaActual = fechaActual.AddDays(4);
-            CargarTablasDiasAtras();
+            //botonatras = false;
+            botonavanzar = true;
+            if (checkBox1.Checked)
+            {
+                //if(indice + 4 < dias.Count)
+                //{
+                    if (botonatras)
+                    {
+                        //indice -= 3;
+                        CargarDiaEspecifico("R");
+                    }
+                    else
+                    {
+                        CargarDiaEspecifico("R");
+                    }
+                    
+                    
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Test2");
+                //}
+            }
+            else
+            {
+                dias.Clear();
+                fechaActual = fechaActual.AddDays(4);
+                CargarTablasDiasAtras();
+            }
         }
 
         private void AgregarBotonAlaTabla(DataGridView dataGrid)
@@ -242,12 +411,42 @@ namespace tienda
         //DateTime guardarfecha;
         private void BtnSacarCuentas1_Click(object sender, EventArgs e)
         {
-            DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label1.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if(r == DialogResult.Yes)
+            obtenerfecha = fechadtg1;
+            logicaSacarCuentas(label1.Text, obtenerfecha);
+            //DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label1.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            //if(r == DialogResult.Yes)
+            //{
+            //    obtenerfecha = fechadtg1;//para sumar los proveedores de ese dia
+            //    DateTime fechaanterior = obtenerfecha.AddDays(-1);//para obtener el neto existente del dia anterior al dia que se cunsulta para poder restarlo.
+            //    LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+            //}
+            //else
+            //{
+
+            //}
+        }
+
+        private void logicaSacarCuentas(string labelfecha, DateTime fecha)
+        {
+            DialogResult r = MessageBox.Show($"Alparecer en esta fecha {labelfecha} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (r == DialogResult.Yes)
             {
-                obtenerfecha = fechadtg1;//para sumar los proveedores de ese dia
+                obtenerfecha = fecha;//para sumar los proveedores de ese dia
                 DateTime fechaanterior = obtenerfecha.AddDays(-1);//para obtener el neto existente del dia anterior al dia que se cunsulta para poder restarlo.
-                LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+                DialogResult resp = MessageBox.Show($"En esta fecha {labelfecha} agrego dinero de ahorro casa o de limones?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if(resp == DialogResult.Yes)
+                {
+                    AgregarDineroAL agregar = new AgregarDineroAL();
+                    if(agregar.ShowDialog() == DialogResult.OK)
+                    {
+                        int dinero = agregar.ObtenerDinero();
+                        LogicaParaCalcularGuardar(obtenerfecha, fechaanterior, dinero);
+                    }
+                }
+                else
+                {
+                    LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+                }
             }
             else
             {
@@ -255,14 +454,14 @@ namespace tienda
             }
         }
 
-        private void LogicaParaCalcularGuardar(DateTime fechaSumarProveedor, DateTime fechaObtenerNEanterior)
+        private void LogicaParaCalcularGuardar(DateTime fechaSumarProveedor, DateTime fechaObtenerNEanterior, int AhorroOlimones = 0)
         {
             double SumaProveedoresFechaPersonalizada = ConectarBD.SumarTodosLosProveedoresFechaActual(fechaSumarProveedor);
             double NEfechaPersonalizada = ConectarBD.VerificarDineroAgarradoDiaAnterior(fechaObtenerNEanterior);
-            double resultado = NEfechaPersonalizada - SumaProveedoresFechaPersonalizada;
+            double resultado = (NEfechaPersonalizada + AhorroOlimones) - SumaProveedoresFechaPersonalizada;
             string re = resultado.ToString("N2");
             guardarFechaPersonalizada(fechaSumarProveedor);
-            DialogResult respuesta = MessageBox.Show($"El resultado de la resta de N.E(${NEfechaPersonalizada}) de la fecha {fechaObtenerNEanterior} y la suma de todos los proveedores(${SumaProveedoresFechaPersonalizada}) de la fecha {obtenerfecha} es ${re}.\nEsta de acuerdo con el resultado?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            DialogResult respuesta = MessageBox.Show($"El resultado de la resta de N.E(${NEfechaPersonalizada}) de la fecha {fechaObtenerNEanterior} con la suma de ${AhorroOlimones}(A.C o L.) y la suma de todos los proveedores(${SumaProveedoresFechaPersonalizada}) de la fecha {obtenerfecha} es ${re}.\nEsta de acuerdo con el resultado?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (respuesta == DialogResult.Yes)
             {
                 this.Hide();
@@ -298,49 +497,55 @@ namespace tienda
 
         private void BtnSacarCuentas2_Click(object sender, EventArgs e)
         {
-            DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label2.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if(r == DialogResult.Yes)
-            {
-                obtenerfecha = fechadtg2;
-                DateTime fechaanterior = obtenerfecha.AddDays(-1);
-                LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
-            }
-            else
-            {
+            obtenerfecha = fechadtg2;
+            logicaSacarCuentas(label2.Text, obtenerfecha);
+            //DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label2.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            //if(r == DialogResult.Yes)
+            //{
+            //    obtenerfecha = fechadtg2;
+            //    DateTime fechaanterior = obtenerfecha.AddDays(-1);
+            //    LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+            //}
+            //else
+            //{
 
-            }
+            //}
             
         }
 
         private void BtnSacarCuentas3_Click(object sender, EventArgs e)
         {
-            DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label3.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if(r == DialogResult.Yes)
-            {
-                obtenerfecha = fechadtg3;
-                DateTime fechaanterior = obtenerfecha.AddDays(-1);
-                LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
-            }
-            else
-            {
+            obtenerfecha = fechadtg3;
+            logicaSacarCuentas(label3.Text, obtenerfecha);
+            //DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label3.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            //if(r == DialogResult.Yes)
+            //{
+            //    obtenerfecha = fechadtg3;
+            //    DateTime fechaanterior = obtenerfecha.AddDays(-1);
+            //    LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+            //}
+            //else
+            //{
 
-            }
+            //}
             
         }
 
         private void BtnSacarCuentas4_Click(object sender, EventArgs e)
         {
-            DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label4.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if(r == DialogResult.Yes)
-            {
-                obtenerfecha = fechadtg4;
-                DateTime fechaanterior = obtenerfecha.AddDays(-1);
-                LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
-            }
-            else
-            {
+            obtenerfecha = fechadtg4;
+            logicaSacarCuentas(label4.Text, obtenerfecha);
+            //DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label4.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            //if(r == DialogResult.Yes)
+            //{
+            //    obtenerfecha = fechadtg4;
+            //    DateTime fechaanterior = obtenerfecha.AddDays(-1);
+            //    LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
+            //}
+            //else
+            //{
 
-            }
+            //}
             
         }
 
@@ -366,6 +571,28 @@ namespace tienda
         {
             Properties.Settings.Default.Delacaja = guardar;
             Properties.Settings.Default.Save();
+        }
+
+        private void BtnConsultar_Click(object sender, EventArgs e)
+        {
+            CargarDiaEspecifico("A");
+            BtnDiaAvansar.Enabled = false;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                CboxElegirDia.Visible = true;
+                BtnConsultar.Visible = true;
+            }
+            else
+            {
+                CboxElegirDia.Visible = false;
+                BtnConsultar.Visible = false;
+                indice = 0;
+                CargarTablasDiasAtras();
+            }
         }
     }
 }

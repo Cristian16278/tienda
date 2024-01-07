@@ -211,7 +211,7 @@
             // 
             this.lblRegistrohoy.AutoSize = true;
             this.lblRegistrohoy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegistrohoy.Location = new System.Drawing.Point(447, 534);
+            this.lblRegistrohoy.Location = new System.Drawing.Point(441, 524);
             this.lblRegistrohoy.Name = "lblRegistrohoy";
             this.lblRegistrohoy.Size = new System.Drawing.Size(0, 22);
             this.lblRegistrohoy.TabIndex = 11;

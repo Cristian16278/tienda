@@ -321,10 +321,10 @@
             // RdbProveedorSFechaFijo
             // 
             this.RdbProveedorSFechaFijo.AutoSize = true;
-            this.RdbProveedorSFechaFijo.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RdbProveedorSFechaFijo.Location = new System.Drawing.Point(159, 149);
+            this.RdbProveedorSFechaFijo.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RdbProveedorSFechaFijo.Location = new System.Drawing.Point(15, 172);
             this.RdbProveedorSFechaFijo.Name = "RdbProveedorSFechaFijo";
-            this.RdbProveedorSFechaFijo.Size = new System.Drawing.Size(146, 33);
+            this.RdbProveedorSFechaFijo.Size = new System.Drawing.Size(175, 40);
             this.RdbProveedorSFechaFijo.TabIndex = 15;
             this.RdbProveedorSFechaFijo.TabStop = true;
             this.RdbProveedorSFechaFijo.Text = "Sin dia fijo";
@@ -334,10 +334,10 @@
             // RdbProveedorAdelanto
             // 
             this.RdbProveedorAdelanto.AutoSize = true;
-            this.RdbProveedorAdelanto.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RdbProveedorAdelanto.Location = new System.Drawing.Point(14, 149);
+            this.RdbProveedorAdelanto.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RdbProveedorAdelanto.Location = new System.Drawing.Point(15, 110);
             this.RdbProveedorAdelanto.Name = "RdbProveedorAdelanto";
-            this.RdbProveedorAdelanto.Size = new System.Drawing.Size(129, 33);
+            this.RdbProveedorAdelanto.Size = new System.Drawing.Size(155, 40);
             this.RdbProveedorAdelanto.TabIndex = 14;
             this.RdbProveedorAdelanto.TabStop = true;
             this.RdbProveedorAdelanto.Text = "Adelanto";
