@@ -870,8 +870,17 @@ namespace Datos
                                "WHERE Fecha = @fecha";
                 SqlCommand com = new SqlCommand(consultar, conn);
                 com.Parameters.AddWithValue("@fecha", fecha);
-                double suma = Convert.ToDouble(com.ExecuteScalar());
-                return suma;
+                object obtener = com.ExecuteScalar();
+                if(obtener == DBNull.Value)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double suma = Convert.ToDouble(obtener);
+                    return suma;
+                }
+                
             }
             catch (Exception e)
             {

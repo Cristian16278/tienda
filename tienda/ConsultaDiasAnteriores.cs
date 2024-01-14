@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlTypes;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
@@ -17,7 +18,9 @@ namespace tienda
     public partial class ConsultaDiasAnteriores : Form
     {
         ConectarBD ConectarBD = new ConectarBD();
-        
+        CultureInfo cultura = new CultureInfo("en-ES");
+
+
         private DateTime fechaActual = DateTime.Now.Date;
         public ConsultaDiasAnteriores()
         {
@@ -160,7 +163,7 @@ namespace tienda
                         label1.Text = fechaFormateada;
                         fechadtg1 = fecharetrocedida;
                         double suma1 = ConectarBD.TraerSumaProveedores(fecharetrocedida);
-                        lblSumaProveedor1.Text = "S.P = $" + suma1.ToString();
+                        lblSumaProveedor1.Text = "S.P = $" + suma1.ToString("#,##0.##", cultura);
                         if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
                         {
                             BtnSacarCuentas1.Enabled = true;
@@ -178,7 +181,7 @@ namespace tienda
                         label2.Text = fechaFormateada1;
                         fechadtg2 = fecharetrocedida;
                         double suma2 = ConectarBD.TraerSumaProveedores(fecharetrocedida);
-                        lblSumaProveedor2.Text = "S.P = $" + suma2.ToString();
+                        lblSumaProveedor2.Text = "S.P = $" + suma2.ToString("#,##0.##",cultura);
                         if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
                         {
                             BtnSacarCuentas2.Enabled = true;
@@ -196,7 +199,7 @@ namespace tienda
                         label3.Text = fechaFormateada2;
                         fechadtg3 = fecharetrocedida;
                         double suma3 = ConectarBD.TraerSumaProveedores(fecharetrocedida);
-                        lblSumaProveedor3.Text = "S.P = $" + suma3.ToString();
+                        lblSumaProveedor3.Text = "S.P = $" + suma3.ToString("#,##0.##", cultura);
                         if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
                         {
                             BtnSacarCuentas3.Enabled = true;
@@ -214,7 +217,7 @@ namespace tienda
                         label4.Text = fechaFormateada3;
                         fechadtg4 = fecharetrocedida;
                         double suma4 = ConectarBD.TraerSumaProveedores(fecharetrocedida);
-                        lblSumaProveedor4.Text = "S.P = $" + suma4.ToString();
+                        lblSumaProveedor4.Text = "S.P = $" + suma4.ToString("#,##0.##", cultura);
                         if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
                         {
                             BtnSacarCuentas4.Enabled = true;
@@ -235,76 +238,83 @@ namespace tienda
         private List<DateTime> dias = new List<DateTime>();
         private void CargarDiaEspecifico(string opcion)
         {
-            string diaelegido = CboxElegirDia.SelectedItem.ToString();
-            int dia = ObtenerDiaSemana(diaelegido);
-            int ano = DateTime.Now.Year;
-            int mes = DateTime.Now.Month;
-            int day = DateTime.Now.Day;
-            DateTime primerdiadelano = new DateTime(ano, 1, 1);
-            DateTime ultimodiadelano = new DateTime(ano, mes, day);
-            dias = ConectarBD.ConsultaDiasAnterioresDiasDelaSemana(dia, primerdiadelano, ultimodiadelano);
-            for (int i = 0; i < 4; i++)
+            try
             {
-                if(opcion == "A")
+                string diaelegido = CboxElegirDia.SelectedItem.ToString();
+                int dia = ObtenerDiaSemana(diaelegido);
+                int ano = DateTime.Now.Year;
+                int mes = DateTime.Now.Month;
+                int day = DateTime.Now.Day;
+                DateTime primerdiadelano = new DateTime(2023, 1, 1);
+                DateTime ultimodiadelano = new DateTime(2050, 12, 31);
+                if (dias.Count == 0)//si la lista esta vacia
                 {
-                    indice++;
+                    //traeme los dias especificado
+                    dias = ConectarBD.ConsultaDiasAnterioresDiasDelaSemana(dia, primerdiadelano, ultimodiadelano);
                 }
-                else if(opcion == "R")
+                else//sino
                 {
-                    indice--;
-                    
+                    //no me agas nada
                 }
-                else
+                for (int i = 0; i < 4; i++)
                 {
-                    
-                }
-                
-                try
-                {
-                    DataTable dt = ConectarBD.DiasSemana(dias[dias.Count -indice]);
+                    if (opcion == "A")
+                    {
+                        indice++;
+                    }
+                    else if (opcion == "R")
+                    {
+                        indice--;
+
+                    }
+                    else
+                    {
+
+                    }
+
+                    DataTable dt = ConectarBD.DiasSemana(dias[dias.Count - indice]);
                     switch (i)
                     {
                         case 0:
                             dataGridView1.DataSource = dt;
-                            string diaformateado1 = dias[dias.Count -indice].ToString("dddd, d 'de' MMMM 'de' yyyy");
+                            string diaformateado1 = dias[dias.Count - indice].ToString("dddd, d 'de' MMMM 'de' yyyy");
                             label1.Text = diaformateado1;
-                            double suma1 = ConectarBD.TraerSumaProveedores(dias[dias.Count -indice]);
-                            lblSumaProveedor1.Text = "S.P = $" + suma1.ToString();
+                            double suma1 = ConectarBD.TraerSumaProveedores(dias[dias.Count - indice]);
+                            lblSumaProveedor1.Text = "S.P = $" + suma1.ToString("#,##0.##", cultura);
                             break;
                         case 1:
                             dataGridView2.DataSource = dt;
-                            string diaformateado2 = dias[dias.Count -indice].ToString("dddd, d 'de' MMMM 'de' yyyy");
+                            string diaformateado2 = dias[dias.Count - indice].ToString("dddd, d 'de' MMMM 'de' yyyy");
                             label2.Text = diaformateado2;
                             double suma2 = ConectarBD.TraerSumaProveedores(dias[dias.Count - indice]);
-                            lblSumaProveedor1.Text = "S.P = $" + suma2.ToString();
+                            lblSumaProveedor2.Text = "S.P = $" + suma2.ToString("#,##0.##", cultura);
                             break;
                         case 2:
                             dataGridView3.DataSource = dt;
-                            string diaformateado3 = dias[dias.Count -indice].ToString("dddd, d 'de' MMMM 'de' yyyy");
+                            string diaformateado3 = dias[dias.Count - indice].ToString("dddd, d 'de' MMMM 'de' yyyy");
                             label3.Text = diaformateado3;
                             double suma3 = ConectarBD.TraerSumaProveedores(dias[dias.Count - indice]);
-                            lblSumaProveedor1.Text = "S.P = $" + suma3.ToString();
+                            lblSumaProveedor3.Text = "S.P = $" + suma3.ToString("#,##0.##", cultura);
                             break;
                         case 3:
                             dataGridView4.DataSource = dt;
                             string diaformateado4 = dias[dias.Count - indice].ToString("dddd, d 'de' MMMM 'de' yyyy");
                             label4.Text = diaformateado4;
                             double suma4 = ConectarBD.TraerSumaProveedores(dias[dias.Count - indice]);
-                            lblSumaProveedor1.Text = "S.P = $" + suma4.ToString();
+                            lblSumaProveedor4.Text = "S.P = $" + suma4.ToString("#,##0.##", cultura);
                             break;
 
                     }
                 }
-                catch (Exception e)
-                {
-                    MessageBox.Show($"ERROR\n\n {e}");
-                    BtnDiaAvansar.Enabled = false;
-                    break;
-                }
-                
-                
             }
+            catch (Exception es)
+            {
+                MessageBox.Show($"ocurrio un error:\n{es}");
+            }
+            
         }
+
+
 
         private int ObtenerDiaSemana(string dia)
         {
@@ -358,7 +368,14 @@ namespace tienda
             }
             else
             {
-                dias.Clear();
+                if(dias.Count == 0)
+                {
+
+                }
+                else
+                {
+                    dias.Clear();
+                }
                 fechaActual = fechaActual.AddDays(-4);
                 CargarTablasDiasAtras();
             }
@@ -392,7 +409,14 @@ namespace tienda
             }
             else
             {
-                dias.Clear();
+                if (dias.Count == 0)
+                {
+
+                }
+                else
+                {
+                    dias.Clear();
+                }
                 fechaActual = fechaActual.AddDays(4);
                 CargarTablasDiasAtras();
             }
@@ -459,7 +483,7 @@ namespace tienda
             double SumaProveedoresFechaPersonalizada = ConectarBD.SumarTodosLosProveedoresFechaActual(fechaSumarProveedor);
             double NEfechaPersonalizada = ConectarBD.VerificarDineroAgarradoDiaAnterior(fechaObtenerNEanterior);
             double resultado = (NEfechaPersonalizada + AhorroOlimones) - SumaProveedoresFechaPersonalizada;
-            string re = resultado.ToString("N2");
+            string re = resultado.ToString("#,##0.##", cultura);
             guardarFechaPersonalizada(fechaSumarProveedor);
             DialogResult respuesta = MessageBox.Show($"El resultado de la resta de N.E(${NEfechaPersonalizada}) de la fecha {fechaObtenerNEanterior} con la suma de ${AhorroOlimones}(A.C o L.) y la suma de todos los proveedores(${SumaProveedoresFechaPersonalizada}) de la fecha {obtenerfecha} es ${re}.\nEsta de acuerdo con el resultado?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (respuesta == DialogResult.Yes)
@@ -575,8 +599,18 @@ namespace tienda
 
         private void BtnConsultar_Click(object sender, EventArgs e)
         {
-            CargarDiaEspecifico("A");
-            BtnDiaAvansar.Enabled = false;
+            if(dias.Count == 0)
+            {
+                CargarDiaEspecifico("A");
+                BtnDiaAvansar.Enabled = false;
+            }
+            else
+            {
+                dias.Clear();
+                CargarDiaEspecifico("A");
+                BtnDiaAvansar.Enabled = false;
+            }
+            
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
