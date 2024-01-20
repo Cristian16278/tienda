@@ -801,47 +801,24 @@ namespace Datos
                     return fechas;
                 }
             }
-            //string consultar = "SELECT DC.ProveedorDiaID, P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra, DC.Comentario " +
-            //                   "FROM DiasCompra AS DC " +
-            //                   "INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
-            //                   "WHERE DC.Fecha BETWEEN @FInicio AND @FFin AND DATEPART(DW, DC.Fecha) = @diadelasemana";
-            //using (SqlCommand comando = new SqlCommand(consultar, conn))
-            //{
-            //    comando.Parameters.AddWithValue("@diadelasemana", diadelasemana);
-            //    comando.Parameters.AddWithValue("@FInicio", inicioano);
-            //    comando.Parameters.AddWithValue("@FFin", finano);
-            //    using (SqlDataReader sqlDataReader = comando.ExecuteReader())
-            //    {
-            //        DataTable dt = new DataTable();
-            //        dt.Load(sqlDataReader);
-            //        return dt;
-            //    }
-            //}
+        }
 
-            /*
-             using (SqlCommand comando = new SqlCommand(verificar, conn))
-                {
-                    comando.Parameters.AddWithValue("@Fecha", fechaActual);
-                    using (SqlDataReader datareader = comando.ExecuteReader())
-                    {
-                        while (datareader.Read())
-                        {
-                            int proveedorID = datareader.GetInt32(0);
-                            obtenerProveedorDeDiasCompra.Add(proveedorID);
-                        }
-                        return obtenerProveedorDeDiasCompra;
-                    }
-                }
-             
-             
-             */
 
-            /*
-             * SELECT DC.ProveedorDiaID, P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra, DC.Comentario
-                FROM DiasCompra AS DC
-                INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID
-                WHERE DATEPART(DW, DC.Fecha) = 6;
-             */
+        public DataTable BuscarProveedorTablaDiasCompra(string proveedor)
+        {
+            string buscar = "SELECT DC.ProveedorDiaID, P.ProveedorID, P.NombreProveedor AS Proveedor, DC.Compra, DC.Comentario, DC.Fecha " +
+                            "FROM DiasCompra AS DC " +
+                            "INNER JOIN Proveedores AS P ON P.ProveedorID = DC.ProveedorID " +
+                            "WHERE P.NombreProveedor LIKE @proveedor";
+            SqlCommand comando = new SqlCommand(buscar, conn);
+            comando.Parameters.AddWithValue("@proveedor", proveedor + "%");
+            using (SqlDataReader read = comando.ExecuteReader())
+            {
+                DataTable dt = new DataTable();
+                dt.Load(read);
+                return dt;
+            }
+
         }
 
         public DataTable DiasSemana(DateTime fecha)

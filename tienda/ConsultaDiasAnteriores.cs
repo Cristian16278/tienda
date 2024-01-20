@@ -47,10 +47,12 @@ namespace tienda
             dataGridView2.Columns["ProveedorID"].Visible = false;
             dataGridView3.Columns["ProveedorID"].Visible = false;
             dataGridView4.Columns["ProveedorID"].Visible = false;
+            
             dataGridView1.Columns["ProveedorDiaID"].Visible = false;
             dataGridView2.Columns["ProveedorDiaID"].Visible = false;
             dataGridView3.Columns["ProveedorDiaID"].Visible = false;
             dataGridView4.Columns["ProveedorDiaID"].Visible = false;
+            
         }
 
         private void AgregarEventoCellClickAdataGridview(DataGridView data, bool quitarOagregarEvento)//con este se traba bastante
@@ -75,6 +77,7 @@ namespace tienda
                 dataGridView2.CellClick += VisualizarImagen_CellClick;
                 dataGridView3.CellClick += VisualizarImagen_CellClick;
                 dataGridView4.CellClick += VisualizarImagen_CellClick;
+                
 
             }
             else
@@ -83,6 +86,7 @@ namespace tienda
                 dataGridView2.CellClick -= VisualizarImagen_CellClick;
                 dataGridView3.CellClick -= VisualizarImagen_CellClick;
                 dataGridView4.CellClick -= VisualizarImagen_CellClick;
+                
 
             }
         }
@@ -105,7 +109,7 @@ namespace tienda
                         Previsualisacion_imagen imagen = new Previsualisacion_imagen(rutaimagen, "si");
                         if(imagen.ShowDialog() == DialogResult.OK)
                         {
-                            MessageBox.Show("se guardara la nueva ruta");
+                            //MessageBox.Show("se guardara la nueva ruta");
                             //string obtenernuevaruta = imagen.ObtenerNuevaRuta();
                             //MessageBox.Show("Se guardara la nueva ruta");
                             //ConectarBD.GuardarImagenProveedor(proveedorID, date, obtenernuevaruta);
@@ -118,7 +122,7 @@ namespace tienda
                     }
                     else
                     {
-                        MessageBox.Show("No hay imagen que mostrar");
+                        MessageBox.Show("No se encontro ninguga imagen", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
@@ -626,6 +630,83 @@ namespace tienda
                 BtnConsultar.Visible = false;
                 indice = 0;
                 CargarTablasDiasAtras();
+            }
+        }
+
+        private void txtBuscarProveedor_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtBuscarProveedor.Text))
+            {
+                dataGridViewProveedores.DataSource = ConectarBD.BuscarProveedorTablaDiasCompra("$");
+            }
+            else
+            {
+                dataGridViewProveedores.DataSource = ConectarBD.BuscarProveedorTablaDiasCompra(txtBuscarProveedor.Text);
+                CargartablaBuscarProveedoresEspecifico();
+                contador++;
+            }
+            
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(tabControl1.SelectedTab == TpBuscar)
+            {
+                
+            }
+            else
+            {
+
+            }
+        }
+
+        int contador = 0;
+
+        private void CargartablaBuscarProveedoresEspecifico()
+        {
+            //dataGridViewProveedores.DataSource = ConectarBD.BuscarProveedorTablaDiasCompra("");
+            dataGridViewProveedores.Columns["ProveedorID"].Visible = false;
+            dataGridViewProveedores.Columns["ProveedorDiaID"].Visible = false;
+            //dataGridViewProveedores.CellClick += VisualizarImagen_CellClick;
+            //se utilizara otro metodo para visualizar la imagen
+            if(contador == 0)
+            {
+                AgregarBotonAlaTabla(dataGridViewProveedores);
+            }
+        }
+
+        private void dataGridViewProveedores_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                if (e.ColumnIndex == dataGridViewProveedores.Columns["Visualizar imagen"].Index)
+                {
+                    int indice = e.RowIndex;
+                    int proveedorID = (int)dataGridViewProveedores.Rows[indice].Cells["ProveedorID"].Value;
+                    int registroDC = (int)dataGridViewProveedores.Rows[indice].Cells["ProveedorDiaID"].Value;
+                    DateTime obtenerfecha = Convert.ToDateTime(dataGridViewProveedores.Rows[indice].Cells["Fecha"].Value);
+                    var (Proveedorexiste, rutaimagen) = ConectarBD.VerificarImagenEnProveedor(obtenerfecha, proveedorID, registroDC);//aqui falta poner la fecha dependiendo el dia que sea en el datagridview
+                    if (Proveedorexiste == proveedorID)
+                    {
+                        Previsualisacion_imagen imagen = new Previsualisacion_imagen(rutaimagen, "si");
+                        if (imagen.ShowDialog() == DialogResult.OK)
+                        {
+                            //MessageBox.Show("se guardara la nueva ruta");
+                            //string obtenernuevaruta = imagen.ObtenerNuevaRuta();
+                            //MessageBox.Show("Se guardara la nueva ruta");
+                            //ConectarBD.GuardarImagenProveedor(proveedorID, date, obtenernuevaruta);
+                            //data.DataSource = conectar.CargarTablaDiasCompra(date);
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se hara ningun cambio");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se encontro ninguga imagen", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
             }
         }
     }

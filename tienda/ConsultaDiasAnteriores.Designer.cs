@@ -55,14 +55,19 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.TpConsultar = new System.Windows.Forms.TabPage();
+            this.TpBuscar = new System.Windows.Forms.TabPage();
+            this.lblProveedor = new System.Windows.Forms.Label();
+            this.txtBuscarProveedor = new System.Windows.Forms.TextBox();
+            this.dataGridViewProveedores = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.TpConsultar.SuspendLayout();
+            this.TpBuscar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProveedores)).BeginInit();
             this.SuspendLayout();
             // 
             // lblSumaProveedor1
@@ -348,58 +353,92 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.TpConsultar);
+            this.tabControl1.Controls.Add(this.TpBuscar);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1721, 877);
             this.tabControl1.TabIndex = 67;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
-            // tabPage1
+            // TpConsultar
             // 
-            this.tabPage1.Controls.Add(this.BtnDiaAtras);
-            this.tabPage1.Controls.Add(this.lblSumaProveedor1);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.lblSumaProveedor2);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.lblSumaProveedor3);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.lblSumaProveedor4);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.checkBox1);
-            this.tabPage1.Controls.Add(this.BtnDiaAvansar);
-            this.tabPage1.Controls.Add(this.BtnConsultar);
-            this.tabPage1.Controls.Add(this.dataGridView2);
-            this.tabPage1.Controls.Add(this.CboxElegirDia);
-            this.tabPage1.Controls.Add(this.dataGridView1);
-            this.tabPage1.Controls.Add(this.BtnSacarCuentas4);
-            this.tabPage1.Controls.Add(this.dataGridView3);
-            this.tabPage1.Controls.Add(this.BtnSacarCuentas3);
-            this.tabPage1.Controls.Add(this.dataGridView4);
-            this.tabPage1.Controls.Add(this.BtnSacarCuentas2);
-            this.tabPage1.Controls.Add(this.BtnSacarCuentas1);
-            this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabPage1.Location = new System.Drawing.Point(4, 34);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1713, 839);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Consultar";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.TpConsultar.Controls.Add(this.BtnDiaAtras);
+            this.TpConsultar.Controls.Add(this.lblSumaProveedor1);
+            this.TpConsultar.Controls.Add(this.label1);
+            this.TpConsultar.Controls.Add(this.lblSumaProveedor2);
+            this.TpConsultar.Controls.Add(this.label2);
+            this.TpConsultar.Controls.Add(this.lblSumaProveedor3);
+            this.TpConsultar.Controls.Add(this.label3);
+            this.TpConsultar.Controls.Add(this.lblSumaProveedor4);
+            this.TpConsultar.Controls.Add(this.label4);
+            this.TpConsultar.Controls.Add(this.checkBox1);
+            this.TpConsultar.Controls.Add(this.BtnDiaAvansar);
+            this.TpConsultar.Controls.Add(this.BtnConsultar);
+            this.TpConsultar.Controls.Add(this.dataGridView2);
+            this.TpConsultar.Controls.Add(this.CboxElegirDia);
+            this.TpConsultar.Controls.Add(this.dataGridView1);
+            this.TpConsultar.Controls.Add(this.BtnSacarCuentas4);
+            this.TpConsultar.Controls.Add(this.dataGridView3);
+            this.TpConsultar.Controls.Add(this.BtnSacarCuentas3);
+            this.TpConsultar.Controls.Add(this.dataGridView4);
+            this.TpConsultar.Controls.Add(this.BtnSacarCuentas2);
+            this.TpConsultar.Controls.Add(this.BtnSacarCuentas1);
+            this.TpConsultar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TpConsultar.Location = new System.Drawing.Point(4, 34);
+            this.TpConsultar.Name = "TpConsultar";
+            this.TpConsultar.Padding = new System.Windows.Forms.Padding(3);
+            this.TpConsultar.Size = new System.Drawing.Size(1713, 839);
+            this.TpConsultar.TabIndex = 0;
+            this.TpConsultar.Text = "Consultar";
+            this.TpConsultar.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // TpBuscar
             // 
-            this.tabPage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabPage2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.tabPage2.Location = new System.Drawing.Point(4, 34);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1713, 839);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Buscar proveedor";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.TpBuscar.Controls.Add(this.lblProveedor);
+            this.TpBuscar.Controls.Add(this.txtBuscarProveedor);
+            this.TpBuscar.Controls.Add(this.dataGridViewProveedores);
+            this.TpBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TpBuscar.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.TpBuscar.Location = new System.Drawing.Point(4, 34);
+            this.TpBuscar.Name = "TpBuscar";
+            this.TpBuscar.Padding = new System.Windows.Forms.Padding(3);
+            this.TpBuscar.Size = new System.Drawing.Size(1713, 839);
+            this.TpBuscar.TabIndex = 1;
+            this.TpBuscar.Text = "Buscar proveedor";
+            this.TpBuscar.UseVisualStyleBackColor = true;
+            // 
+            // lblProveedor
+            // 
+            this.lblProveedor.AutoSize = true;
+            this.lblProveedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProveedor.Location = new System.Drawing.Point(473, 40);
+            this.lblProveedor.Name = "lblProveedor";
+            this.lblProveedor.Size = new System.Drawing.Size(259, 36);
+            this.lblProveedor.TabIndex = 2;
+            this.lblProveedor.Text = "Buscar proveedor:";
+            // 
+            // txtBuscarProveedor
+            // 
+            this.txtBuscarProveedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBuscarProveedor.Location = new System.Drawing.Point(479, 88);
+            this.txtBuscarProveedor.Name = "txtBuscarProveedor";
+            this.txtBuscarProveedor.Size = new System.Drawing.Size(565, 53);
+            this.txtBuscarProveedor.TabIndex = 1;
+            this.txtBuscarProveedor.TextChanged += new System.EventHandler(this.txtBuscarProveedor_TextChanged);
+            // 
+            // dataGridViewProveedores
+            // 
+            this.dataGridViewProveedores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewProveedores.Location = new System.Drawing.Point(377, 162);
+            this.dataGridViewProveedores.Name = "dataGridViewProveedores";
+            this.dataGridViewProveedores.RowHeadersWidth = 51;
+            this.dataGridViewProveedores.RowTemplate.Height = 24;
+            this.dataGridViewProveedores.Size = new System.Drawing.Size(821, 313);
+            this.dataGridViewProveedores.TabIndex = 0;
+            this.dataGridViewProveedores.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewProveedores_CellClick);
             // 
             // ConsultaDiasAnteriores
             // 
@@ -418,8 +457,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.TpConsultar.ResumeLayout(false);
+            this.TpConsultar.PerformLayout();
+            this.TpBuscar.ResumeLayout(false);
+            this.TpBuscar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProveedores)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -448,7 +490,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage TpConsultar;
+        private System.Windows.Forms.TabPage TpBuscar;
+        private System.Windows.Forms.TextBox txtBuscarProveedor;
+        private System.Windows.Forms.DataGridView dataGridViewProveedores;
+        private System.Windows.Forms.Label lblProveedor;
     }
 }
