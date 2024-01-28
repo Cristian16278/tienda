@@ -53,14 +53,14 @@ namespace tienda
                     }
                     else//si no son esas fechas quiere decir que es un dia normal.
                     {
-                        if (horaactual.Hour >= 17 && horaactual.Minute >= 0)//y la hora es mas de las 17:00 horas(5:00 PM)
+                        if (horaactual.Hour >= 20 && horaactual.Minute >= 0)//y la hora es mas de las 20:00 horas(8:00 PM)
                         {
                             CboxAccionRealizar.SelectedItem = "Sumar todo";//Seleccioname el 'Sumar todo' del combobox
                             MetodoParaEventoLoadDelForm();
                             CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
                         }
                         else
-                        {    //en caso contrario
+                        {   //en caso contrario
                             CboxAccionRealizar.SelectedItem = "Modificar";//seleccioname el 'Modificar' del combobox
                             MetodoParaEventoLoadDelForm();
                             CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
@@ -552,7 +552,7 @@ namespace tienda
                     }
                     else//si no son esas fechas es que es un dia normal
                     {
-                        if (horaactual.Hour >= 17 && horaactual.Minute >= 0)// solo se podra hacer la suma asta las 5:00pm
+                        if (horaactual.Hour >= 20 && horaactual.Minute >= 0)// solo se podra hacer la suma asta las 8:00pm
                         {
                             lblProveedor.Visible = false;
                             txtProveedor.Visible = false;
@@ -577,7 +577,7 @@ namespace tienda
                         }
                         else
                         {
-                            MessageBox.Show("Solo se podra sumar los proveedores alas \n17:00 horas(5:00 PM).", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Solo se podra sumar los proveedores alas \n20:00 horas(8:00 PM).", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             CboxAccionRealizar.SelectedItem = "Modificar";
                         }
                     }
@@ -1063,6 +1063,22 @@ namespace tienda
             CboxProveedoresSinFechaFijo.DataSource = conectar.BuscarProveedorSinDiaFijo(proveedorSDF);
             CboxProveedoresSinFechaFijo.DisplayMember = "NombreProveedor";
             CboxProveedoresSinFechaFijo.ValueMember = "ProveedorID";
+        }
+
+        private void txtCompra_Enter(object sender, EventArgs e)
+        {
+            if(txtCompra.Text == "0.00")
+            {
+                txtCompra.Text = "";
+            }
+        }
+
+        private void txtCompra_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtCompra.Text))
+            {
+                txtCompra.Text = "0.00";
+            }
         }
 
         //private void Provedores_FormClosed(object sender, FormClosedEventArgs e)

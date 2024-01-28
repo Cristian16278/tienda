@@ -11,7 +11,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace tienda
 {
@@ -153,6 +153,26 @@ namespace tienda
         DateTime fechadtg3;
         DateTime fechadtg4;
 
+        private void MetodoCargarDtgvLabels(DataTable dt, DateTime fecharetrocedida, Label lblSumaProveedor, Label label, Button BtnSacarcuentas, DataGridView dataGridView)
+        {
+            dataGridView.DataSource = dt;
+            string fechaFormateada = fecharetrocedida.ToString("dddd, d 'de' MMMM 'de' yyyy");
+            label.Text = fechaFormateada;
+            //fechadtg1 = fecharetrocedida;
+            double suma1 = ConectarBD.TraerSumaProveedores(fecharetrocedida);
+            lblSumaProveedor.Text = "S.P = $" + suma1.ToString("#,##0.##", cultura);
+            if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
+            {
+                BtnSacarcuentas.Enabled = true;
+                BtnSacarcuentas.Visible = true;
+            }
+            else
+            {
+                BtnSacarcuentas.Enabled = false;
+                BtnSacarcuentas.Visible = false;
+            }
+        }
+
         private void CargarTablasDiasAtras()
         {
             for(int i = 0; i < 4; i++)
@@ -162,76 +182,16 @@ namespace tienda
                 switch (i)
                 {
                     case 0:
-                        dataGridView1.DataSource = dt;
-                        string fechaFormateada = fecharetrocedida.ToString("dddd, d 'de' MMMM 'de' yyyy");
-                        label1.Text = fechaFormateada;
-                        fechadtg1 = fecharetrocedida;
-                        double suma1 = ConectarBD.TraerSumaProveedores(fecharetrocedida);
-                        lblSumaProveedor1.Text = "S.P = $" + suma1.ToString("#,##0.##", cultura);
-                        if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
-                        {
-                            BtnSacarCuentas1.Enabled = true;
-                            BtnSacarCuentas1.Visible = true;
-                        }
-                        else
-                        {
-                            BtnSacarCuentas1.Enabled = false;
-                            BtnSacarCuentas1.Visible = false;
-                        }
+                        MetodoCargarDtgvLabels(dt, fecharetrocedida, lblSumaProveedor1, label1, BtnSacarCuentas1, dataGridView1);
                         break;
                     case 1:
-                        dataGridView2.DataSource = dt;
-                        string fechaFormateada1 = fecharetrocedida.ToString("dddd, d 'de' MMMM 'de' yyyy");
-                        label2.Text = fechaFormateada1;
-                        fechadtg2 = fecharetrocedida;
-                        double suma2 = ConectarBD.TraerSumaProveedores(fecharetrocedida);
-                        lblSumaProveedor2.Text = "S.P = $" + suma2.ToString("#,##0.##",cultura);
-                        if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
-                        {
-                            BtnSacarCuentas2.Enabled = true;
-                            BtnSacarCuentas2.Visible = true;
-                        }
-                        else
-                        {
-                            BtnSacarCuentas2.Enabled = false;
-                            BtnSacarCuentas2.Visible = false;
-                        }
+                        MetodoCargarDtgvLabels(dt, fecharetrocedida, lblSumaProveedor2, label2, BtnSacarCuentas2, dataGridView2);
                         break;
                     case 2:
-                        dataGridView3.DataSource = dt;
-                        string fechaFormateada2 = fecharetrocedida.ToString("dddd, d 'de' MMMM 'de' yyyy");
-                        label3.Text = fechaFormateada2;
-                        fechadtg3 = fecharetrocedida;
-                        double suma3 = ConectarBD.TraerSumaProveedores(fecharetrocedida);
-                        lblSumaProveedor3.Text = "S.P = $" + suma3.ToString("#,##0.##", cultura);
-                        if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
-                        {
-                            BtnSacarCuentas3.Enabled = true;
-                            BtnSacarCuentas3.Visible = true;
-                        }
-                        else
-                        {
-                            BtnSacarCuentas3.Enabled = false;
-                            BtnSacarCuentas3.Visible = false;
-                        }
+                        MetodoCargarDtgvLabels(dt, fecharetrocedida, lblSumaProveedor3, label3, BtnSacarCuentas3, dataGridView3);
                         break;
                     case 3:
-                        dataGridView4.DataSource = dt;
-                        string fechaFormateada3 = fecharetrocedida.ToString("dddd, d 'de' MMMM 'de' yyyy");
-                        label4.Text = fechaFormateada3;
-                        fechadtg4 = fecharetrocedida;
-                        double suma4 = ConectarBD.TraerSumaProveedores(fecharetrocedida);
-                        lblSumaProveedor4.Text = "S.P = $" + suma4.ToString("#,##0.##", cultura);
-                        if (ConectarBD.TraerNetoExistenteDiaAnterior(fecharetrocedida) == 0)
-                        {
-                            BtnSacarCuentas4.Enabled = true;
-                            BtnSacarCuentas4.Visible = true;
-                        }
-                        else
-                        {
-                            BtnSacarCuentas4.Enabled = false;
-                            BtnSacarCuentas4.Visible = false;
-                        }
+                        MetodoCargarDtgvLabels(dt, fecharetrocedida, lblSumaProveedor4, label4, BtnSacarCuentas4,dataGridView4);
                         break;
                 }
             }
@@ -441,17 +401,7 @@ namespace tienda
         {
             obtenerfecha = fechadtg1;
             logicaSacarCuentas(label1.Text, obtenerfecha);
-            //DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label1.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            //if(r == DialogResult.Yes)
-            //{
-            //    obtenerfecha = fechadtg1;//para sumar los proveedores de ese dia
-            //    DateTime fechaanterior = obtenerfecha.AddDays(-1);//para obtener el neto existente del dia anterior al dia que se cunsulta para poder restarlo.
-            //    LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
-            //}
-            //else
-            //{
-
-            //}
+            
         }
 
         private void logicaSacarCuentas(string labelfecha, DateTime fecha)
@@ -527,17 +477,7 @@ namespace tienda
         {
             obtenerfecha = fechadtg2;
             logicaSacarCuentas(label2.Text, obtenerfecha);
-            //DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label2.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            //if(r == DialogResult.Yes)
-            //{
-            //    obtenerfecha = fechadtg2;
-            //    DateTime fechaanterior = obtenerfecha.AddDays(-1);
-            //    LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
-            //}
-            //else
-            //{
-
-            //}
+            
             
         }
 
@@ -545,17 +485,7 @@ namespace tienda
         {
             obtenerfecha = fechadtg3;
             logicaSacarCuentas(label3.Text, obtenerfecha);
-            //DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label3.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            //if(r == DialogResult.Yes)
-            //{
-            //    obtenerfecha = fechadtg3;
-            //    DateTime fechaanterior = obtenerfecha.AddDays(-1);
-            //    LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
-            //}
-            //else
-            //{
-
-            //}
+            
             
         }
 
@@ -563,17 +493,7 @@ namespace tienda
         {
             obtenerfecha = fechadtg4;
             logicaSacarCuentas(label4.Text, obtenerfecha);
-            //DialogResult r = MessageBox.Show($"Alparecer en esta fecha {label4.Text} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            //if(r == DialogResult.Yes)
-            //{
-            //    obtenerfecha = fechadtg4;
-            //    DateTime fechaanterior = obtenerfecha.AddDays(-1);
-            //    LogicaParaCalcularGuardar(obtenerfecha, fechaanterior);
-            //}
-            //else
-            //{
-
-            //}
+            
             
         }
 

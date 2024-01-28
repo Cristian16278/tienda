@@ -32,6 +32,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Provedores));
             this.dtgDiasCompra = new System.Windows.Forms.DataGridView();
             this.OfdElegirImagen = new System.Windows.Forms.OpenFileDialog();
@@ -73,6 +74,7 @@
             this.dtgDiasCompra.AllowUserToDeleteRows = false;
             this.dtgDiasCompra.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.DimGray;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
             this.dtgDiasCompra.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dtgDiasCompra.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -102,6 +104,8 @@
             this.dtgDiasCompra.ReadOnly = true;
             this.dtgDiasCompra.RowHeadersVisible = false;
             this.dtgDiasCompra.RowHeadersWidth = 51;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtgDiasCompra.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dtgDiasCompra.RowTemplate.Height = 24;
             this.dtgDiasCompra.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgDiasCompra.Size = new System.Drawing.Size(1080, 400);
@@ -147,7 +151,9 @@
             this.txtCompra.Name = "txtCompra";
             this.txtCompra.Size = new System.Drawing.Size(281, 38);
             this.txtCompra.TabIndex = 4;
+            this.txtCompra.Enter += new System.EventHandler(this.txtCompra_Enter);
             this.txtCompra.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCompra_KeyPress);
+            this.txtCompra.Leave += new System.EventHandler(this.txtCompra_Leave);
             // 
             // lblCompra
             // 
@@ -216,7 +222,7 @@
             this.BtnRefrescarTabla.Name = "BtnRefrescarTabla";
             this.BtnRefrescarTabla.Size = new System.Drawing.Size(99, 55);
             this.BtnRefrescarTabla.TabIndex = 11;
-            this.BtnRefrescarTabla.Text = "Refrescar tabla";
+            this.BtnRefrescarTabla.Text = "Recargar tabla";
             this.BtnRefrescarTabla.UseVisualStyleBackColor = true;
             this.BtnRefrescarTabla.Click += new System.EventHandler(this.BtnRefrescarTabla_Click);
             // 
