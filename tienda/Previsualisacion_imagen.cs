@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+
 namespace tienda
 {
     public partial class Previsualisacion_imagen : Form
@@ -99,16 +101,18 @@ namespace tienda
         }
 
         string imagenborrar;
+
+        
         private void BtnAbriConFotos_Click(object sender, EventArgs e)
         {
-            
+            BtnAbriConFotos.Enabled = false;
             string carpetatemporal = Path.GetTempPath();
             string rutatemporalimagen = Path.Combine(carpetatemporal, "imagentemporal.jpg");
             File.WriteAllBytes(rutatemporalimagen, imagentemporal);
             imagenborrar = rutatemporalimagen;
             Borrarimagen.Start();
             Process.Start(rutatemporalimagen);
-            
+
         }
 
         private void Borrarimagen_Tick(object sender, EventArgs e)
@@ -116,6 +120,7 @@ namespace tienda
             if(Process.GetProcessesByName("PhotosApp").Length == 0)//PhotosService
             {
                 File.Delete(imagenborrar);
+                BtnAbriConFotos.Enabled = true;
                 Borrarimagen.Stop();
             }
         }

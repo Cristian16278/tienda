@@ -822,5 +822,28 @@ namespace tienda
                 MandarMensagesParaSumarProveedoresConNE("Si");
             }
         }
+
+        private ConsultaDiasAnteriores consulta = null;
+
+        private void BtnProveedores_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (consulta == null || consulta.IsDisposed)
+                {
+                    consulta = new ConsultaDiasAnteriores();
+                    consulta.Show();
+                }
+                else
+                {
+                    consulta.Activate();
+                }
+            }
+            catch (Exception t)
+            {
+                MessageBox.Show($"Ocurrior un error al intentar abrir el form\ntipo de error:\n {t}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
+        }
     }
 }

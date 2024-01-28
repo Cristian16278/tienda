@@ -383,6 +383,7 @@
             // 
             // TpConsultar
             // 
+            this.TpConsultar.BackColor = System.Drawing.Color.Transparent;
             this.TpConsultar.Controls.Add(this.BtnDiaAtras);
             this.TpConsultar.Controls.Add(this.lblSumaProveedor1);
             this.TpConsultar.Controls.Add(this.label1);
@@ -411,7 +412,6 @@
             this.TpConsultar.Size = new System.Drawing.Size(1721, 839);
             this.TpConsultar.TabIndex = 0;
             this.TpConsultar.Text = "Consultar";
-            this.TpConsultar.UseVisualStyleBackColor = true;
             // 
             // TpBuscar
             // 
@@ -423,7 +423,7 @@
             this.TpBuscar.Location = new System.Drawing.Point(4, 34);
             this.TpBuscar.Name = "TpBuscar";
             this.TpBuscar.Padding = new System.Windows.Forms.Padding(3);
-            this.TpBuscar.Size = new System.Drawing.Size(1713, 839);
+            this.TpBuscar.Size = new System.Drawing.Size(1721, 839);
             this.TpBuscar.TabIndex = 1;
             this.TpBuscar.Text = "Buscar proveedor";
             this.TpBuscar.UseVisualStyleBackColor = true;
@@ -432,7 +432,7 @@
             // 
             this.lblProveedor.AutoSize = true;
             this.lblProveedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProveedor.Location = new System.Drawing.Point(473, 40);
+            this.lblProveedor.Location = new System.Drawing.Point(518, 41);
             this.lblProveedor.Name = "lblProveedor";
             this.lblProveedor.Size = new System.Drawing.Size(259, 36);
             this.lblProveedor.TabIndex = 2;
@@ -441,7 +441,7 @@
             // txtBuscarProveedor
             // 
             this.txtBuscarProveedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBuscarProveedor.Location = new System.Drawing.Point(479, 88);
+            this.txtBuscarProveedor.Location = new System.Drawing.Point(524, 89);
             this.txtBuscarProveedor.Name = "txtBuscarProveedor";
             this.txtBuscarProveedor.Size = new System.Drawing.Size(565, 53);
             this.txtBuscarProveedor.TabIndex = 1;
@@ -460,7 +460,7 @@
             this.dataGridViewProveedores.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridViewProveedores.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridViewProveedores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewProveedores.Location = new System.Drawing.Point(184, 162);
+            this.dataGridViewProveedores.Location = new System.Drawing.Point(229, 163);
             this.dataGridViewProveedores.Name = "dataGridViewProveedores";
             this.dataGridViewProveedores.ReadOnly = true;
             this.dataGridViewProveedores.RowHeadersWidth = 51;

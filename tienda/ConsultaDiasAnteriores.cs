@@ -183,15 +183,19 @@ namespace tienda
                 {
                     case 0:
                         MetodoCargarDtgvLabels(dt, fecharetrocedida, lblSumaProveedor1, label1, BtnSacarCuentas1, dataGridView1);
+                        fechadtg1 = fecharetrocedida;
                         break;
                     case 1:
                         MetodoCargarDtgvLabels(dt, fecharetrocedida, lblSumaProveedor2, label2, BtnSacarCuentas2, dataGridView2);
+                        fechadtg2 = fecharetrocedida;
                         break;
                     case 2:
                         MetodoCargarDtgvLabels(dt, fecharetrocedida, lblSumaProveedor3, label3, BtnSacarCuentas3, dataGridView3);
+                        fechadtg3 = fecharetrocedida;
                         break;
                     case 3:
                         MetodoCargarDtgvLabels(dt, fecharetrocedida, lblSumaProveedor4, label4, BtnSacarCuentas4,dataGridView4);
+                        fechadtg4 = fecharetrocedida;
                         break;
                 }
             }

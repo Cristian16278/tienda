@@ -47,6 +47,7 @@
             this.BtnBilletesCalcular = new System.Windows.Forms.Button();
             this.BtnAgarrarDinero = new System.Windows.Forms.Button();
             this.BtnAgregarSumarProveedor = new System.Windows.Forms.Button();
+            this.BtnProveedores = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -257,12 +258,26 @@
             this.BtnAgregarSumarProveedor.Visible = false;
             this.BtnAgregarSumarProveedor.Click += new System.EventHandler(this.BtnAgregarSumarProveedor_Click);
             // 
+            // BtnProveedores
+            // 
+            this.BtnProveedores.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BtnProveedores.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnProveedores.Location = new System.Drawing.Point(746, 11);
+            this.BtnProveedores.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnProveedores.Name = "BtnProveedores";
+            this.BtnProveedores.Size = new System.Drawing.Size(136, 42);
+            this.BtnProveedores.TabIndex = 15;
+            this.BtnProveedores.Text = "Proveedores";
+            this.BtnProveedores.UseVisualStyleBackColor = true;
+            this.BtnProveedores.Click += new System.EventHandler(this.BtnProveedores_Click);
+            // 
             // CuentasDiarias
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(913, 647);
+            this.Controls.Add(this.BtnProveedores);
             this.Controls.Add(this.BtnAgregarSumarProveedor);
             this.Controls.Add(this.BtnAgarrarDinero);
             this.Controls.Add(this.BtnBilletesCalcular);
@@ -315,5 +330,6 @@
         private System.Windows.Forms.Button BtnBilletesCalcular;
         private System.Windows.Forms.Button BtnAgarrarDinero;
         private System.Windows.Forms.Button BtnAgregarSumarProveedor;
+        private System.Windows.Forms.Button BtnProveedores;
     }
 }

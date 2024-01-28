@@ -704,7 +704,7 @@ namespace Datos
                 //"INNER JOIN Proveedores AS P ON DC.ProveedorID = P.ProveedorID " +
                 //"WHERE DC.Fecha = @fecha";
             }
-            catch (Exception o)
+            catch (Exception)
             {
                 return 0;
             }
@@ -1043,7 +1043,7 @@ namespace Datos
                 conn.Close();
                 return resultado;
             }
-            catch (Exception o)
+            catch (Exception)
             {
                 return 0;
             }

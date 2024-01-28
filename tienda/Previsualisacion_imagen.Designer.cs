@@ -93,13 +93,13 @@
             this.BtnAbriConFotos.Name = "BtnAbriConFotos";
             this.BtnAbriConFotos.Size = new System.Drawing.Size(176, 38);
             this.BtnAbriConFotos.TabIndex = 4;
-            this.BtnAbriConFotos.Text = "Abri con Fotos";
+            this.BtnAbriConFotos.Text = "Abrir con Fotos";
             this.BtnAbriConFotos.UseVisualStyleBackColor = true;
             this.BtnAbriConFotos.Click += new System.EventHandler(this.BtnAbriConFotos_Click);
             // 
             // Borrarimagen
             // 
-            this.Borrarimagen.Interval = 3000;
+            this.Borrarimagen.Interval = 2000;
             this.Borrarimagen.Tick += new System.EventHandler(this.Borrarimagen_Tick);
             // 
             // Previsualisacion_imagen
