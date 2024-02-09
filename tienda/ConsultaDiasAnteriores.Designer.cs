@@ -411,7 +411,7 @@
             this.TpConsultar.Padding = new System.Windows.Forms.Padding(3);
             this.TpConsultar.Size = new System.Drawing.Size(1721, 839);
             this.TpConsultar.TabIndex = 0;
-            this.TpConsultar.Text = "Consultar";
+            this.TpConsultar.Text = "Por fecha";
             // 
             // TpBuscar
             // 
@@ -425,7 +425,7 @@
             this.TpBuscar.Padding = new System.Windows.Forms.Padding(3);
             this.TpBuscar.Size = new System.Drawing.Size(1721, 839);
             this.TpBuscar.TabIndex = 1;
-            this.TpBuscar.Text = "Buscar proveedor";
+            this.TpBuscar.Text = "Por proveedor";
             this.TpBuscar.UseVisualStyleBackColor = true;
             // 
             // lblProveedor
@@ -463,6 +463,7 @@
             this.dataGridViewProveedores.Location = new System.Drawing.Point(229, 163);
             this.dataGridViewProveedores.Name = "dataGridViewProveedores";
             this.dataGridViewProveedores.ReadOnly = true;
+            this.dataGridViewProveedores.RowHeadersVisible = false;
             this.dataGridViewProveedores.RowHeadersWidth = 51;
             dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGridViewProveedores.RowsDefaultCellStyle = dataGridViewCellStyle10;

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Previsualisacion_imagen));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.BtnGuardar = new System.Windows.Forms.Button();
             this.BtnCancelar = new System.Windows.Forms.Button();
@@ -112,12 +113,13 @@
             this.Controls.Add(this.BtnCancelar);
             this.Controls.Add(this.BtnGuardar);
             this.Controls.Add(this.pictureBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(766, 765);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(766, 765);
             this.Name = "Previsualisacion_imagen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Previsualisacion_imagen";
+            this.Text = "Previsualización";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
