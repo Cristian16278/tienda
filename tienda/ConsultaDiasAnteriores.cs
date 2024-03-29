@@ -108,7 +108,8 @@ namespace tienda
                     if (Proveedorexiste == proveedorID)
                     {
                         Previsualisacion_imagen imagen = new Previsualisacion_imagen(rutaimagen, "si");
-                        if (imagen.ShowDialog() == DialogResult.OK)
+                        DialogResult respuesta = imagen.ShowDialog();
+                        if (respuesta == DialogResult.OK)
                         {
                             string obtenernuevaruta = imagen.ObtenerNuevaRuta();
                             byte[] bytesguardarimagen = File.ReadAllBytes(obtenernuevaruta);
@@ -116,7 +117,11 @@ namespace tienda
                             data.DataSource = ConectarBD.CargarTablaDiasCompra(fechadtgEspecifico);
                             MessageBox.Show("Se modifico correctamente la imagen", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-                        else
+                        else if (respuesta == DialogResult.Yes)
+                        {
+
+                        }
+                        else if (respuesta == DialogResult.Abort)
                         {
                             MessageBox.Show("No se hara ningun cambio", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
@@ -131,7 +136,8 @@ namespace tienda
                                 string imagen = OfdElegirImagen.FileName;
                                 byte[] rutaimagengua = File.ReadAllBytes(imagen);
                                 Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(rutaimagengua, "no");
-                                if (previsualisacion.ShowDialog() == DialogResult.OK)
+                                DialogResult respuesta2 = previsualisacion.ShowDialog();
+                                if (respuesta2 == DialogResult.OK)
                                 {
                                     int indice1 = e.RowIndex;
                                     int proveedorID1 = (int)data.Rows[indice1].Cells["ProveedorID"].Value;
@@ -141,7 +147,11 @@ namespace tienda
                                     MessageBox.Show("Se guardo correctamente la imagen","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     
                                 }
-                                else
+                                else if (respuesta2 == DialogResult.Yes)
+                                {
+
+                                }
+                                else if (respuesta2 == DialogResult.Abort)
                                 {
                                     MessageBox.Show("No se hara ningun cambio","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }

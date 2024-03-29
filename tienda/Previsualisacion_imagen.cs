@@ -73,13 +73,13 @@ namespace tienda
             }
             else
             {
-                DialogResult = DialogResult.Cancel;
+                DialogResult = DialogResult.Yes;
             }
         }
 
         private void BtnCancelar_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.Abort;
         }
 
         string nuevaruta;
@@ -91,8 +91,9 @@ namespace tienda
             {
                 nuevaruta = ofd.FileName;
                 pictureBox1.Image = Image.FromFile(nuevaruta);
+                BtnCancelar.Enabled = true;
+                BtnAbriConFotos.Enabled = false;
             }
-            BtnCancelar.Enabled = true;
         }
 
         public string ObtenerNuevaRuta()

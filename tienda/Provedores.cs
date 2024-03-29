@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,12 +46,14 @@ namespace tienda
                             CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
                             QuitarEventoFocustxtCompra(true);
                             dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                            
                         }
                         else
                         {
                             CboxAccionRealizar.SelectedItem = "Modificar";//seleccioname el 'Modificar' del combobox
                             MetodoParaEventoLoadDelForm();
                             CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                            
                         }
                     }
                     else//si no son esas fechas quiere decir que es un dia normal.
@@ -62,12 +65,14 @@ namespace tienda
                             CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
                             QuitarEventoFocustxtCompra(true);
                             dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                            
                         }
                         else
                         {   //en caso contrario
                             CboxAccionRealizar.SelectedItem = "Modificar";//seleccioname el 'Modificar' del combobox
                             MetodoParaEventoLoadDelForm();
                             CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                            
                         }
                     }
                 }
@@ -85,12 +90,14 @@ namespace tienda
                             CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
                             QuitarEventoFocustxtCompra(true);
                             dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                            
                         }
                         else
                         {
                             CboxAccionRealizar.SelectedItem = "Modificar";//seleccioname el 'Modificar' del combobox
                             MetodoParaEventoLoadDelForm();
                             CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                            
                         }
                     }
                     else//si no son esas fechas quire decir que es un dia normal
@@ -102,17 +109,19 @@ namespace tienda
                             CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
                             QuitarEventoFocustxtCompra(true);
                             dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
+                            
                         }
                         else//en caso contrario
                         {
                             CboxAccionRealizar.SelectedItem = "Modificar";//Seleccioname el 'Modificar' del Combobox
                             MetodoParaEventoLoadDelForm();
                             CboxElegirAhorroOcomplemento.SelectedItem = "Sel..";
+                            
 
                         }
                     }
                 }
-                
+                dtgDiasCompra.ClearSelection();
             }
             catch (Exception ex)
             {
@@ -139,7 +148,7 @@ namespace tienda
             llenarComboboxSinFechaFijo();
             LlenarComboboxProveedorAdelanto();
             borrarContenidoTextbox();
-            //dtgDiasCompra.ClearSelection();
+            dtgDiasCompra.ClearSelection();
         }
 
         private List<int> VerificarProveedorEspecifico(List<int> obtenerProveedorDeTablaProveedores, List<int> proveedoresDiascompra, DateTime dia)
@@ -286,7 +295,8 @@ namespace tienda
                         if (Proveedorexiste == proveedorID)
                         {
                             Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(rutaimagen, "si");
-                            if (previsualisacion.ShowDialog() == DialogResult.OK)
+                            DialogResult respuesta = previsualisacion.ShowDialog();
+                            if (respuesta == DialogResult.OK)
                             {
                                 string obtenernuevaruta = previsualisacion.ObtenerNuevaRuta();
                                 byte[] bytesguardarimagen = File.ReadAllBytes(obtenernuevaruta);
@@ -294,7 +304,7 @@ namespace tienda
                                 dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(date);
                                 EnviarMensaje("Se cambio la imagen correctamente.", Color.Green);
                             }
-                            else
+                            else if (respuesta == DialogResult.Abort)
                             {
                                 EnviarMensaje("No se cambio la imagen.", Color.Yellow);
                             }
@@ -306,7 +316,8 @@ namespace tienda
                                 string imagen = OfdElegirImagen.FileName;
                                 byte[] rutaimagengua = File.ReadAllBytes(imagen);
                                 Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(rutaimagengua, "no");
-                                if (previsualisacion.ShowDialog() == DialogResult.OK)
+                                DialogResult respuesta = previsualisacion.ShowDialog();
+                                if (respuesta == DialogResult.OK)
                                 {
                                     int indice1 = e.RowIndex;
                                     int proveedorID1 = (int)dtgDiasCompra.Rows[indice1].Cells["ProveedorID"].Value;
@@ -315,7 +326,7 @@ namespace tienda
                                     //dtgDiasCompra.Columns["ProveedorID"].Visible = false;
                                     EnviarMensaje("Se guardo correctamente la imagen", Color.Green);
                                 }
-                                else
+                                else if (respuesta == DialogResult.Abort)
                                 {
                                     EnviarMensaje("No se guardara la imagen.", Color.Yellow);
                                 }
@@ -471,7 +482,7 @@ namespace tienda
             {
                 BtnGuardar.Text = "Agregar";
                 lblCompra.Text = "Compra:";
-                txtCompra.Text = "";
+                
                 txtAgregarComentario.Text = "Agrege un Comentario";
                 txtAgregarComentario.ForeColor = Color.DarkGray;
                 //lblProveedor.Text = "Proveedor e agregar:";
@@ -505,7 +516,7 @@ namespace tienda
                 BtnGuardar.Text = "Borrar";
                 lblProveedor.Text = "Proveedor a eliminar:";
                 lblCompra.Text = "Compra:";
-                txtCompra.Text = "";
+                
                 txtAgregarComentario.Text = "";
                 BtnGuardar.Click -= BtnBorrar_Click;
                 BtnGuardar.Click += BtnBorrar_Click;
@@ -558,7 +569,7 @@ namespace tienda
                             dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
                             QuitarEventoFocustxtCompra(true);
                             BtnGuardar.Text = "Sumar";
-                            txtCompra.Text = "";
+                            
                             BtnGuardar.BackColor = Color.Yellow;
                             BtnGuardar.ForeColor = Color.Black;
                         }
@@ -590,7 +601,7 @@ namespace tienda
                             dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
                             QuitarEventoFocustxtCompra(true);
                             BtnGuardar.Text = "Sumar";
-                            txtCompra.Text = "";
+                            
                             BtnGuardar.BackColor = Color.Yellow;
                             BtnGuardar.ForeColor = Color.Black;
                         }
@@ -620,7 +631,7 @@ namespace tienda
                             txtProveedorEspecifico.Visible = false;
                             txtProveedorEspecifico.Enabled = false;
                             lblCompra.Text = "Resultado:";
-                            txtCompra.Text = "";
+                            
                             BtnGuardar.Click -= BtnSumarTodo_Click;
                             BtnGuardar.Click += BtnSumarTodo_Click;
                             BtnGuardar.Click -= BtnAgregar_Click;
@@ -629,7 +640,6 @@ namespace tienda
                             dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
                             QuitarEventoFocustxtCompra(true);
                             BtnGuardar.Text = "Sumar";
-                            txtCompra.Text = "";
                             BtnGuardar.BackColor = Color.Yellow;
                             BtnGuardar.ForeColor = Color.Black;
                         }
@@ -654,7 +664,7 @@ namespace tienda
                             txtProveedorEspecifico.Visible = false;
                             txtProveedorEspecifico.Enabled = false;
                             lblCompra.Text = "Resultado:";
-                            txtCompra.Text = "";
+                            
                             BtnGuardar.Click -= BtnSumarTodo_Click;
                             BtnGuardar.Click += BtnSumarTodo_Click;
                             BtnGuardar.Click -= BtnAgregar_Click;
@@ -681,7 +691,7 @@ namespace tienda
                 BtnGuardar.Text = "Guardar cambios";
                 lblProveedor.Text = "Proveedor a modificar:";
                 lblCompra.Text = "Compra:";
-                txtCompra.Text = "";
+                
                 txtAgregarComentario.Text = "Agrege un Comentario";
                 txtAgregarComentario.ForeColor = Color.DarkGray;
                 BtnGuardar.Click -= BtnAgregar_Click;
@@ -708,6 +718,9 @@ namespace tienda
                 QuitarCheckedRadiobutton(false, false);
                 //nesecitaremos el ProveedroID, la compra y la fecha
             }
+            dtgDiasCompra.ClearSelection();
+            txtCompra.Text = "";
+            txtProveedor.Text = "";
         }
 
         private void QuitarEventoFocustxtCompra(bool quitarodejar)
@@ -737,41 +750,48 @@ namespace tienda
                 double restar = (ne + decasa) - resultado;
                 string result = restar.ToString("N2");
                 string elegido = CboxElegirAhorroOcomplemento.SelectedItem.ToString();
-                MessageBox.Show($"el resultado de la resta de (T.E: ${ne} + {elegido}: ${decasa}) - {resultado} = {result}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if(restar < 0)//si el resultado de la resta de tara existente y la suma de los proveedores da un numero negativo -1
+                DialogResult resp = MessageBox.Show($"el resultado de la resta de (T.E: ${ne} + {elegido}: ${decasa}) - {resultado} = {result}, esta de acuerdo con el resultado?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (resp == DialogResult.Yes)
                 {
-                    VerificarSiEsNumeroNegativo(restar);
-                    double numeronegativo = Math.Abs(restar);
-                    double numeroredondeado = Math.Round(numeronegativo);
-                    Properties.Settings.Default.Delacaja = numeroredondeado;
-                    Properties.Settings.Default.Save();
-                    CuentasDiarias cuentasDiarias = new CuentasDiarias(numeroredondeado);
-                    this.Hide();
-                    if(cuentasDiarias.ShowDialog() == DialogResult.Cancel)
+                    if (restar < 0)//si el resultado de la resta de tara existente y la suma de los proveedores da un numero negativo -1
                     {
-                        Application.Exit();//hicieron todos los calculos y lo cerraron
+                        VerificarSiEsNumeroNegativo(restar);
+                        double numeronegativo = Math.Abs(restar);
+                        double numeroredondeado = Math.Round(numeronegativo);
+                        Properties.Settings.Default.Delacaja = numeroredondeado;
+                        Properties.Settings.Default.Save();
+                        CuentasDiarias cuentasDiarias = new CuentasDiarias(numeroredondeado);
+                        this.Hide();
+                        if (cuentasDiarias.ShowDialog() == DialogResult.Cancel)
+                        {
+                            Application.Exit();//hicieron todos los calculos y lo cerraron
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ocurrio algo desde el form cuentas diarias");
+                        }
                     }
-                    else
+                    else//en caso contrario se almacenara para preguntar despues si desean agregarlo o no
                     {
-                        MessageBox.Show("Ocurrio algo desde el form cuentas diarias");
+                        VerificarSiEsNumeroNegativo(restar);
+                        double redondear = Math.Round(restar);
+                        Properties.Settings.Default.Delacaja = redondear;
+                        Properties.Settings.Default.Save();
+                        CuentasDiarias cuentas = new CuentasDiarias();
+                        this.Hide();
+                        if (cuentas.ShowDialog() == DialogResult.Cancel)
+                        {
+                            Application.Exit();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ocurrio algo desde el form cuentas diarias");
+                        }
                     }
                 }
-                else//en caso contrario se almacenara para preguntar despues si desean agregarlo o no
+                else
                 {
-                    VerificarSiEsNumeroNegativo(restar);
-                    double redondear = Math.Round(restar);
-                    Properties.Settings.Default.Delacaja = redondear;
-                    Properties.Settings.Default.Save();
-                    CuentasDiarias cuentas = new CuentasDiarias();
-                    this.Hide();
-                    if(cuentas.ShowDialog() == DialogResult.Cancel)
-                    {
-                        Application.Exit();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ocurrio algo desde el form cuentas diarias");
-                    }
+
                 }
             }
             else
@@ -779,7 +799,6 @@ namespace tienda
 
             }
         }
-
         private void VerificarSiEsNumeroNegativo(double restar)
         {
             Properties.Settings.Default.NumeroNegativoOno = restar;
@@ -819,16 +838,16 @@ namespace tienda
                 {
                     EnviarMensaje("Ocurrio un error al intentar ingresar los datos.", Color.Red);
                 }
-                
+                dtgDiasCompra.ClearSelection();
                 //se descomentara despues<-----------------------------------------------------------------------------------
             }
             catch (FormatException)
             {
-                MessageBox.Show($"Elija una fila", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Elija la fila a modificar.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception es)
             {
-                MessageBox.Show($"Ocurrio un error\ntipo de error:\n{es}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ocurrio un error al intentar modificar los datos.\ntipo de error:\n{es}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -836,6 +855,7 @@ namespace tienda
         {
             try
             {
+                double compra = double.Parse(txtCompra.Text.Replace(".", ","));
                 DialogResult respuesta = MessageBox.Show("Esta seguro que quiere borrar este dato?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (respuesta == DialogResult.Yes)
                 {
@@ -858,10 +878,15 @@ namespace tienda
                 {
                     MessageBox.Show("No se borro ningun dato", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                dtgDiasCompra.ClearSelection();
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Eliga el proveedor a eliminar.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception s)
             {
-                MessageBox.Show($"Ocurrio un error al intentar borrar los datos\ntipo de error:\n{s}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ocurrio un error al intentar borrar los datos.\ntipo de error:\n{s}", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -933,6 +958,7 @@ namespace tienda
                     dtgDiasCompra.SelectionChanged -= dtgDiasCompra_SelectionChanged;
                     dtgDiasCompra.DataSource = conectar.CargarTablaDiasCompra(FechaActual);
                     txtProveedorEspecifico.Text = "";
+                    dtgDiasCompra.ClearSelection();
                 }
                 else
                 {
@@ -952,6 +978,7 @@ namespace tienda
                 CboxProveedorAdelantado.Visible = true;
                 CboxProveedoresSinFechaFijo.Visible = false;
                 lblProveedor.Text = "Proveedor adelanto:";
+                txtProveedorEspecifico.Text = "";
             }
             
         }
@@ -963,6 +990,7 @@ namespace tienda
                 CboxProveedoresSinFechaFijo.Visible = true;
                 CboxProveedorAdelantado.Visible = false;
                 lblProveedor.Text = "Proveedor sin dia fijo:";
+                txtProveedorEspecifico.Text = "";
             }
             
         }

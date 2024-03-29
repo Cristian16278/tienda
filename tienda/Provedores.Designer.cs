@@ -139,6 +139,7 @@
             // 
             // consultarDiasAtrasToolStripMenuItem
             // 
+            this.consultarDiasAtrasToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.consultarDiasAtrasToolStripMenuItem.Name = "consultarDiasAtrasToolStripMenuItem";
             this.consultarDiasAtrasToolStripMenuItem.Size = new System.Drawing.Size(173, 35);
             this.consultarDiasAtrasToolStripMenuItem.Text = "Consultar dias";
@@ -189,8 +190,9 @@
             this.lblFechaActual.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFechaActual.Location = new System.Drawing.Point(21, 52);
             this.lblFechaActual.Name = "lblFechaActual";
-            this.lblFechaActual.Size = new System.Drawing.Size(0, 32);
+            this.lblFechaActual.Size = new System.Drawing.Size(289, 32);
             this.lblFechaActual.TabIndex = 8;
+            this.lblFechaActual.Text = "Dia ## de mes de año";
             // 
             // txtPresupuesto
             // 
