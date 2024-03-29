@@ -66,6 +66,7 @@
             this.lblProveedor = new System.Windows.Forms.Label();
             this.txtBuscarProveedor = new System.Windows.Forms.TextBox();
             this.dataGridViewProveedores = new System.Windows.Forms.DataGridView();
+            this.OfdElegirImagen = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -473,6 +474,10 @@
             this.dataGridViewProveedores.TabIndex = 0;
             this.dataGridViewProveedores.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewProveedores_CellClick);
             // 
+            // OfdElegirImagen
+            // 
+            this.OfdElegirImagen.FileName = "openFileDialog1";
+            // 
             // ConsultaDiasAnteriores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -483,7 +488,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1771, 948);
-            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(1771, 948);
             this.Name = "ConsultaDiasAnteriores";
             this.Text = "Consultar fechas";
@@ -531,5 +535,6 @@
         private System.Windows.Forms.TextBox txtBuscarProveedor;
         private System.Windows.Forms.DataGridView dataGridViewProveedores;
         private System.Windows.Forms.Label lblProveedor;
+        private System.Windows.Forms.OpenFileDialog OfdElegirImagen;
     }
 }

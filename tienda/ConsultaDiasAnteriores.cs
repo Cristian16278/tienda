@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlTypes;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
@@ -96,33 +97,60 @@ namespace tienda
             DataGridView data = (DataGridView)sender;
             string nombredeldatagridview = data.Name;
             DateTime fechadtgEspecifico = obtenerFechaDtgEspecifico(nombredeldatagridview);
-            if(e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                if(e.ColumnIndex == data.Columns["Visualizar imagen"].Index)
+                if (e.ColumnIndex == data.Columns["Visualizar imagen"].Index)
                 {
                     int indice = e.RowIndex;
                     int proveedorID = (int)data.Rows[indice].Cells["ProveedorID"].Value;
                     int registroDC = (int)data.Rows[indice].Cells["ProveedorDiaID"].Value;
                     var (Proveedorexiste, rutaimagen) = ConectarBD.VerificarImagenEnProveedor(fechadtgEspecifico, proveedorID, registroDC);//aqui falta poner la fecha dependiendo el dia que sea en el datagridview
-                    if(Proveedorexiste == proveedorID)
+                    if (Proveedorexiste == proveedorID)
                     {
                         Previsualisacion_imagen imagen = new Previsualisacion_imagen(rutaimagen, "si");
-                        if(imagen.ShowDialog() == DialogResult.OK)
+                        if (imagen.ShowDialog() == DialogResult.OK)
                         {
-                            //MessageBox.Show("se guardara la nueva ruta");
-                            //string obtenernuevaruta = imagen.ObtenerNuevaRuta();
-                            //MessageBox.Show("Se guardara la nueva ruta");
-                            //ConectarBD.GuardarImagenProveedor(proveedorID, date, obtenernuevaruta);
-                            //data.DataSource = conectar.CargarTablaDiasCompra(date);
+                            string obtenernuevaruta = imagen.ObtenerNuevaRuta();
+                            byte[] bytesguardarimagen = File.ReadAllBytes(obtenernuevaruta);
+                            ConectarBD.GuardarImagenProveedor(proveedorID, fechadtgEspecifico, bytesguardarimagen, registroDC);
+                            data.DataSource = ConectarBD.CargarTablaDiasCompra(fechadtgEspecifico);
+                            MessageBox.Show("Se modifico correctamente la imagen", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
-                            MessageBox.Show("No se hara ningun cambio");
+                            MessageBox.Show("No se hara ningun cambio", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                     else
                     {
-                        MessageBox.Show("No se encontro ninguga imagen", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        DialogResult respuesta = MessageBox.Show("No se encontro ninguga imagen, desea agregar una?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (respuesta == DialogResult.Yes)
+                        {
+                            if (OfdElegirImagen.ShowDialog() == DialogResult.OK)
+                            {
+                                string imagen = OfdElegirImagen.FileName;
+                                byte[] rutaimagengua = File.ReadAllBytes(imagen);
+                                Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(rutaimagengua, "no");
+                                if (previsualisacion.ShowDialog() == DialogResult.OK)
+                                {
+                                    int indice1 = e.RowIndex;
+                                    int proveedorID1 = (int)data.Rows[indice1].Cells["ProveedorID"].Value;
+                                    ConectarBD.GuardarImagenProveedor(proveedorID1, fechadtgEspecifico, rutaimagengua, registroDC);
+                                    data.DataSource = ConectarBD.CargarTablaDiasCompra(fechadtgEspecifico);
+                                    //dtgDiasCompra.Columns["ProveedorID"].Visible = false;
+                                    MessageBox.Show("Se guardo correctamente la imagen","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    
+                                }
+                                else
+                                {
+                                    MessageBox.Show("No se hara ningun cambio","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                            }
+                            else
+                            {
+
+                            }
+                        }
                     }
                 }
             }

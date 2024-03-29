@@ -114,8 +114,8 @@
             this.Controls.Add(this.BtnGuardar);
             this.Controls.Add(this.pictureBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(766, 765);
-            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(766, 765);
             this.Name = "Previsualisacion_imagen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
