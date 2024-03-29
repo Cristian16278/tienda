@@ -836,6 +836,10 @@ namespace tienda
                 }
                 else
                 {
+                    if (consulta.WindowState == FormWindowState.Minimized)
+                    {
+                        consulta.WindowState = FormWindowState.Normal;
+                    }
                     consulta.Activate();
                 }
             }

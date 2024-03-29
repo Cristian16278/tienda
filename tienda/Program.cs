@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Datos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,21 +15,20 @@ namespace tienda
         [STAThread]
         static void Main()
         {
-            //DateTime horaActual = DateTime.Now;
+            ConectarBD conectarBD = new ConectarBD();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Provedores());
-            //if (horaActual.Hour >= 22 && horaActual.Minute >= 0)
-            //{
-            //    Application.Run(new CuentasDiarias());//<---para que funcione bien todo tengo que poner: CuentasDiarias()
-            //    //para que comiense bien en proveedores debo poner: Provedores()
-            //}
-            //else
-            //{
-            //    Application.Run(new Provedores());//<---para que funcione bien todo tengo que poner: Proveedores()
-            //    //para que comiense bien en proveedores debo poner: Provedores()
-            //}
-
+            //aqui hay que aplicar una logica para abrir un formulario dependiendo si ya se hicieron las cuentas diarias
+            DateTime Fechaactual = DateTime.Now.Date;
+            int resultado = conectarBD.TraerNetoExistenteDiaAnterior(Fechaactual);
+            if (resultado == 0)//si el resultado es '0' se abrira el formulario de "Provedores".
+            {
+                Application.Run(new Provedores());//<---para que funcione bien todo tengo que poner: Provedores()
+            }
+            else//en caso contrario se abrira el formulario de "CuentasDiarias"
+            {
+                Application.Run(new CuentasDiarias());
+            }
         }
     }
 }
