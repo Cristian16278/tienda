@@ -115,7 +115,7 @@ namespace tienda
                             byte[] bytesguardarimagen = File.ReadAllBytes(obtenernuevaruta);
                             ConectarBD.GuardarImagenProveedor(proveedorID, fechadtgEspecifico, bytesguardarimagen, registroDC);
                             data.DataSource = ConectarBD.CargarTablaDiasCompra(fechadtgEspecifico);
-                            MessageBox.Show("Se modifico correctamente la imagen", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("La imagen se modificó correctamente.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else if (respuesta == DialogResult.Yes)
                         {
@@ -123,12 +123,12 @@ namespace tienda
                         }
                         else if (respuesta == DialogResult.Abort)
                         {
-                            MessageBox.Show("No se hara ningun cambio", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("No se realizarán cambios.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                     else
                     {
-                        DialogResult respuesta = MessageBox.Show("No se encontro ninguga imagen, desea agregar una?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        DialogResult respuesta = MessageBox.Show("No se encontró ninguna imagen. ¿Desea agregar una?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if (respuesta == DialogResult.Yes)
                         {
                             if (OfdElegirImagen.ShowDialog() == DialogResult.OK)
@@ -144,7 +144,7 @@ namespace tienda
                                     ConectarBD.GuardarImagenProveedor(proveedorID1, fechadtgEspecifico, rutaimagengua, registroDC);
                                     data.DataSource = ConectarBD.CargarTablaDiasCompra(fechadtgEspecifico);
                                     //dtgDiasCompra.Columns["ProveedorID"].Visible = false;
-                                    MessageBox.Show("Se guardo correctamente la imagen","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    MessageBox.Show("La imagen se guardó correctamente.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     
                                 }
                                 else if (respuesta2 == DialogResult.Yes)
@@ -153,7 +153,7 @@ namespace tienda
                                 }
                                 else if (respuesta2 == DialogResult.Abort)
                                 {
-                                    MessageBox.Show("No se hara ningun cambio","Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    MessageBox.Show("El guardado ha sido cancelado.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
                             }
                             else
@@ -437,18 +437,11 @@ namespace tienda
             dataGrid.Columns.Add(botonVisualizarImagen);
         }
 
-        DateTime obtenerfecha;
-        //DateTime guardarfecha;
-        private void BtnSacarCuentas1_Click(object sender, EventArgs e)
-        {
-            obtenerfecha = fechadtg1;
-            logicaSacarCuentas(label1.Text, obtenerfecha);
-            
-        }
+
 
         private void logicaSacarCuentas(string labelfecha, DateTime fecha)
         {
-            DialogResult r = MessageBox.Show($"Alparecer en esta fecha {labelfecha} no se saco las cuentas diarias en las noches, desea hacerlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult r = MessageBox.Show($"Al parecer, no se encontraron datos para la fecha {labelfecha}. ¿Desea crearlos?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (r == DialogResult.Yes)
             {
                 obtenerfecha = fecha;//para sumar los proveedores de ese dia
@@ -513,6 +506,15 @@ namespace tienda
             {
 
             }
+        }
+
+        DateTime obtenerfecha;
+        //DateTime guardarfecha;
+        private void BtnSacarCuentas1_Click(object sender, EventArgs e)
+        {
+            obtenerfecha = fechadtg1;
+            logicaSacarCuentas(label1.Text, obtenerfecha);
+
         }
 
         private void BtnSacarCuentas2_Click(object sender, EventArgs e)
@@ -651,22 +653,59 @@ namespace tienda
                     if (Proveedorexiste == proveedorID)
                     {
                         Previsualisacion_imagen imagen = new Previsualisacion_imagen(rutaimagen, "si");
-                        if (imagen.ShowDialog() == DialogResult.OK)
+                        DialogResult r = imagen.ShowDialog();
+                        if (r == DialogResult.OK)
                         {
-                            //MessageBox.Show("se guardara la nueva ruta");
-                            //string obtenernuevaruta = imagen.ObtenerNuevaRuta();
-                            //MessageBox.Show("Se guardara la nueva ruta");
-                            //ConectarBD.GuardarImagenProveedor(proveedorID, date, obtenernuevaruta);
-                            //data.DataSource = conectar.CargarTablaDiasCompra(date);
+                            string obtenernuevaruta = imagen.ObtenerNuevaRuta();
+                            byte[] bytesguardarimagen = File.ReadAllBytes(obtenernuevaruta);
+                            ConectarBD.GuardarImagenProveedor(proveedorID, obtenerfecha, bytesguardarimagen, registroDC);
+                            dataGridViewProveedores.DataSource = ConectarBD.BuscarProveedorTablaDiasCompra(txtBuscarProveedor.Text);
+                            MessageBox.Show("La imagen se modificó correctamente.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-                        else
+                        else if(r == DialogResult.Yes)
                         {
-                            MessageBox.Show("No se hara ningun cambio");
+
+                        }
+                        else if(r == DialogResult.Abort)
+                        {
+                            MessageBox.Show("No se realizarán cambios.", "Mensage del programa.", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                     else
                     {
-                        MessageBox.Show("No se encontro ninguga imagen", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        DialogResult respues = MessageBox.Show("No se encontró ninguna imagen. ¿Desea agregar una?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (respues == DialogResult.Yes)
+                        {
+                            if (OfdElegirImagen.ShowDialog() == DialogResult.OK)
+                            {
+                                string imagen = OfdElegirImagen.FileName;
+                                byte[] rutaimagengua = File.ReadAllBytes(imagen);
+                                Previsualisacion_imagen previsualisacion = new Previsualisacion_imagen(rutaimagengua, "no");
+                                DialogResult respuesta2 = previsualisacion.ShowDialog();
+                                if (respuesta2 == DialogResult.OK)
+                                {
+                                    int indice1 = e.RowIndex;
+                                    int proveedorID1 = (int)dataGridViewProveedores.Rows[indice1].Cells["ProveedorID"].Value;
+                                    ConectarBD.GuardarImagenProveedor(proveedorID1, obtenerfecha, rutaimagengua, registroDC);
+                                    dataGridViewProveedores.DataSource = ConectarBD.BuscarProveedorTablaDiasCompra(txtBuscarProveedor.Text);
+                                    //dtgDiasCompra.Columns["ProveedorID"].Visible = false;
+                                    MessageBox.Show("La imagen se guardó correctamente.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                }
+                                else if (respuesta2 == DialogResult.Yes)
+                                {
+
+                                }
+                                else if (respuesta2 == DialogResult.Abort)
+                                {
+                                    MessageBox.Show("El guardado ha sido cancelado.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                            }
+                        }
+                        else
+                        {
+
+                        }
                     }
                 }
             }

@@ -33,7 +33,7 @@ namespace tienda
                         // Mostrar la imagen en el PictureBox
                         pictureBox1.Image = image;
                         //pictureBox1.Image = Image.FromFile(imagen);
-                        BtnGuardar.Text = "Aceptar";
+                        BtnGuardar.Text = "Cerrar";
                         BtnCancelar.Enabled = false;
                     }
                     
@@ -93,6 +93,7 @@ namespace tienda
                 pictureBox1.Image = Image.FromFile(nuevaruta);
                 BtnCancelar.Enabled = true;
                 BtnAbriConFotos.Enabled = false;
+                BtnGuardar.Text = "Guardar";
             }
         }
 

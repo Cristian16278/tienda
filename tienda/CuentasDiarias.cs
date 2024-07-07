@@ -256,7 +256,7 @@ namespace tienda
                     DialogResult resupuesta = MessageBox.Show($"Sobro ${agarar} de la suma de los proveedores, desea agregarlo?", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (resupuesta == DialogResult.Yes)
                     {
-                        DialogResult respues = MessageBox.Show("Desea agregarlo todo o solo una parte?\nEliga 'Si' si quiere agregarlo todo.\nEliga 'No' si desea agregar solo una parte.", "Mensage del programa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        DialogResult respues = MessageBox.Show("Desea agregarlo todo o solo una parte?\nEliga 'Si' si quiere agregarlo todo.\nEliga 'No' si desea agregar solo una parte.", "Mensage del programa", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                         if (respues == DialogResult.Yes)
                         {
                             int NEhoy = Properties.Settings.Default.AgarrarDinero;//AgarrarDinero se almacena Neto existente del calculo que se muestrar en el listbox
@@ -276,7 +276,7 @@ namespace tienda
                                 MessageBox.Show("Alparecer hubo un problema al guardar el resultado.", "Mensage del programa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                         }
-                        else
+                        else if (resupuesta == DialogResult.No)
                         {
                             //Se mostrara un nuevo form para elegir la cantidad especifica de dinero e agarrar.
                             AgarrarDinero Partedinero = new AgarrarDinero(agarar, "Sobro:");
@@ -303,14 +303,23 @@ namespace tienda
                             else
                             {
                                 MessageBox.Show("Se cancelo la accion.", "Mensage del program", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                BtnAgarrarDinero.Enabled = true;
+                                BtnAgarrarDinero.Visible = true;
                                 BtnAgregarSumarProveedor.Visible = true;
                                 BtnAgregarSumarProveedor.Enabled = true;
                             }
                         }
+                        else
+                        {
+                            BtnAgarrarDinero.Enabled = true;
+                            BtnAgarrarDinero.Visible = true;
+                            BtnAgregarSumarProveedor.Visible = true;
+                            BtnAgregarSumarProveedor.Enabled = true;
+                        }
                     }
                     else
                     {
-                        MessageBox.Show($"No se sumara la cantidad ${agarar} con el neto existente", "Mensage del program", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show($"No se sumara la cantidad ${agarar} con el neto existente", "Mensage del program", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         BtnAgarrarDinero.Enabled = true;
                         BtnAgarrarDinero.Visible = true;
                         BtnAgregarSumarProveedor.Enabled = true;
